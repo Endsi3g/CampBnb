@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Ajouter une annonce</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2d572c",
+            "secondary": "#3a5f7f",
+            "neutral": "#f5f1e9",
+            "text-color": "#333333",
+            "accent": "#e57c23",
+            "background-light": "#ffffff",
+            "background-dark": "#1a1c19",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    .switch-checkbox:checked {
+        background-color: #2d572c;border-color: #2d572c;}
+    .switch-checkbox:checked + .switch-label .switch-dot {
+        transform: translateX(100%);
+        background-color: white;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="sticky top-0 z-10 flex items-center justify-between bg-background-light dark:bg-background-dark p-4 pb-2">
+<button class="flex size-12 shrink-0 items-center justify-center text-text-color dark:text-neutral">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center text-lg font-bold tracking-[-0.015em] text-text-color dark:text-neutral pr-12">Étape 4: Règlement</h1>
+</div>
+<main class="flex-grow pb-28">
+<div class="flex flex-col gap-3 p-4">
+<div class="flex justify-between">
+<p class="text-base font-medium leading-normal text-text-color dark:text-neutral">Étape 4 sur 5</p>
+</div>
+<div class="rounded-full bg-gray-200">
+<div class="h-2 rounded-full bg-primary" style="width: 80%;"></div>
+</div>
+</div>
+<div class="px-4 pt-5 pb-3">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-text-color dark:text-neutral">Règles du camping</h2>
+<p class="text-base font-normal leading-normal text-text-color/80 dark:text-neutral/80 pt-1">Définissez les règles de base pour votre emplacement.</p>
+</div>
+<div class="flex flex-col gap-2 px-4">
+<div class="flex items-center justify-between rounded-lg bg-gray-100 dark:bg-background-dark/50 p-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-neutral/80">pets</span>
+<span class="font-medium text-text-color dark:text-neutral">Animaux acceptés</span>
+</div>
+<div class="relative inline-block w-11">
+<input class="switch-checkbox absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="pets-toggle" type="checkbox"/>
+<label class="switch-label flex h-6 w-11 items-center rounded-full bg-primary/30 p-1 duration-300 ease-in-out peer-checked:bg-primary" for="pets-toggle">
+<div class="switch-dot h-4 w-4 transform rounded-full bg-white shadow-md duration-300 ease-in-out"></div>
+</label>
+</div>
+</div>
+<div class="flex items-center justify-between rounded-lg bg-gray-100 dark:bg-background-dark/50 p-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-neutral/80">local_fire_department</span>
+<span class="font-medium text-text-color dark:text-neutral">Feux de camp autorisés</span>
+</div>
+<div class="relative inline-block w-11">
+<input checked="" class="switch-checkbox absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="fire-toggle" type="checkbox"/>
+<label class="switch-label flex h-6 w-11 items-center rounded-full bg-primary/30 p-1 duration-300 ease-in-out peer-checked:bg-primary" for="fire-toggle">
+<div class="switch-dot h-4 w-4 transform rounded-full bg-white shadow-md duration-300 ease-in-out"></div>
+</label>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 px-4 pt-6">
+<div>
+<label class="text-base font-medium text-text-color dark:text-neutral" for="check-in-time">Heure d'arrivée</label>
+<input class="mt-2 w-full rounded-lg border border-primary/30 bg-gray-100 dark:bg-background-dark dark:border-primary/50 py-3 px-4 text-text-color dark:text-neutral placeholder-text-color/50 dark:placeholder-neutral/50 focus:border-primary focus:ring-primary" id="check-in-time" placeholder="Après 15:00" type="text"/>
+</div>
+<div>
+<label class="text-base font-medium text-text-color dark:text-neutral" for="check-out-time">Heure de départ</label>
+<input class="mt-2 w-full rounded-lg border border-primary/30 bg-gray-100 dark:bg-background-dark dark:border-primary/50 py-3 px-4 text-text-color dark:text-neutral placeholder-text-color/50 dark:placeholder-neutral/50 focus:border-primary focus:ring-primary" id="check-out-time" placeholder="Avant 11:00" type="text"/>
+</div>
+</div>
+<div class="px-4 pt-8 pb-3">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-text-color dark:text-neutral">Informations pratiques</h2>
+<p class="text-base font-normal leading-normal text-text-color/80 dark:text-neutral/80 pt-1">Ajoutez des détails importants pour les voyageurs (ex: accès, bois de chauffage, etc.).</p>
+</div>
+<div class="px-4">
+<textarea class="h-32 w-full rounded-lg border border-primary/30 bg-gray-100 dark:bg-background-dark dark:border-primary/50 p-4 text-text-color dark:text-neutral placeholder-text-color/50 dark:placeholder-neutral/50 focus:border-primary focus:ring-primary" placeholder="Décrivez ici les informations pratiques..."></textarea>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-10 w-full border-t border-gray-200 bg-background-light dark:bg-background-dark/80 p-4 backdrop-blur-sm">
+<div class="flex items-center justify-between gap-4">
+<button class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 border-2 border-primary/50 text-primary text-base font-bold">
+<span class="truncate">Précédent</span>
+</button>
+<button class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary text-white text-base font-bold shadow-lg">
+<span class="truncate">Suivant</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

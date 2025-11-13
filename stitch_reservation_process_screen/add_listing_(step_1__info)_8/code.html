@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Ajouter une annonce</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2d572c",
+              "secondary": "#3a5f7f",
+              "neutral": "#f5f1e9",
+              "text-color": "#333333",
+              "accent": "#e57c23",
+              "background-light": "#f5f1e9",
+              "background-dark": "#1a1c19",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-white dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="sticky top-0 z-10 flex items-center justify-between bg-white dark:bg-background-dark p-4 pb-2">
+<button class="flex size-12 shrink-0 items-center justify-center text-text-color dark:text-neutral">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center text-lg font-bold tracking-[-0.015em] text-text-color dark:text-neutral pr-12">Étape 1: Informations générales</h1>
+</div>
+<main class="flex-grow pb-28">
+<div class="flex flex-col gap-3 p-4">
+<div class="flex justify-between">
+<p class="text-base font-medium leading-normal text-text-color dark:text-neutral">Étape 1 sur 5</p>
+</div>
+<div class="rounded-full bg-primary/20">
+<div class="h-2 rounded-full bg-primary" style="width: 20%;"></div>
+</div>
+</div>
+<div class="px-4 pt-5 pb-3">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-text-color dark:text-neutral">Photos du site</h2>
+</div>
+<p class="text-base font-normal leading-normal text-text-color/80 dark:text-neutral/80 px-4 pb-3 pt-1">Attirez les campeurs avec de superbes photos. Ajoutez jusqu'à 10 images.</p>
+<div class="flex flex-col p-4">
+<div class="flex flex-col items-center gap-6 rounded-lg border-2 border-dashed border-primary/30 px-6 py-14">
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-4xl text-primary">add_a_photo</span>
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-center text-text-color dark:text-neutral">Ajouter jusqu'à 10 photos</p>
+<p class="text-sm font-normal leading-normal text-center text-text-color/80 dark:text-neutral/80">0/10</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Télécharger</span>
+</button>
+</div>
+</div>
+<div class="px-4 pt-5 pb-3">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-text-color dark:text-neutral">Détails du site</h2>
+</div>
+<div class="flex flex-col gap-4 px-4">
+<div>
+<label class="mb-2 block text-sm font-medium text-text-color dark:text-neutral" for="site-name">Nom du site</label>
+<input class="w-full rounded-lg border border-primary/30 bg-neutral/20 dark:bg-background-dark dark:border-primary/50 px-4 py-3 text-text-color dark:text-neutral placeholder-text-color/50 dark:placeholder-neutral/50 focus:border-primary focus:ring-primary" id="site-name" placeholder="Ex: Le Refuge du Hibou" type="text"/>
+</div>
+<div>
+<label class="mb-2 block text-sm font-medium text-text-color dark:text-neutral" for="site-description">Description</label>
+<textarea class="w-full rounded-lg border border-primary/30 bg-neutral/20 dark:bg-background-dark dark:border-primary/50 px-4 py-3 text-text-color dark:text-neutral placeholder-text-color/50 dark:placeholder-neutral/50 focus:border-primary focus:ring-primary" id="site-description" placeholder="Décrivez ce qui rend votre site unique..." rows="4"></textarea>
+</div>
+</div>
+<div class="px-4 pt-5 pb-3">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-text-color dark:text-neutral">Emplacement</h2>
+</div>
+<div class="p-4">
+<button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full h-12 px-6 bg-secondary/10 dark:bg-secondary/20 text-secondary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined">location_on</span>
+<span class="truncate">Définir l'emplacement sur la carte</span>
+</button>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-10 w-full border-t border-primary/20 bg-white dark:bg-background-dark/80 p-4 backdrop-blur-sm">
+<div class="flex items-center justify-between gap-4">
+<button class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 border-2 border-primary/50 text-primary text-base font-bold">
+<span class="truncate">Retour</span>
+</button>
+<button class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary text-white text-base font-bold shadow-lg">
+<span class="truncate">Suivant</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

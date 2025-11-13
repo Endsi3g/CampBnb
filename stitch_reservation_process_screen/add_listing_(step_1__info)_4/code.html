@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Ajouter une annonce</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2d572c",
+            "secondary": "#3a5f7f",
+            "neutral": "#f5f1e9",
+            "text-color": "#333333",
+            "accent": "#e57c23",
+            "background-light": "#f5f1e9",
+            "background-dark": "#1a1c19",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-white dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="sticky top-0 z-10 flex items-center justify-between bg-white dark:bg-background-dark p-4 pb-2">
+<button class="flex size-12 shrink-0 items-center justify-center text-text-color dark:text-neutral">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center text-lg font-bold tracking-[-0.015em] text-text-color dark:text-neutral pr-12">Étape 3: Prix et Calendrier</h1>
+</div>
+<main class="flex-grow pb-28">
+<div class="flex flex-col gap-3 p-4">
+<div class="flex justify-between">
+<p class="text-base font-medium leading-normal text-text-color dark:text-neutral">Étape 3 sur 5</p>
+</div>
+<div class="rounded-full bg-primary/20">
+<div class="h-2 rounded-full bg-primary" style="width: 60%;"></div>
+</div>
+</div>
+<div class="px-4 pt-5 pb-3">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-text-color dark:text-neutral">Prix par nuit</h2>
+<p class="text-base font-normal leading-normal text-text-color/80 dark:text-neutral/80 pt-1">Fixez un prix de base pour votre emplacement.</p>
+</div>
+<div class="flex flex-col gap-4 px-4">
+<div class="relative">
+<span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-text-color/50 dark:text-neutral/50">CAD $</span>
+<input class="w-full rounded-lg border border-primary/30 bg-neutral/60 dark:bg-background-dark dark:border-primary/50 py-3 pl-16 pr-4 text-text-color dark:text-neutral placeholder-text-color/50 dark:placeholder-neutral/50 focus:border-primary focus:ring-primary" id="site-price" placeholder="50.00" step="0.01" type="number"/>
+</div>
+</div>
+<div class="px-4 pt-8 pb-3">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-text-color dark:text-neutral">Disponibilité</h2>
+<p class="text-base font-normal leading-normal text-text-color/80 dark:text-neutral/80 pt-1">Sélectionnez les dates pour les marquer comme disponibles ou non disponibles.</p>
+</div>
+<div class="flex flex-col p-4">
+<div class="rounded-lg bg-neutral/60 dark:bg-background-dark/50 p-4">
+<div class="flex items-center justify-between pb-4">
+<button class="flex size-10 items-center justify-center rounded-full text-text-color dark:text-neutral hover:bg-primary/10">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<h3 class="text-base font-bold text-text-color dark:text-neutral">Juin 2024</h3>
+<button class="flex size-10 items-center justify-center rounded-full text-text-color dark:text-neutral hover:bg-primary/10">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center">
+<div class="text-xs font-medium text-text-color/60 dark:text-neutral/60">D</div>
+<div class="text-xs font-medium text-text-color/60 dark:text-neutral/60">L</div>
+<div class="text-xs font-medium text-text-color/60 dark:text-neutral/60">M</div>
+<div class="text-xs font-medium text-text-color/60 dark:text-neutral/60">M</div>
+<div class="text-xs font-medium text-text-color/60 dark:text-neutral/60">J</div>
+<div class="text-xs font-medium text-text-color/60 dark:text-neutral/60">V</div>
+<div class="text-xs font-medium text-text-color/60 dark:text-neutral/60">S</div>
+<div class="text-sm text-text-color/40 dark:text-neutral/40">26</div>
+<div class="text-sm text-text-color/40 dark:text-neutral/40">27</div>
+<div class="text-sm text-text-color/40 dark:text-neutral/40">28</div>
+<div class="text-sm text-text-color/40 dark:text-neutral/40">29</div>
+<div class="text-sm text-text-color/40 dark:text-neutral/40">30</div>
+<div class="text-sm text-text-color/40 dark:text-neutral/40">31</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">1</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">2</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-primary text-sm font-semibold text-neutral">3</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-primary text-sm font-semibold text-neutral">4</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">5</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">6</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">7</div>
+<div class="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color/50 dark:text-neutral/50"><span class="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-accent"></span><span class="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-accent"></span>8</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">9</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">10</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">11</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">12</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">13</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">14</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">15</div>
+<div class="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color/50 dark:text-neutral/50"><span class="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-accent"></span><span class="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-accent"></span>16</div>
+<div class="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color/50 dark:text-neutral/50"><span class="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-accent"></span><span class="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-accent"></span>17</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">18</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">19</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">20</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">21</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">22</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">23</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">24</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">25</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">26</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">27</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">28</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">29</div>
+<div class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sm text-text-color dark:text-neutral">30</div>
+</div>
+<div class="flex items-center justify-center gap-6 pt-6">
+<div class="flex items-center gap-2">
+<div class="h-4 w-4 rounded-full bg-primary"></div>
+<span class="text-xs text-text-color dark:text-neutral">Disponible</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative h-4 w-4"><span class="absolute left-1/2 top-1/2 h-px w-3.5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-accent"></span><span class="absolute left-1/2 top-1/2 h-px w-3.5 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-accent"></span></div>
+<span class="text-xs text-text-color dark:text-neutral">Non disponible</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-10 w-full border-t border-primary/20 bg-white dark:bg-background-dark/80 p-4 backdrop-blur-sm">
+<div class="flex items-center justify-between gap-4">
+<button class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 border-2 border-primary/50 text-primary text-base font-bold">
+<span class="truncate">Précédent</span>
+</button>
+<button class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary text-white text-base font-bold shadow-lg">
+<span class="truncate">Publier l'annonce</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

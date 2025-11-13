@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Connexion</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2d572c",
+              "secondary": "#3a5f7e",
+              "neutral": "#f5f1e8",
+              "text-dark": "#333333",
+              "background-light": "#f5f1e8",
+              "background-dark": "#1a1c1a",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex min-h-screen flex-col items-center justify-center bg-white dark:bg-background-dark p-4 group/design-root">
+<main class="w-full max-w-md space-y-8">
+<div class="flex flex-col items-center text-center">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-4xl text-primary dark:text-green-400">forest</span>
+<h1 class="text-3xl font-bold text-text-dark dark:text-neutral">Campbnb Québec</h1>
+</div>
+<h2 class="text-3xl font-bold tracking-tight text-text-dark dark:text-neutral">Connexion</h2>
+<p class="mt-2 text-base text-gray-600 dark:text-gray-400">Heureux de vous revoir!</p>
+</div>
+<form class="mt-8 space-y-6">
+<div class="flex flex-col gap-4 rounded-lg">
+<div class="flex flex-col">
+<label class="text-text-dark dark:text-neutral text-base font-medium leading-normal pb-2" for="email">Email</label>
+<input autocomplete="email" class="form-input w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-dark dark:text-neutral placeholder:text-gray-500 focus:outline-0 focus:ring-2 focus:ring-secondary/50 dark:focus:ring-secondary border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 h-14 p-4 text-base font-normal leading-normal" id="email" name="email" placeholder="Entrez votre email" required="" type="email"/>
+</div>
+<div class="flex flex-col">
+<label class="text-text-dark dark:text-neutral text-base font-medium leading-normal pb-2" for="password">Mot de passe</label>
+<div class="relative flex w-full items-stretch">
+<input autocomplete="current-password" class="form-input flex-1 resize-none overflow-hidden rounded-l-lg text-text-dark dark:text-neutral placeholder:text-gray-500 focus:outline-0 focus:ring-2 focus:ring-secondary/50 dark:focus:ring-secondary border border-r-0 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 h-14 p-4 pr-12 text-base font-normal leading-normal" id="password" name="password" placeholder="Entrez votre mot de passe" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 dark:text-gray-400" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-4">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-5 bg-primary text-white text-base font-bold leading-normal tracking-wide shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark" type="submit">
+                        Connexion
+                    </button>
+<a class="text-secondary dark:text-blue-400 text-sm font-medium leading-normal underline hover:text-secondary/80 dark:hover:text-blue-300" href="#">
+                        Mot de passe oublié ?
+                    </a>
+</div>
+</form>
+<div class="mt-6 flex flex-col gap-4">
+<div class="relative flex items-center justify-center">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+</div>
+<div class="relative">
+<span class="bg-white dark:bg-background-dark px-2 text-sm text-gray-500 dark:text-gray-400">OU</span>
+</div>
+</div>
+<button class="flex w-full items-center justify-center gap-3 rounded-full border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 h-14 px-5 text-text-dark dark:text-neutral text-base font-medium leading-normal shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 dark:focus:ring-offset-background-dark" type="button">
+<svg class="h-6 w-6" fill="none" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25C22.56 11.45 22.49 10.68 22.36 9.92H12V14.26H18.06C17.84 15.89 17.06 17.29 15.82 18.15V21.09H19.5C21.43 19.34 22.56 16.07 22.56 12.25Z" fill="#4285F4"></path>
+<path d="M12 23C14.99 23 17.48 22.02 19.5 20.35L15.82 17.41C14.75 18.12 13.48 18.57 12 18.57C9.21 18.57 6.82 16.73 5.92 14.1H2.04V17.04C3.96 20.81 7.72 23 12 23Z" fill="#34A853"></path>
+<path d="M5.92 14.1C5.69 13.42 5.56 12.72 5.56 12C5.56 11.28 5.69 10.58 5.92 9.9H2.04C1.32 11.28 1 12.68 1 14.1C1 15.52 1.32 16.92 2.04 18.3L5.92 15.36V14.1Z" fill="#FBBC05"></path>
+<path d="M12 5.43C13.67 5.43 15.04 6.01 16.04 6.95L19.59 3.4C17.48 1.48 14.99 0.5 12 0.5C7.72 0.5 3.96 2.69 2.04 6.46L5.92 9.4C6.82 6.77 9.21 4.93 12 4.93V5.43Z" fill="#EA4335"></path>
+</svg>
+<span>Continuer avec Google</span>
+</button>
+<button class="flex w-full items-center justify-center gap-3 rounded-full border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 h-14 px-5 text-text-dark dark:text-neutral text-base font-medium leading-normal shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 dark:focus:ring-offset-background-dark" type="button">
+<svg class="h-6 w-6" fill="#1877F2" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12C2 16.84 5.44 20.87 10 21.8V14.88H7V12H10V9.62C10 6.65 11.89 5 14.65 5C15.96 5 17.29 5.22 17.29 5.22V7.75H15.97C14.54 7.75 14 8.52 14 9.38V12H17.23L16.7 14.88H14V21.8C18.56 20.87 22 16.84 22 12Z"></path>
+</svg>
+<span>Continuer avec Facebook</span>
+</button>
+</div>
+</main>
+</div>
+</body></html>

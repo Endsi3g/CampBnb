@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gérer l'annonce - Campbnb Québec</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2E4636", // Forest Green
+              "secondary": "#3A6EA5", // Lake Blue
+              "text-primary": "#333333",
+              "background-light": "#F5F1E9", // Wood Beige
+              "background-dark": "#152210", // Dark Green
+              "card-light": "#FFFFFF", // Off-white
+              "card-dark": "#232F20"
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px; /* Default size */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary dark:text-background-light">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-10 flex h-16 items-center bg-card-light dark:bg-card-dark px-4 pb-2 pt-4 justify-between border-b border-gray-200/50 dark:border-white/10">
+<button class="text-text-primary dark:text-background-light flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-text-primary dark:text-background-light text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Gérer l'annonce</h1>
+<div class="size-10 shrink-0"></div> <!-- Spacer for centering title -->
+</header>
+<main class="flex-1 pb-40">
+<!-- Header Image -->
+<div class="w-full">
+<div class="bg-cover bg-center flex flex-col justify-end overflow-hidden min-h-64" data-alt="A rustic cabin nestled among tall pine trees by a calm lake at sunrise." style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 40%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuChM2lyTlgff3t47rwyF71T5qUKmcudRpsuVNKDOtrAYdAIzjhZSYbE0Jv1t2nxP2qm0GfoYd9WDXliXWZn6gWMwgvCIYw5CQKGdlDqDny7VxtKgsfj6-6X5yPfGAl-KX5GzuKAaswh6r2-gDy-RGEmTNN7tWv8AJrXDkTwAu5lIxADRii2HQ0RghcjhfgLRgmcxlCudgFqSvSamNFxNNGf_U0ot1HAwqRWiuuelX8Pm0yKJIkEHmaqg1QxfGxAjJvqYpwNJ6psT9sq");'>
+<div class="flex p-6">
+<h2 class="text-white tracking-light text-[28px] font-bold leading-tight">Chalet rustique au bord du lac Memphrémagog</h2>
+</div>
+</div>
+</div>
+<!-- Management Menu -->
+<div class="flex flex-col gap-2 p-4">
+<!-- Informations générales -->
+<a class="flex items-center gap-4 bg-card-light dark:bg-card-dark p-4 min-h-14 justify-between rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<div class="text-text-primary dark:text-background-light flex items-center justify-center rounded-lg bg-background-light dark:bg-black/20 shrink-0 size-10">
+<span class="material-symbols-outlined">info</span>
+</div>
+<p class="text-text-primary dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Informations générales</p>
+</div>
+<div class="shrink-0 text-text-primary/70 dark:text-background-light/70">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+<!-- Photos et Vidéos -->
+<a class="flex items-center gap-4 bg-card-light dark:bg-card-dark p-4 min-h-14 justify-between rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<div class="text-text-primary dark:text-background-light flex items-center justify-center rounded-lg bg-background-light dark:bg-black/20 shrink-0 size-10">
+<span class="material-symbols-outlined">photo_camera</span>
+</div>
+<p class="text-text-primary dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Photos et Vidéos</p>
+</div>
+<div class="shrink-0 text-text-primary/70 dark:text-background-light/70">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+<!-- Équipements et Activités -->
+<a class="flex items-center gap-4 bg-card-light dark:bg-card-dark p-4 min-h-14 justify-between rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<div class="text-text-primary dark:text-background-light flex items-center justify-center rounded-lg bg-background-light dark:bg-black/20 shrink-0 size-10">
+<span class="material-symbols-outlined">outdoor_grill</span>
+</div>
+<p class="text-text-primary dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Équipements et Activités</p>
+</div>
+<div class="shrink-0 text-text-primary/70 dark:text-background-light/70">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+<!-- Prix et Calendrier -->
+<a class="flex items-center gap-4 bg-card-light dark:bg-card-dark p-4 min-h-14 justify-between rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<div class="text-text-primary dark:text-background-light flex items-center justify-center rounded-lg bg-background-light dark:bg-black/20 shrink-0 size-10">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<p class="text-text-primary dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Prix et Calendrier</p>
+</div>
+<div class="shrink-0 text-text-primary/70 dark:text-background-light/70">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+<!-- Règlement -->
+<a class="flex items-center gap-4 bg-card-light dark:bg-card-dark p-4 min-h-14 justify-between rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<div class="text-text-primary dark:text-background-light flex items-center justify-center rounded-lg bg-background-light dark:bg-black/20 shrink-0 size-10">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<p class="text-text-primary dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Règlement</p>
+</div>
+<div class="shrink-0 text-text-primary/70 dark:text-background-light/70">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+</div>
+</main>
+<!-- Bottom Action Buttons -->
+<footer class="fixed bottom-0 left-0 right-0 z-10 bg-card-light dark:bg-card-dark p-4 border-t border-gray-200/50 dark:border-white/10">
+<div class="flex w-full items-center gap-3">
+<button class="flex-1 h-12 px-6 bg-transparent border border-primary text-primary dark:text-primary rounded-full font-bold text-base transition-colors hover:bg-primary/10">Mettre en pause</button>
+<button class="flex-1 h-12 px-6 bg-primary border border-primary text-white dark:text-background-dark rounded-full font-bold text-base transition-colors hover:opacity-90">Prévisualiser</button>
+</div>
+</footer>
+</div>
+</body></html>

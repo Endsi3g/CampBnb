@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profil - Campbnb Québec</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42d411", // Keeping this as per base config, but will override with app-specific colors
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#152210",
+                        // Campbnb Québec Theme
+                        "forest-green": "#2d572c",
+                        "lake-blue": "#3b8ea5",
+                        "wood-beige": "#f5f1e3",
+                        "charcoal": "#333333",
+                        "off-white": "#FFFFFF",
+                        "trophy-gold": "#ffd700",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-off-white font-display">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="flex items-center bg-off-white p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-12 shrink-0 items-center text-charcoal">
+<span class="material-symbols-outlined text-3xl">arrow_back</span>
+</div>
+<h1 class="text-charcoal text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Profil</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="text-forest-green text-base font-bold leading-normal tracking-[0.015em] shrink-0">Modifier</button>
+</div>
+</header>
+<section class="flex p-4 @container bg-off-white">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-off-white shadow-md" data-alt="Profile picture of Alexandre Tremblay" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZmKRejsJYXkCSXJgG0CqHd1tQD3MKSwH3H1wiTQLcwU-9HZmCd7N3y_iK6fLLMtgHwfsd65WCFIEpCTuF-JcAvr1mC7E5FzlYL1--NtpM_8oQ9nZzUSLR8e0IFMJ2rPDiZQ7B3Lb6ovKQ0fizoZBlOOYSm1TOJok1asvv4rjC-MS5-8MjmtYjn9Lyxv8WNB9zntu6xP4JAkldFEDlk2rx2SG_q1Z4184wQDrqB_K5_kNzwRT5h1RAJR07p3_5ACKNlLNLTHe1ThAU");'></div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-charcoal text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Alexandre Tremblay</p>
+<p class="text-forest-green text-base font-normal leading-normal text-center">Membre depuis Janvier 2023</p>
+</div>
+</div>
+</div>
+</section>
+<main class="flex flex-col p-4 gap-4 bg-gray-50/50">
+<div class="flex flex-col gap-3">
+<details class="flex flex-col rounded bg-off-white shadow-sm group" open="">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-4">
+<p class="text-charcoal text-base font-bold leading-normal">Historique des réservations</p>
+<div class="text-charcoal group-open:rotate-180 transition-transform">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</summary>
+<div class="flex flex-col divide-y divide-gray-200 px-2 pb-2">
+<div class="flex gap-4 bg-off-white px-2 py-3 justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg h-[60px] w-[60px]" data-alt="Photo of Camping du Fjord" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5YAqSEA6Wup9HgrbcWTJ-E71lM1WTG7plGulo74iFLGltnK9llDIl_1jw8ZWKW0y_6nkB9a6vCGeBjwUUChm0B_y9vJLADvIJ4a94vf7wLzH5a0_zI7AydtD2U7sjczK61JC-UhHQsOSnkHxzMsH7yuioN-7Qw5U8oyK7_kCN8MQLBovLNbnDE400pe800U2xGXUL-pbb0zLumlGaviIKuVivr1SEUGmd4atpTusUw56V5i1ls3F8Q5UFU0OCdA4xXWuTLARJFK7V");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-charcoal text-base font-medium leading-normal">Camping du Fjord</p>
+<p class="text-forest-green text-sm font-normal leading-normal">12 Juin 2023 - 15 Juin 2023</p>
+<p class="text-gray-500 text-sm font-normal leading-normal">Saguenay, Québec</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex gap-4 bg-off-white px-2 py-3 justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg h-[60px] w-[60px]" data-alt="Photo of Parc National de la Gaspésie" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMScF8I3M9Hmyc06PFHclg2koEwECT-NM2LNAifw2GnBeuQuhA8EmBrw_6oPIguNJ2jqTZEJr_IoE9mgrZkgZLpm0q8Gk14q9LHshk1ognyS0POUT3mp8fOyuqg7b-0TjkoossNtRkVdKLX5RCgG0CCcBKYZI7lFSBaCnexGhAafyizzvmuAGxWOjEMNRXZEzuBh-qzy_rcIItJ56WS1TNPS4u36kkMlRJClPubeTCezojzlAxcw4KO-Y7pVegs2Aogmi8z5c3vCVg");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-charcoal text-base font-medium leading-normal">Parc National de la Gaspésie</p>
+<p class="text-forest-green text-sm font-normal leading-normal">22 Juillet 2023 - 25 Juillet 2023</p>
+<p class="text-gray-500 text-sm font-normal leading-normal">Gaspésie, Québec</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+<details class="flex flex-col rounded bg-off-white shadow-sm group">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-4">
+<p class="text-charcoal text-base font-bold leading-normal">Liste de favoris</p>
+<div class="text-charcoal group-open:rotate-180 transition-transform">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</summary>
+<div class="flex flex-col divide-y divide-gray-200 px-2 pb-2">
+<div class="flex gap-4 bg-off-white px-2 py-3 justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg h-[60px] w-[60px]" data-alt="Photo of Chalets Mont-Sainte-Anne" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAEmwZQYGU2MEjuD4vz-Wiws1CVxOFpI6Jw6Qdkmq7tO7Vs7A7ky2-vc73G__Ttz3dBoOcKSLo7aiQ6y5JvuonnJGQeJFBBbhpg4Dm_CPZ4XyaTMEt34YwyMZSDYGHc5YV5fEF92QGMiV4wlDtCoPi8ubwwH49PvG8tT9S22bGV004KFlWsfdFhcZRqUOIi47Db5Q42pbUZH0GB6KsJMKgoYepl38MbsiQ8UnzmUazYHC_qOpGB8Ol58aBgXKT7A0gIulZiGvrhnDVS");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-charcoal text-base font-medium leading-normal">Chalets Mont-Sainte-Anne</p>
+<p class="text-gray-500 text-sm font-normal leading-normal">Beaupré, Québec</p>
+</div>
+</div>
+<div class="shrink-0 text-lake-blue">
+<span class="material-symbols-outlined !text-3xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+</div>
+</details>
+<details class="flex flex-col rounded bg-off-white shadow-sm group">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-4">
+<p class="text-charcoal text-base font-bold leading-normal">Badges et Trophées</p>
+<div class="text-charcoal group-open:rotate-180 transition-transform">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</summary>
+<div class="grid grid-cols-3 gap-4 p-4 text-center">
+<div class="flex flex-col items-center gap-2">
+<div class="flex h-16 w-16 items-center justify-center rounded-full bg-trophy-gold/20">
+<span class="material-symbols-outlined text-4xl text-trophy-gold">nights_stay</span>
+</div>
+<p class="text-charcoal text-xs font-medium leading-tight">Première Nuit</p>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="flex h-16 w-16 items-center justify-center rounded-full bg-trophy-gold/20">
+<span class="material-symbols-outlined text-4xl text-trophy-gold">forest</span>
+</div>
+<p class="text-charcoal text-xs font-medium leading-tight">Explorateur Forestier</p>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-50">
+<div class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200">
+<span class="material-symbols-outlined text-4xl text-gray-500">loyalty</span>
+</div>
+<p class="text-charcoal text-xs font-medium leading-tight">Fidèle Campeur</p>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-50">
+<div class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200">
+<span class="material-symbols-outlined text-4xl text-gray-500">kayaking</span>
+</div>
+<p class="text-charcoal text-xs font-medium leading-tight">Aventurier du Lac</p>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-50">
+<div class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200">
+<span class="material-symbols-outlined text-4xl text-gray-500">hiking</span>
+</div>
+<p class="text-charcoal text-xs font-medium leading-tight">Grand Randonneur</p>
+</div>
+</div>
+</details>
+</div>
+</main>
+</div>
+</body></html>

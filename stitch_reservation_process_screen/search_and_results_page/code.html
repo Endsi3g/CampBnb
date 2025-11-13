@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Recherche</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .horizontal-scroll {
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#42d411",
+              "background-light": "#f6f8f6",
+              "background-dark": "#152210",
+              "forest-green": "#2C5F2D","lake-blue": "#97BC62FF","wood-beige": "#F1F4F0","dark-charcoal": "#131811","off-white": "#f6f8f6"
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm pt-4">
+<div class="flex items-center bg-transparent px-4 pb-2 justify-between">
+<h1 class="text-dark-charcoal dark:text-off-white text-2xl font-bold leading-tight tracking-tight flex-1">Campbnb Québec</h1>
+<div class="text-dark-charcoal dark:text-off-white flex size-12 shrink-0 items-center justify-end">
+<span class="material-symbols-outlined">menu</span>
+</div>
+</div>
+<div class="px-4 py-2">
+<label class="flex flex-col min-w-40 h-14 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full shadow-sm">
+<div class="text-forest-green flex border-none bg-wood-beige dark:bg-dark-charcoal/50 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-dark-charcoal dark:text-off-white focus:outline-0 focus:ring-0 border-none bg-wood-beige dark:bg-dark-charcoal/50 focus:border-none h-full placeholder:text-forest-green/70 dark:placeholder:text-off-white/50 px-4 pl-2 text-base font-normal leading-normal" placeholder="Où voulez-vous camper?" value=""/>
+</div>
+</label>
+</div>
+<div class="flex gap-2 p-3 overflow-x-auto horizontal-scroll">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-wood-beige dark:bg-dark-charcoal/50 pl-4 pr-3">
+<p class="text-dark-charcoal dark:text-off-white text-sm font-medium leading-normal">Type de camping</p>
+<div class="text-dark-charcoal dark:text-off-white">
+<span class="material-symbols-outlined !text-[20px]">expand_more</span>
+</div>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-wood-beige dark:bg-dark-charcoal/50 pl-4 pr-3">
+<p class="text-dark-charcoal dark:text-off-white text-sm font-medium leading-normal">Équipements</p>
+<div class="text-dark-charcoal dark:text-off-white">
+<span class="material-symbols-outlined !text-[20px]">expand_more</span>
+</div>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-forest-green text-off-white pl-4 pr-3">
+<p class="text-sm font-medium leading-normal">Prix</p>
+<div class="text-off-white">
+<span class="material-symbols-outlined !text-[20px]">expand_more</span>
+</div>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-wood-beige dark:bg-dark-charcoal/50 pl-4 pr-3">
+<p class="text-dark-charcoal dark:text-off-white text-sm font-medium leading-normal">Région</p>
+<div class="text-dark-charcoal dark:text-off-white">
+<span class="material-symbols-outlined !text-[20px]">expand_more</span>
+</div>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-wood-beige dark:bg-dark-charcoal/50 pl-4 pr-3">
+<p class="text-dark-charcoal dark:text-off-white text-sm font-medium leading-normal">Plus de filtres</p>
+<div class="text-dark-charcoal dark:text-off-white">
+<span class="material-symbols-outlined !text-[20px]">tune</span>
+</div>
+</button>
+</div>
+</header>
+<main class="flex-grow flex flex-col">
+<div class="relative w-full aspect-[4/3] px-4 py-3">
+<iframe class="w-full h-full rounded-lg shadow-lg" src="https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/[-73.5,45.5,9]/375x281?access_token=pk.eyJ1IjoiZXhhbXBsZXMiLCJhIjoiY2p0MG01MXRqMW45cjQzb2R6b2ptc3J4MSJ9.zA2W0IkI0c6KaAhJfk9bWg" title="Interactive map of campsites in Quebec"></iframe>
+<button class="absolute top-[40%] left-[30%] flex items-center justify-center size-8 bg-forest-green text-off-white rounded-full shadow-md">
+<span class="material-symbols-outlined !text-lg">camping</span>
+</button>
+<button class="absolute top-[55%] left-[50%] flex items-center justify-center size-8 bg-forest-green text-off-white rounded-full shadow-md">
+<span class="material-symbols-outlined !text-lg">camping</span>
+</button>
+<button class="absolute top-[35%] left-[70%] flex flex-col items-center justify-center gap-1">
+<div class="flex items-center justify-center size-10 bg-forest-green text-off-white rounded-full shadow-lg">
+<span class="material-symbols-outlined !text-xl">camping</span>
+</div>
+<div class="w-3 h-3 bg-forest-green rounded-full -mt-2"></div>
+</button>
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] flex items-center gap-2.5 p-2 rounded-lg bg-white dark:bg-dark-charcoal shadow-2xl">
+<div class="w-16 h-16 bg-center bg-no-repeat bg-cover rounded-md" data-alt="RV parked in a scenic campsite with mountains in the background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAN6bw0zYukOv4ZNij7UPNZl18rPF6FLOKUioxFWuhNXqJFXcA3b7WuwuIascbOO0LulqtWqS7DZoDN8tYofZGaNTseNv55gZ0pt62eusj97BOWXLjXJgNRRTgnGAwqu_I6dk9KQIGVKRvfIe1SIQC5EFesqQYkH5KtGrTTfdGgmnmmBS3PYkJRDxa_Iss1PQc0AYgC6ssy8fKQfWFDiTQVYQ4ydcB3RpYK5JTfyLMVMY3x5C4pUp78euhAeoJlBBj3vbJNdgXDK6GW");'></div>
+<div class="flex flex-col flex-1">
+<p class="text-dark-charcoal dark:text-off-white text-sm font-bold leading-tight">Au Bord du Lac Bleu</p>
+<div class="flex items-center gap-1 text-forest-green dark:text-off-white/80 mt-1">
+<span class="material-symbols-outlined !text-[14px]">star</span>
+<p class="text-xs font-medium leading-normal">4.9</p>
+</div>
+<p class="text-dark-charcoal dark:text-off-white text-sm font-bold leading-normal mt-0.5">$62 <span class="font-normal text-xs">/ nuit</span></p>
+</div>
+<button class="shrink-0 flex items-center justify-center size-8 bg-wood-beige dark:bg-dark-charcoal/50 rounded-full text-forest-green dark:text-off-white">
+<span class="material-symbols-outlined !text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-4 pt-2">
+<div class="flex flex-col items-stretch justify-start rounded-lg bg-white dark:bg-dark-charcoal/50 shadow-[0_4px_12px_rgba(0,0,0,0.05)] overflow-hidden">
+<div class="relative w-full">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Lush green forest campsite with a tent set up near a river" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnmOXw3m1P2aLvYPFLhPWcGEDpsfbAxKiurMHlJcw4KIvthJ_3DDFnhd5XTTviaduoJh6CXbLDo1BWqtjVTmC2K00yL6P7-IQ9jNfpfQWpZww90e61__DoBHdIGYD_gIJoLOHpXJjPTtRV2BX0tRiv_MqkoTDM_8er29EIr2RIyrkvuI87voLkTFhL9Xd3eN57KBeEqNBBIgXNQU4_iTdDrKiUavCNRG8OKkqt8TQ0aATWb8_RjqBox0YA7ma6JB0LGUo0ELrOvtM_");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/30 backdrop-blur-sm rounded-full text-white dark:text-off-white">
+<span class="material-symbols-outlined">favorite_border</span>
+</button>
+</div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1.5 p-4">
+<p class="text-dark-charcoal dark:text-off-white text-lg font-bold leading-tight tracking-[-0.015em]">Camping de la Forêt</p>
+<p class="text-forest-green dark:text-off-white/80 text-sm font-normal leading-normal">Parc National de la Jacques-Cartier</p>
+<div class="flex items-center gap-3 pt-1">
+<div class="flex items-center gap-1 text-forest-green dark:text-off-white/80">
+<span class="material-symbols-outlined !text-[16px]">star</span>
+<p class="text-sm font-medium leading-normal">4.8 <span class="font-normal text-forest-green/80 dark:text-off-white/60">(123 avis)</span></p>
+</div>
+</div>
+<p class="text-dark-charcoal dark:text-off-white text-base font-bold leading-normal pt-1">$45 <span class="font-normal">/ nuit</span></p>
+</div>
+</div>
+<div class="flex flex-col items-stretch justify-start rounded-lg bg-wood-beige dark:bg-forest-green/30 shadow-[0_4px_12px_rgba(0,0,0,0.05)] overflow-hidden ring-2 ring-forest-green dark:ring-lake-blue/50">
+<div class="relative w-full">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="RV parked in a scenic campsite with mountains in the background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAN6bw0zYukOv4ZNij7UPNZl18rPF6FLOKUioxFWuhNXqJFXcA3b7WuwuIascbOO0LulqtWqS7DZoDN8tYofZGaNTseNv55gZ0pt62eusj97BOWXLjXJgNRRTgnGAwqu_I6dk9KQIGVKRvfIe1SIQC5EFesqQYkH5KtGrTTfdGgmnmmBS3PYkJRDxa_Iss1PQc0AYgC6ssy8fKQfWFDiTQVYQ4ydcB3RpYK5JTfyLMVMY3x5C4pUp78euhAeoJlBBj3vbJNdgXDK6GW");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/30 backdrop-blur-sm rounded-full text-white dark:text-off-white">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1.5 p-4">
+<p class="text-dark-charcoal dark:text-off-white text-lg font-bold leading-tight tracking-[-0.015em]">Au Bord du Lac Bleu</p>
+<p class="text-forest-green dark:text-off-white/80 text-sm font-normal leading-normal">Mont-Tremblant</p>
+<div class="flex items-center gap-3 pt-1">
+<div class="flex items-center gap-1 text-forest-green dark:text-off-white/80">
+<span class="material-symbols-outlined !text-[16px]">star</span>
+<p class="text-sm font-medium leading-normal">4.9 <span class="font-normal text-forest-green/80 dark:text-off-white/60">(210 avis)</span></p>
+</div>
+</div>
+<p class="text-dark-charcoal dark:text-off-white text-base font-bold leading-normal pt-1">$62 <span class="font-normal">/ nuit</span></p>
+</div>
+</div>
+<div class="flex flex-col items-stretch justify-start rounded-lg bg-white dark:bg-dark-charcoal/50 shadow-[0_4px_12px_rgba(0,0,0,0.05)] overflow-hidden">
+<div class="relative w-full">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Rustic cabin in the woods during autumn" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoYPmVoYo7k6lID3Lf3G97OhXIhWaOc1-v9AO1U7xYW9mfZx15csUNp20xJWXyXl1NRvJq9BSinYXgruz5q8bGHUr7r6luuJ_9OIoUeAre-yZG8YuLwIi-2PmU3k5Lhc0SjPqWwHm1T6uhzH1QuBGp4godZ8w2p8QvIJ-lNIRJTW-8nv5HVMsu6jKhbwGMZo7ByRdUTQzq2qBTqJKzhFM1QiVuh_X5xsa1HtUVd0jnj77KOK9CRyZBhsqvhJJHiS1ImfD1MaVX1ub-");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/30 backdrop-blur-sm rounded-full text-white dark:text-off-white">
+<span class="material-symbols-outlined">favorite_border</span>
+</button>
+</div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1.5 p-4">
+<p class="text-dark-charcoal dark:text-off-white text-lg font-bold leading-tight tracking-[-0.015em]">Le Refuge du Trappeur</p>
+<p class="text-forest-green dark:text-off-white/80 text-sm font-normal leading-normal">Gaspésie</p>
+<div class="flex items-center gap-3 pt-1">
+<div class="flex items-center gap-1 text-forest-green dark:text-off-white/80">
+<span class="material-symbols-outlined !text-[16px]">star</span>
+<p class="text-sm font-medium leading-normal">4.7 <span class="font-normal text-forest-green/80 dark:text-off-white/60">(88 avis)</span></p>
+</div>
+</div>
+<p class="text-dark-charcoal dark:text-off-white text-base font-bold leading-normal pt-1">$55 <span class="font-normal">/ nuit</span></p>
+</div>
+</div>
+</div>
+</main>
+<div class="sticky bottom-6 z-10 w-full flex justify-center">
+<div class="flex items-center justify-center rounded-full bg-dark-charcoal dark:bg-wood-beige p-1 shadow-2xl">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full h-10 px-4 bg-wood-beige dark:bg-dark-charcoal text-dark-charcoal dark:text-off-white text-sm font-medium leading-normal">
+<span class="material-symbols-outlined !text-[20px]">view_list</span>
+<span class="truncate">Liste</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full h-10 px-4 bg-transparent text-off-white dark:text-dark-charcoal text-sm font-medium leading-normal">
+<span class="material-symbols-outlined !text-[20px]">map</span>
+<span class="truncate">Carte</span>
+</button>
+</div>
+</div>
+</div>
+
+</body></html>

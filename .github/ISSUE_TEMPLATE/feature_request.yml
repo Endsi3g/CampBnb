@@ -1,0 +1,91 @@
+name: ✨ Demande de Feature
+description: Proposer une nouvelle fonctionnalité ou amélioration
+title: "[Feature] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de proposer cette amélioration ! Votre feedback est précieux.
+  
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème / Besoin
+      description: Quel problème cette feature résout-elle ? Quel besoin comble-t-elle ?
+      placeholder: "Ex: Il est difficile de trouver un camping adapté aux enfants..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée
+      description: Décrivez la feature que vous aimeriez voir
+      placeholder: "Ajouter un filtre 'Adapté aux enfants' dans la recherche..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considérées
+      description: Avez-vous envisagé d'autres solutions ?
+      placeholder: "J'ai aussi pensé à..."
+  
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité
+      description: Quelle est la priorité de cette feature ?
+      options:
+        - Basse
+        - Moyenne
+        - Haute
+        - Critique
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: category
+    attributes:
+      label: Catégorie
+      description: Dans quelle catégorie cette feature s'inscrit-elle ?
+      options:
+        - Recherche & Découverte
+        - Réservation
+        - Profil & Paramètres
+        - Messagerie
+        - Paiement
+        - Hôte / Dashboard
+        - UI/UX
+        - Performance
+        - Autre
+    validations:
+      required: true
+  
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / Maquettes
+      description: Si vous avez des maquettes ou exemples visuels
+      placeholder: "Glisser-déposer les images ici"
+  
+  - type: textarea
+    id: additional
+    attributes:
+      label: Informations supplémentaires
+      description: Tout autre détail pertinent
+      placeholder: "Références, exemples d'autres apps, etc."
+  
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: J'ai vérifié que cette feature n'a pas déjà été proposée
+          required: true
+        - label: J'ai vérifié la roadmap du projet
+          required: false
+
+

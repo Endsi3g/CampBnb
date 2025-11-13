@@ -1,0 +1,47 @@
+{
+  "name": "campbnb-backend",
+  "version": "1.0.0",
+  "description": "Backend pour Campbnb Québec - Plateforme de réservation de campings",
+  "main": "index.js",
+  "scripts": {
+    "dev": "supabase start",
+    "migrate": "supabase db push",
+    "migrate:create": "supabase migration new",
+    "functions:deploy": "supabase functions deploy",
+    "functions:deploy:all": "supabase functions deploy --all",
+    "functions:deploy:listings": "supabase functions deploy listings",
+    "functions:deploy:reservations": "supabase functions deploy reservations",
+    "functions:deploy:profiles": "supabase functions deploy profiles",
+    "functions:deploy:messages": "supabase functions deploy messages",
+    "functions:deploy:reviews": "supabase functions deploy reviews",
+    "functions:deploy:favorites": "supabase functions deploy favorites",
+    "functions:deploy:activities": "supabase functions deploy activities",
+    "functions:deploy:mapbox": "supabase functions deploy mapbox",
+    "functions:deploy:gemini": "supabase functions deploy gemini",
+    "functions:deploy:analytics": "supabase functions deploy analytics",
+    "functions:deploy:payments": "supabase functions deploy payments",
+    "storage:setup": "supabase storage create listing-images profile-avatars activity-images",
+    "deploy": "bash scripts/deploy.sh",
+    "deploy:windows": "powershell -ExecutionPolicy Bypass -File scripts/deploy.ps1",
+    "env:create": "node -e \"const fs=require('fs');const path=require('path');const content='SUPABASE_URL=https://kniaisdkzeflauawmyka.supabase.co\\nSUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuaWFpc2RremVmbGF1YXdteWthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDk2NzMsImV4cCI6MjA3ODYyNTY3M30.HL5ZhIZS7abfeuHnPW54KN8qQgsoXohfYwJhO0Tgyoo\\nMAPBOX_ACCESS_TOKEN=pk.eyJ1IjoiY2FtcGJuYiIsImEiOiJjbWh3N21wZjAwNDhuMm9weXFwMmt1c2VqIn0.r6bKsNWgKmIb0FzWOcZh8g\\n';const envPath=path.join(process.cwd(),'.env');if(!fs.existsSync(envPath)){fs.writeFileSync(envPath,content);console.log('✅ Fichier .env créé avec succès!');}else{console.log('⚠️  Le fichier .env existe déjà.');}\"",
+    "env:create:windows": "powershell -ExecutionPolicy Bypass -File scripts/create_env.ps1",
+    "test": "echo \"Tests à implémenter\" && exit 0",
+    "lint": "echo \"Linter à configurer\" && exit 0",
+    "build": "echo \"Build à configurer\" && exit 0"
+  },
+  "keywords": [
+    "camping",
+    "reservation",
+    "supabase",
+    "postgresql",
+    "api"
+  ],
+  "author": "Campbnb Québec",
+  "license": "PROPRIETARY",
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "dependencies": {}
+}
+
+

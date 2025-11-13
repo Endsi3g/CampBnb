@@ -1,0 +1,78 @@
+name: Sync Google Stitch Screens
+
+on:
+  schedule:
+    # Exécution quotidienne à 2h du matin UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update all screens'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  sync-screens:
+    name: Synchronize Stitch Screens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 pillow
+      
+      - name: Run sync script
+        run: python scripts/sync_stitch_screens.py
+        env:
+          STITCH_API_KEY: ${{ secrets.STITCH_API_KEY }}
+          FORCE_UPDATE: ${{ inputs.force_update }}
+      
+      - name: Check for changes
+        id: verify-changed-files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create Pull Request
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: sync Google Stitch screens'
+          title: '🔄 Sync Google Stitch Screens'
+          body: |
+            ## 🔄 Synchronisation des screens Google Stitch
+            
+            Cette PR synchronise automatiquement les screens depuis Google Stitch.
+            
+            ### Changements détectés
+            - Screens mis à jour depuis la dernière synchronisation
+            - Vérifiez les différences dans le dossier `docs/stitch-screens/`
+            
+            ### Action requise
+            - [ ] Vérifier les changements UI/UX
+            - [ ] Tester les écrans modifiés
+            - [ ] Valider la cohérence avec le design system
+            
+            **Généré automatiquement par GitHub Actions**
+          branch: sync/stitch-screens
+          delete-branch: true
+          labels: |
+            automated
+            ui/ux
+            stitch-sync
+
+

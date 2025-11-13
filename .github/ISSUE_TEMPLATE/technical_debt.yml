@@ -1,0 +1,62 @@
+name: 🔧 Dette Technique
+description: Signaler une dette technique ou une amélioration de code
+title: "[Tech Debt] "
+labels: ["technical-debt", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci d'identifier cette dette technique. C'est important pour maintenir la qualité du code !
+  
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Décrivez la dette technique ou l'amélioration nécessaire
+      placeholder: "Ex: Le code de cette feature utilise des callbacks au lieu de Riverpod..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: location
+    attributes:
+      label: Localisation
+      description: Fichiers, dossiers ou features concernés
+      placeholder: "lib/features/reservation/presentation/screens/reservation_screen.dart"
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Sévérité
+      description: Impact de cette dette technique
+      options:
+        - Basse - Amélioration cosmétique
+        - Moyenne - Impact sur la maintenabilité
+        - Haute - Impact sur les performances ou la stabilité
+        - Critique - Bloque des features futures
+    validations:
+      required: true
+  
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Quel est l'impact de cette dette technique ?
+      placeholder: "Ralentit le développement, cause des bugs, etc."
+  
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée
+      description: Comment résoudre cette dette technique ?
+      placeholder: "Refactoriser pour utiliser Riverpod, extraire en service, etc."
+  
+  - type: textarea
+    id: additional
+    attributes:
+      label: Informations supplémentaires
+      description: Références, liens, contexte additionnel
+
+

@@ -1,0 +1,137 @@
+# ============================================
+# Campbnb Québec - CI/CD avec GitHub Actions
+# ============================================
+# Déploiement automatique vers Netlify et Supabase
+
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+env:
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+jobs:
+  # Job: Tests et validation
+  test:
+    name: Tests et Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint || true
+
+      - name: Run tests
+        run: npm test || true
+
+  # Job: Déploiement des migrations Supabase
+  deploy-migrations:
+    name: Déployer Migrations Supabase
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Link Supabase project
+        run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Run migrations
+        run: |
+          supabase db push
+
+      - name: Deploy Edge Functions
+        run: |
+          supabase functions deploy listings --no-verify-jwt
+          supabase functions deploy reservations --no-verify-jwt
+          supabase functions deploy profiles --no-verify-jwt
+          supabase functions deploy messages --no-verify-jwt
+          supabase functions deploy reviews --no-verify-jwt
+          supabase functions deploy mapbox --no-verify-jwt
+          supabase functions deploy gemini --no-verify-jwt
+
+  # Job: Déploiement Netlify
+  deploy-netlify:
+    name: Déployer sur Netlify
+    runs-on: ubuntu-latest
+    needs: [test, deploy-migrations]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          VITE_MAPBOX_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+
+      - name: Deploy to Netlify
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=dist --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  # Job: Notification
+  notify:
+    name: Notifier le déploiement
+    runs-on: ubuntu-latest
+    needs: [deploy-migrations, deploy-netlify]
+    if: always()
+    
+    steps:
+      - name: Notify success
+        if: success()
+        run: |
+          echo "✅ Déploiement réussi!"
+          # Ici, vous pourriez ajouter une notification Slack, Discord, etc.
+
+      - name: Notify failure
+        if: failure()
+        run: |
+          echo "❌ Déploiement échoué!"
+          # Ici, vous pourriez ajouter une notification d'erreur

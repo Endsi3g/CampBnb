@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Aide et soutien</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2d4d34",
+              "secondary": "#6b90a8",
+              "accent": "#e4d5b7",
+              "neutral": "#f8f6f2",
+              "charcoal": "#333333",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-neutral font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="flex items-center bg-neutral p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-charcoal">arrow_back</span>
+</div>
+<h1 class="text-charcoal text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Aide et soutien</h1>
+<div class="flex size-12 shrink-0 items-center"></div>
+</div>
+<div class="flex-grow flex flex-col px-4">
+<!-- Search Bar -->
+<div class="py-3 mt-4">
+<label class="flex flex-col min-w-40 h-14 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-secondary flex border-none bg-white items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-charcoal focus:outline-0 focus:ring-0 border-none bg-white focus:border-none h-full placeholder:text-gray-500 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Rechercher dans la FAQ" value=""/>
+</div>
+</label>
+</div>
+<!-- Popular Topics Section -->
+<div class="mt-6">
+<h2 class="text-charcoal text-lg font-bold leading-tight tracking-[-0.015em] pb-3">Sujets populaires</h2>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center justify-center gap-y-2 rounded-lg bg-accent/60 p-4 h-28 text-center transition-colors hover:bg-accent">
+<span class="material-symbols-outlined text-primary text-3xl">event_busy</span>
+<p class="text-charcoal text-sm font-medium leading-normal">Problèmes de réservation</p>
+</button>
+<button class="flex flex-col items-center justify-center gap-y-2 rounded-lg bg-accent/60 p-4 h-28 text-center transition-colors hover:bg-accent">
+<span class="material-symbols-outlined text-primary text-3xl">credit_card</span>
+<p class="text-charcoal text-sm font-medium leading-normal">Questions sur le paiement</p>
+</button>
+<button class="flex flex-col items-center justify-center gap-y-2 rounded-lg bg-accent/60 p-4 h-28 text-center transition-colors hover:bg-accent">
+<span class="material-symbols-outlined text-primary text-3xl">account_circle</span>
+<p class="text-charcoal text-sm font-medium leading-normal">Gestion de mon compte</p>
+</button>
+<button class="flex flex-col items-center justify-center gap-y-2 rounded-lg bg-accent/60 p-4 h-28 text-center transition-colors hover:bg-accent">
+<span class="material-symbols-outlined text-primary text-3xl">gite</span>
+<p class="text-charcoal text-sm font-medium leading-normal">Règles du camping</p>
+</button>
+</div>
+</div>
+<div class="flex-grow"></div>
+</div>
+<!-- Contact CTA Section -->
+<div class="sticky bottom-0 bg-neutral/80 backdrop-blur-sm p-4 pt-2 border-t border-gray-200">
+<h3 class="text-secondary text-base font-bold leading-normal tracking-[0.015em] py-3 text-center">Besoin de plus d'aide ?</h3>
+<div class="flex flex-col gap-3">
+<button class="flex h-14 w-full items-center justify-center gap-x-2 rounded-lg bg-primary text-white text-base font-bold transition-opacity hover:opacity-90">
+<span class="material-symbols-outlined">chat_bubble</span>
+                    Démarrer le chat en direct
+                </button>
+<button class="flex h-14 w-full items-center justify-center gap-x-2 rounded-lg border-2 border-secondary bg-transparent text-secondary text-base font-bold transition-colors hover:bg-secondary/10">
+<span class="material-symbols-outlined">mail</span>
+                    Nous contacter par e-mail
+                </button>
+</div>
+</div>
+</div>
+</body></html>

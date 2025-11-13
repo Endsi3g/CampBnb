@@ -1,0 +1,83 @@
+[
+  {
+    "name": "bug",
+    "color": "d73a4a",
+    "description": "Quelque chose ne fonctionne pas"
+  },
+  {
+    "name": "enhancement",
+    "color": "a2eeef",
+    "description": "Nouvelle feature ou amélioration"
+  },
+  {
+    "name": "documentation",
+    "color": "0075ca",
+    "description": "Amélioration de la documentation"
+  },
+  {
+    "name": "good first issue",
+    "color": "7057ff",
+    "description": "Bon pour les nouveaux contributeurs"
+  },
+  {
+    "name": "help wanted",
+    "color": "008672",
+    "description": "Besoin d'aide supplémentaire"
+  },
+  {
+    "name": "invalid",
+    "color": "e4e669",
+    "description": "Cette issue n'est plus valide"
+  },
+  {
+    "name": "question",
+    "color": "d876e3",
+    "description": "Question nécessitant une réponse"
+  },
+  {
+    "name": "wontfix",
+    "color": "ffffff",
+    "description": "Ne sera pas corrigé"
+  },
+  {
+    "name": "ui/ux",
+    "color": "f9d0c4",
+    "description": "Changements d'interface utilisateur"
+  },
+  {
+    "name": "technical-debt",
+    "color": "fbca04",
+    "description": "Dette technique à résoudre"
+  },
+  {
+    "name": "dependencies",
+    "color": "0366d6",
+    "description": "Mise à jour des dépendances"
+  },
+  {
+    "name": "flutter",
+    "color": "02569B",
+    "description": "Relatif à Flutter"
+  },
+  {
+    "name": "needs-triage",
+    "color": "fef2c0",
+    "description": "Nécessite une revue initiale"
+  },
+  {
+    "name": "automated",
+    "color": "1d76db",
+    "description": "Généré automatiquement"
+  },
+  {
+    "name": "stitch-sync",
+    "color": "0e8a16",
+    "description": "Synchronisation des screens Stitch"
+  },
+  {
+    "name": "github-actions",
+    "color": "2088FF",
+    "description": "Relatif à GitHub Actions"
+  }
+]
+

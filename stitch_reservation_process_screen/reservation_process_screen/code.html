@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Réserver votre séjour</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2d572c",
+              "background-light": "#f6f8f6",
+              "background-dark": "#152210",
+              "secondary": "#3c7a89",
+              "accent": "#f5e5d5",
+              "text-main": "#3e362e"
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "1rem",
+              "lg": "2rem",
+              "xl": "3rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        font-size: 24px;
+      }
+       /* For Webkit-based browsers (Chrome, Safari) */
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
+      /* For Firefox */
+      input[type="number"] {
+          -moz-appearance: textfield;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-10 flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-700">
+<button class="flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-text-main">arrow_back</span>
+</button>
+<h1 class="text-text-main text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Réserver votre séjour</h1>
+<div class="w-10"></div> <!-- Spacer -->
+</header>
+<main class="flex-1 pb-32">
+<!-- Dates Section -->
+<section>
+<h2 class="text-text-main tracking-light text-[28px] font-bold leading-tight px-4 text-left pb-3 pt-5">Sélectionnez vos dates</h2>
+<div class="flex flex-wrap items-start justify-center gap-6 p-4">
+<!-- June Calendar -->
+<div class="flex min-w-72 max-w-[336px] flex-1 flex-col gap-0.5">
+<div class="flex items-center p-1 justify-between">
+<button>
+<span class="material-symbols-outlined text-text-main flex size-10 items-center justify-center">chevron_left</span>
+</button>
+<p class="text-text-main text-base font-bold leading-tight flex-1 text-center pr-10">Juin 2024</p>
+</div>
+<div class="grid grid-cols-7 text-center">
+<p class="text-text-main/70 text-[13px] font-bold leading-normal tracking-[0.015em] flex h-12 w-full items-center justify-center pb-0.5">D</p>
+<p class="text-text-main/70 text-[13px] font-bold leading-normal tracking-[0.015em] flex h-12 w-full items-center justify-center pb-0.5">L</p>
+<p class="text-text-main/70 text-[13px] font-bold leading-normal tracking-[0.015em] flex h-12 w-full items-center justify-center pb-0.5">M</p>
+<p class="text-text-main/70 text-[13px] font-bold leading-normal tracking-[0.015em] flex h-12 w-full items-center justify-center pb-0.5">M</p>
+<p class="text-text-main/70 text-[13px] font-bold leading-normal tracking-[0.015em] flex h-12 w-full items-center justify-center pb-0.5">J</p>
+<p class="text-text-main/70 text-[13px] font-bold leading-normal tracking-[0.015em] flex h-12 w-full items-center justify-center pb-0.5">V</p>
+<p class="text-text-main/70 text-[13px] font-bold leading-normal tracking-[0.015em] flex h-12 w-full items-center justify-center pb-0.5">S</p>
+<div class="h-12 w-full col-start-7"></div>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">1</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">2</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">3</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">4</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">5</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">6</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">7</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">8</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">9</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">10</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">11</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">12</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">13</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">14</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">15</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">16</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">17</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">18</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">19</div></button>
+<button class="h-12 w-full rounded-l-full bg-accent text-sm font-medium leading-normal">
+<div class="flex size-full items-center justify-center rounded-full bg-primary text-white">20</div>
+</button>
+<button class="h-12 w-full bg-accent text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center">21</div></button>
+<button class="h-12 w-full rounded-r-full bg-accent text-sm font-medium leading-normal">
+<div class="flex size-full items-center justify-center rounded-full bg-primary text-white">22</div>
+</button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">23</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">24</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">25</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">26</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">27</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">28</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">29</div></button>
+<button class="h-12 w-full text-text-main text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">30</div></button>
+</div>
+</div>
+</div>
+</section>
+<div class="px-4"><hr class="border-gray-200 dark:border-gray-700 my-4"/></div>
+<!-- Guests Section -->
+<section>
+<h2 class="text-text-main tracking-light text-[28px] font-bold leading-tight px-4 text-left pb-3 pt-5">Qui vous accompagne ?</h2>
+<div class="flex flex-col gap-4 px-4 pt-2">
+<!-- Adults -->
+<div class="flex items-center gap-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center rounded-lg bg-accent shrink-0 size-10">
+<span class="material-symbols-outlined text-text-main">person</span>
+</div>
+<div class="flex flex-col">
+<p class="text-text-main text-base font-medium leading-normal">Adultes</p>
+<p class="text-text-main/70 text-sm">13 ans et plus</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="flex items-center gap-3 text-text-main">
+<button class="text-lg font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full border border-secondary text-secondary cursor-pointer">-</button>
+<input class="text-base font-medium leading-normal w-6 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none" readonly="" type="number" value="2"/>
+<button class="text-lg font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full border border-secondary text-secondary cursor-pointer">+</button>
+</div>
+</div>
+</div>
+<!-- Children -->
+<div class="flex items-center gap-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center rounded-lg bg-accent shrink-0 size-10">
+<span class="material-symbols-outlined text-text-main">child_care</span>
+</div>
+<div class="flex flex-col">
+<p class="text-text-main text-base font-medium leading-normal">Enfants</p>
+<p class="text-text-main/70 text-sm">2-12 ans</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="flex items-center gap-3 text-text-main">
+<button class="text-lg font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full border border-secondary text-secondary cursor-pointer">-</button>
+<input class="text-base font-medium leading-normal w-6 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none" readonly="" type="number" value="0"/>
+<button class="text-lg font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full border border-secondary text-secondary cursor-pointer">+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom CTA Bar -->
+<footer class="fixed bottom-0 left-0 right-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-4 border-t border-gray-200 dark:border-gray-700">
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-bold text-text-main text-lg">$345.24 <span class="font-normal text-base">total</span></span>
+<a class="text-sm font-medium text-secondary underline" href="#">Détails du prix</a>
+</div>
+<button class="bg-primary text-white font-bold py-3 px-6 rounded-lg">Confirmer la demande</button>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

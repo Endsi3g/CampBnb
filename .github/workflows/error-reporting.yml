@@ -1,0 +1,106 @@
+name: Error Reporting & Monitoring
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Rapport quotidien à 9h UTC
+    - cron: '0 9 * * *'
+  issues:
+    types: [opened, closed]
+
+jobs:
+  error-report:
+    name: Generate Error Report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install Sentry CLI
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
+      
+      - name: Generate Error Report
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        run: |
+          # Récupérer les erreurs des dernières 24h
+          sentry-cli issues list \
+            --status=unresolved \
+            --query="is:unresolved age:-24h" \
+            --format=json > errors-24h.json
+          
+          # Générer un rapport
+          node scripts/generate-error-report.js
+      
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: error-report
+          path: error-report.md
+          retention-days: 30
+      
+      - name: Comment on Issue
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('error-report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+
+  notify-team:
+    name: Notify Team of Critical Errors
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check for Critical Errors
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        run: |
+          # Vérifier les erreurs critiques
+          CRITICAL_COUNT=$(sentry-cli issues list \
+            --status=unresolved \
+            --query="is:unresolved level:fatal age:-24h" \
+            --format=json | jq '. | length')
+          
+          if [ "$CRITICAL_COUNT" -gt 0 ]; then
+            echo "CRITICAL_ERRORS=$CRITICAL_COUNT" >> $GITHUB_ENV
+            exit 1
+          fi
+      
+      - name: Send Slack Notification
+        if: env.CRITICAL_ERRORS > 0
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "text": "🚨 ${{ env.CRITICAL_ERRORS }} erreurs critiques détectées dans les dernières 24h",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Erreurs critiques détectées*\n${{ env.CRITICAL_ERRORS }} erreurs fatales dans les dernières 24h"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+

@@ -1,0 +1,117 @@
+name: Overseer Daily Status Report
+
+on:
+  schedule:
+    # Exécution quotidienne à 2h UTC (22h HNE / 23h HAE)
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Permet l'exécution manuelle
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'lib/**'
+      - 'supabase/**'
+      - 'scripts/**'
+      - '.github/workflows/overseer-daily-report.yml'
+
+jobs:
+  generate-status-report:
+    name: Generate Daily Status Report
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies (if needed)
+        run: |
+          # Aucune dépendance externe requise pour le script
+          python --version
+      
+      - name: Generate status report
+        id: generate_report
+        run: |
+          python scripts/overseer_status_check.py \
+            --output docs/STATUS_REPORT.md \
+            --format markdown
+      
+      - name: Generate JSON report
+        run: |
+          python scripts/overseer_status_check.py \
+            --json docs/STATUS_REPORT.json \
+            --format json
+      
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet docs/STATUS_REPORT.md; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and push report
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/STATUS_REPORT.md docs/STATUS_REPORT.json
+          git commit -m "📊 [Overseer] Rapport de statut quotidien - $(date +'%Y-%m-%d')" || exit 0
+          git push
+      
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## 📊 Rapport de Statut Quotidien" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Rapport généré le $(date +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 Résumé" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f docs/STATUS_REPORT.md ]; then
+            # Extraire les métriques principales
+            grep -E "Screens implémentés|Couverture tests|Documentation|Intégrations actives" docs/STATUS_REPORT.md | head -5 >> $GITHUB_STEP_SUMMARY || true
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📄 [Voir le rapport complet](docs/STATUS_REPORT.md)" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: status-report-$(date +'%Y-%m-%d')
+          path: |
+            docs/STATUS_REPORT.md
+            docs/STATUS_REPORT.json
+          retention-days: 30
+
+  check-stitch-coverage:
+    name: Check Stitch Screens Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Check Stitch screens coverage
+        run: |
+          python scripts/check_stitch_screens_coverage.py || true
+      
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: stitch-coverage-$(date +'%Y-%m-%d')
+          path: docs/STITCH_COVERAGE_REPORT.md
+          retention-days: 30
+
+

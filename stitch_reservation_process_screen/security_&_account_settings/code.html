@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sécurité et Compte - Campbnb Québec</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        @layer base {
+          :root {
+            --background-light: 247 245 242; /* #F7F5F2 */
+            --background-dark: 21 34 16; /* #152210 */
+            --primary: 46 70 54; /* #2E4636 */
+          }
+        }
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "rgb(var(--primary) / <alpha-value>)", // #2E4636
+              "background-light": "rgb(var(--background-light) / <alpha-value>)", // #F7F5F2
+              "background-dark": "rgb(var(--background-dark) / <alpha-value>)",
+              "lake-blue": "#3A7CA5",
+              "wood-beige": "#D3BBAF",
+              "charcoal-grey": "#333333",
+              "light-grey": "#E0E0E0",
+              "alert-red": "#D9534F"
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {
+                "DEFAULT": "0.75rem",
+                "lg": "1rem",
+                "xl": "1.5rem",
+                "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-charcoal-grey dark:text-background-light">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="flex shrink-0 items-center border-b border-light-grey/50 dark:border-white/10 p-4 pb-3">
+<div class="flex size-10 shrink-0 items-center justify-center text-charcoal-grey dark:text-background-light">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h1 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-charcoal-grey dark:text-background-light pr-10">Sécurité et compte</h1>
+</div>
+<div class="flex flex-col p-4 pt-6 space-y-8">
+<!-- Section 1: Connexion et sécurité -->
+<div class="flex flex-col space-y-3">
+<h2 class="text-primary dark:text-primary/90 text-sm font-bold uppercase tracking-wider px-4">Connexion et sécurité</h2>
+<div class="flex flex-col overflow-hidden rounded-lg bg-white dark:bg-black/20 shadow-sm shadow-wood-beige/30 dark:shadow-none">
+<!-- Change Password -->
+<div class="flex items-center gap-4 p-4 min-h-14 justify-between border-b border-light-grey/50 dark:border-white/10">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">lock</span>
+</div>
+<p class="text-charcoal-grey dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Changer le mot de passe</p>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal-grey/60 dark:text-background-light/60 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Two-Factor Authentication -->
+<div class="flex items-center gap-4 p-4 min-h-14 justify-between border-b border-light-grey/50 dark:border-white/10">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">shield_lock</span>
+</div>
+<p class="text-charcoal-grey dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Authentification à deux facteurs</p>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal-grey/60 dark:text-background-light/60 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Connected Devices -->
+<div class="flex items-center gap-4 p-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">devices</span>
+</div>
+<p class="text-charcoal-grey dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Appareils connectés</p>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal-grey/60 dark:text-background-light/60 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Informations du compte -->
+<div class="flex flex-col space-y-3">
+<h2 class="text-primary dark:text-primary/90 text-sm font-bold uppercase tracking-wider px-4">Informations du compte</h2>
+<div class="flex flex-col overflow-hidden rounded-lg bg-white dark:bg-black/20 shadow-sm shadow-wood-beige/30 dark:shadow-none">
+<!-- Update Personal Information -->
+<div class="flex items-center gap-4 p-4 min-h-14 justify-between border-b border-light-grey/50 dark:border-white/10">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">person</span>
+</div>
+<p class="text-charcoal-grey dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Modifier les informations personnelles</p>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal-grey/60 dark:text-background-light/60 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Manage Email Address -->
+<div class="flex items-center gap-4 p-4 min-h-14 justify-between border-b border-light-grey/50 dark:border-white/10">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">mail</span>
+</div>
+<p class="text-charcoal-grey dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Gérer l'adresse courriel</p>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal-grey/60 dark:text-background-light/60 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Manage Phone Number -->
+<div class="flex items-center gap-4 p-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">call</span>
+</div>
+<p class="text-charcoal-grey dark:text-background-light text-base font-normal leading-normal flex-1 truncate">Gérer le numéro de téléphone</p>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal-grey/60 dark:text-background-light/60 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Actions sur le compte -->
+<div class="flex flex-col space-y-3 pt-4">
+<h2 class="text-primary dark:text-primary/90 text-sm font-bold uppercase tracking-wider px-4">Actions sur le compte</h2>
+<div class="flex flex-col overflow-hidden rounded-lg bg-white dark:bg-black/20 shadow-sm shadow-wood-beige/30 dark:shadow-none">
+<!-- Deactivate Account -->
+<div class="flex items-center gap-4 p-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-alert-red flex items-center justify-center rounded-lg bg-alert-red/10 dark:bg-alert-red/20 shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">delete</span>
+</div>
+<p class="text-alert-red text-base font-bold leading-normal flex-1 truncate">Désactiver le compte</p>
+</div>
+<div class="shrink-0">
+<div class="text-charcoal-grey/60 dark:text-background-light/60 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

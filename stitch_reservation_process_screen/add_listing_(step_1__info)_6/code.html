@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campbnb Québec - Tableau de bord</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.filled {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2d572c",
+            "secondary": "#3a5f7f",
+            "neutral": "#f5f1e9",
+            "text-color": "#333333",
+            "accent": "#e57c23",
+            "background-light": "#ffffff",
+            "background-dark": "#1a1c19",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-color dark:text-neutral">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="p-4 pt-8">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="text-3xl font-bold tracking-tight">Bonjour, Alex!</h1>
+<p class="text-text-color/80 dark:text-neutral/80">Voici le résumé de vos annonces.</p>
+</div>
+<button class="flex size-12 items-center justify-center rounded-full bg-neutral/60 dark:bg-black/20">
+<span class="material-symbols-outlined text-2xl">person</span>
+</button>
+</div>
+</header>
+<main class="flex-grow px-4 pb-28">
+<div class="mt-6">
+<div class="mb-4 flex items-center justify-between">
+<h2 class="text-xl font-bold">Vos annonces actives</h2>
+<button class="text-sm font-bold text-primary">Voir tout</button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 rounded-lg bg-neutral/50 dark:bg-black/20 p-4 shadow-sm">
+<div class="flex items-start gap-4">
+<img alt="Campsite thumbnail" class="h-20 w-20 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq2rJvKOcFP9FDTzIdgL0diOB0wKR_p2OLX7uwC25sg-wtdwqQ6BOQ00NMDlhxRDUuoJCsM3UGUvbDKlzkJdph7ZL3cvf4Nj1utw4o5Ut6rKcRB5pP5KJUfyXGHQbVK9upXuIeFuLtUaOazOc18YFKMHiRyUSqkZ0LloQ5AhIU0XcqXdt5YrcqbomwA1SZ5o_MS852XInq8YqYTca3nhUFqeVV5w0nrmQdw6VUV6QjMjAqq0AP0Z4NUoKW7xn5vjpGEkCsVZ4pTW9Z"/>
+<div class="flex-1">
+<p class="text-xs font-medium text-primary">Actif</p>
+<h3 class="font-bold">Le Refuge du Hibou</h3>
+<p class="text-sm text-text-color/70 dark:text-neutral/70">Près de Mont-Tremblant</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex items-center gap-2 rounded-lg bg-white dark:bg-background-dark/80 p-3">
+<span class="material-symbols-outlined text-secondary">visibility</span>
+<div>
+<p class="font-bold">1.2k</p>
+<p class="text-xs text-text-color/70 dark:text-neutral/70">Vues (30j)</p>
+</div>
+</div>
+<div class="flex items-center gap-2 rounded-lg bg-white dark:bg-background-dark/80 p-3">
+<span class="material-symbols-outlined text-secondary">inbox</span>
+<div>
+<p class="font-bold">5</p>
+<p class="text-xs text-text-color/70 dark:text-neutral/70">Demandes</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-lg bg-neutral/50 dark:bg-black/20 p-4 shadow-sm">
+<div class="flex items-start gap-4">
+<img alt="Campsite thumbnail" class="h-20 w-20 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMkBM_0G3jjhW3JEiwJD4gFxItiRNzGI_zIVg20bMvkH4pEgg75dTdodx8p7iq9cXR1YhPfFITiWmILv7kSm6FfLVwXb5J6-Uu15jrM1mySBDJOyMw7B4SBWk-91ym51DEImX8lU56GmCKL3iisTIDFbPuRhLQ-IKKi4yT0SS33brQr1AvPV-3It71WGDrrf20urzEq0tCNg7cVlo4-pwlmDCPAfbGCPzcpjopzOwgTzsgjSsycjZm7S1W9b7zn8bhCL5oJXcLsq0x"/>
+<div class="flex-1">
+<p class="text-xs font-medium text-primary">Actif</p>
+<h3 class="font-bold">Clairière Sereine</h3>
+<p class="text-sm text-text-color/70 dark:text-neutral/70">Cantons-de-l'Est</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex items-center gap-2 rounded-lg bg-white dark:bg-background-dark/80 p-3">
+<span class="material-symbols-outlined text-secondary">visibility</span>
+<div>
+<p class="font-bold">876</p>
+<p class="text-xs text-text-color/70 dark:text-neutral/70">Vues (30j)</p>
+</div>
+</div>
+<div class="flex items-center gap-2 rounded-lg bg-white dark:bg-background-dark/80 p-3">
+<span class="material-symbols-outlined text-secondary">inbox</span>
+<div>
+<p class="font-bold">2</p>
+<p class="text-xs text-text-color/70 dark:text-neutral/70">Demandes</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<button class="flex w-full items-center justify-center gap-2 rounded-full bg-primary py-4 text-base font-bold text-white shadow-lg">
+<span class="material-symbols-outlined">add</span>
+<span>Ajouter une annonce</span>
+</button>
+</div>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-10 w-full border-t border-primary/20 bg-background-light/80 dark:bg-background-dark/80 p-2 backdrop-blur-sm">
+<div class="flex items-center justify-around">
+<a class="flex flex-col items-center gap-1 p-2 text-primary" href="#">
+<span class="material-symbols-outlined filled">dashboard</span>
+<span class="text-xs font-bold">Tableau de bord</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-text-color/60 dark:text-neutral/60" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-xs">Calendrier</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-text-color/60 dark:text-neutral/60" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-xs">Messages</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-text-color/60 dark:text-neutral/60" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="text-xs">Menu</span>
+</a>
+</div>
+</div>
+</div>
+</body></html>

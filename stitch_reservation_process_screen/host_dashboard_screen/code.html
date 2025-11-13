@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tableau de bord - Campbnb Québec</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2d572c",
+              "secondary": "#3c7a89",
+              "accent": "#e5e0d8",
+              "background-light": "#f9f9f7",
+              "background-dark": "#152210",
+              "text-light": "#333333",
+              "text-dark": "#e5e0d8",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden pb-32">
+<!-- Top App Bar -->
+<div class="flex flex-col gap-2 bg-background-light dark:bg-background-dark p-4 pb-2">
+<div class="flex items-center h-12 justify-between">
+<div class="flex size-12 shrink-0 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar de l'hôte Marie" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdLykCUG7LRvfrImzpdLTLmIMOZVtwgf6vW4Chn9LXiUMmFQcJlQwWNXcKhXXd14vk8iH-FtYJ2ZmUWoGMw2dvI2dzGIs--NW9jlYpOBMQ8J5Lxn4wfzGDhL6JOPsd3P0kk743eHFKbvQLURC9fUbfSUrbZWyjvl0LVlotGK9BXEv9-bQJZMl5B49R1pPAkEgfK866l0brN_BU_f9yu2nk1ic61M7gimE9tiQ3M0TYDQBiXpst-pA8jZS2JvkJIFZYTDXPol_BoP4q");'></div>
+</div>
+</div>
+<p class="text-text-light dark:text-text-dark tracking-light text-[28px] font-bold leading-tight">Bonjour, Marie!</p>
+</div>
+<!-- Stats Section -->
+<div class="flex flex-wrap gap-4 p-4">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-accent/30 dark:bg-accent/10 p-6 border border-accent dark:border-white/10">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Revenus (30 jours)</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">$1,250</p>
+<p class="text-primary dark:text-green-400 text-base font-medium leading-normal">+15.2%</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-accent/30 dark:bg-accent/10 p-6 border border-accent dark:border-white/10">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Vues totales</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">2,800</p>
+<p class="text-primary dark:text-green-400 text-base font-medium leading-normal">+8.5%</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-accent/30 dark:bg-accent/10 p-6 border border-accent dark:border-white/10">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Nouvelles demandes</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">4</p>
+<p class="text-primary dark:text-green-400 text-base font-medium leading-normal">+20%</p>
+</div>
+</div>
+<!-- Section Header -->
+<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Vos Annonces</h2>
+<!-- Listing Cards Section -->
+<div class="flex flex-col gap-4 px-4">
+<!-- Card 1 -->
+<div class="flex flex-col gap-0 rounded-lg bg-white dark:bg-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex items-stretch justify-between gap-4 p-4">
+<div class="flex flex-[2_2_0px] flex-col gap-4 justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-text-light dark:text-text-dark text-base font-bold leading-tight">Bord de l'eau à Sutton</p>
+<p class="text-primary dark:text-green-400 text-sm font-medium leading-normal">Actif</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 flex-row-reverse bg-accent/60 dark:bg-accent/20 text-text-light dark:text-text-dark text-sm font-medium leading-normal w-fit">
+<span class="truncate">Voir les détails</span>
+</button>
+</div>
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex-1" data-alt="Photo d'un emplacement de camping au bord d'un lac à Sutton" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAHrf-1SaldEurD1QUTnIu7puhJkFQdtrPKun6_G3OQ6LtdgNXsGWVgYTFQl_lMmufd2fq4M2R6sUomp9M7Kgp1MVAKrpQqlptGgErpdSKcCLDL-H0dcQFtIgTyttCwgemrxnjYQWHPZjCNpsEU87qLJzKQ0IZNO9HmX3YD21ThH2UItNV-WKGrNZQKIQCRgxoMTAuAX_oe9jzrXGw6yUjv8oAt83q8roym1g_poMP01UeNtIvSV63RzztRX4_Qeq6jD6MMUCqqmOth");'></div>
+</div>
+<!-- Reaction Bar -->
+<div class="flex flex-wrap gap-4 px-2 py-1 border-t border-accent/50 dark:border-white/10">
+<div class="flex items-center justify-center gap-2 px-3 py-2">
+<span class="material-symbols-outlined text-secondary dark:text-blue-300 text-base">visibility</span>
+<p class="text-secondary dark:text-blue-300 text-[13px] font-bold leading-normal tracking-[0.015em]">1.2k</p>
+</div>
+<div class="flex items-center justify-center gap-2 px-3 py-2">
+<span class="material-symbols-outlined text-secondary dark:text-blue-300 text-base">chat_bubble</span>
+<p class="text-secondary dark:text-blue-300 text-[13px] font-bold leading-normal tracking-[0.015em]">5</p>
+</div>
+<div class="flex items-center justify-center gap-2 px-3 py-2">
+<span class="material-symbols-outlined text-secondary dark:text-blue-300 text-base">calendar_month</span>
+<p class="text-secondary dark:text-blue-300 text-[13px] font-bold leading-normal tracking-[0.015em]">8</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col gap-0 rounded-lg bg-white dark:bg-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex items-stretch justify-between gap-4 p-4">
+<div class="flex flex-[2_2_0px] flex-col gap-4 justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-text-light dark:text-text-dark text-base font-bold leading-tight">Forêt enchantée à Magog</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">En attente</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 flex-row-reverse bg-accent/60 dark:bg-accent/20 text-text-light dark:text-text-dark text-sm font-medium leading-normal w-fit">
+<span class="truncate">Voir les détails</span>
+</button>
+</div>
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex-1" data-alt="Photo d'un emplacement de camping dans une forêt dense à Magog" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqgVccRQK3cpEPiOq3dSZF1Pgj1q3zQXRq10EMjMJ4M2J2qhHu1QYhskfPfO70b6x34v_w4lUbXZnVIomSBznoph_Xojfbs-1jxZ7MiXwevWQwgVMQ72qMJixsrbU0bKGe3n_QI5zsxdasV7kWaeSQiMVb2pPQlJHjoo6c7IbOoqaY94jvYuCNApUfrgpCb-mz77QsbUX3voNkDQULW8rYPQIGpa-7FDc0mejfZi6OB7xOPnKBNYzfgYk4r_9KpOmT4wG1Wt_qGT5I");'></div>
+</div>
+<!-- Reaction Bar -->
+<div class="flex flex-wrap gap-4 px-2 py-1 border-t border-accent/50 dark:border-white/10">
+<div class="flex items-center justify-center gap-2 px-3 py-2">
+<span class="material-symbols-outlined text-secondary dark:text-blue-300 text-base">visibility</span>
+<p class="text-secondary dark:text-blue-300 text-[13px] font-bold leading-normal tracking-[0.015em]">450</p>
+</div>
+<div class="flex items-center justify-center gap-2 px-3 py-2">
+<span class="material-symbols-outlined text-secondary dark:text-blue-300 text-base">chat_bubble</span>
+<p class="text-secondary dark:text-blue-300 text-[13px] font-bold leading-normal tracking-[0.015em]">1</p>
+</div>
+<div class="flex items-center justify-center gap-2 px-3 py-2">
+<span class="material-symbols-outlined text-secondary dark:text-blue-300 text-base">calendar_month</span>
+<p class="text-secondary dark:text-blue-300 text-[13px] font-bold leading-normal tracking-[0.015em]">2</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-4 flex h-14 items-center gap-2.5 whitespace-nowrap rounded-full bg-primary px-5 py-3.5 text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:text-white">
+<span class="material-symbols-outlined">add</span>
+<span class="text-base font-medium">Ajouter une annonce</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-50 flex h-20 items-center justify-around border-t border-accent/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-lg">
+<div class="flex flex-col items-center gap-1 text-primary dark:text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<p class="text-xs font-bold">Tableau de bord</p>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined">calendar_today</span>
+<p class="text-xs font-medium">Calendrier</p>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined">chat</span>
+<p class="text-xs font-medium">Messages</p>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined">person</span>
+<p class="text-xs font-medium">Profil</p>
+</div>
+</div>
+</div>
+</body></html>

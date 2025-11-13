@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^flutter", "^dart"],
+      "groupName": "Flutter dependencies",
+      "schedule": ["on monday"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "dev dependencies",
+      "schedule": ["on monday"]
+    }
+  ],
+  "schedule": ["on monday"],
+  "automerge": false,
+  "prConvention": "conventional",
+  "commitMessagePrefix": "chore(deps):",
+  "labels": ["dependencies"]
+}
+
+

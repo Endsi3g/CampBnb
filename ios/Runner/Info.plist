@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Campbnb Québec</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>campbnb_quebec</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+
+	<!-- Permissions Localisation -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Nous avons besoin de votre localisation pour trouver des campings près de vous et afficher votre position sur la carte.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Nous avons besoin de votre localisation en arrière-plan pour vous envoyer des notifications sur les campings à proximité.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Nous avons besoin de votre localisation en arrière-plan pour vous envoyer des notifications sur les campings à proximité.</string>
+
+	<!-- Permission Microphone (Recherche Vocale) -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Nous avons besoin du microphone pour la recherche vocale. Vous pouvez rechercher des campings en parlant naturellement.</string>
+
+	<!-- Permissions Caméra (Upload d'Images) -->
+	<key>NSCameraUsageDescription</key>
+	<string>Nous avons besoin de la caméra pour prendre des photos de votre camping et les partager avec la communauté.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Nous avons besoin d'accéder à vos photos pour sélectionner des images de votre camping.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Nous avons besoin de sauvegarder les photos de votre camping dans votre galerie.</string>
+
+	<!-- Permissions Notifications -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+	</array>
+
+	<!-- Deep Links -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.campbnb.quebec</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>campbnb</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- Mapbox Configuration -->
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoiY2FtcGJuYiIsImEiOiJjbWh3N21wZjAwNDhuMm9weXFwMmt1c2VqIn0.r6bKsNWgKmIb0FzWOcZh8g</string>
+
+	<!-- Firebase Configuration -->
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+
+	<!-- Permissions Bluetooth (optionnel) -->
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Nous utilisons Bluetooth pour améliorer la précision de la localisation.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Nous utilisons Bluetooth pour améliorer la précision de la localisation.</string>
+
+	<!-- Face ID / Touch ID (optionnel pour l'authentification) -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Nous utilisons Face ID pour sécuriser votre compte et vos paiements.</string>
+
+	<!-- Contacts (optionnel pour inviter des amis) -->
+	<key>NSContactsUsageDescription</key>
+	<string>Nous avons besoin d'accéder à vos contacts pour vous permettre d'inviter vos amis à utiliser Campbnb Québec.</string>
+
+	<!-- Calendrier (optionnel pour synchroniser les réservations) -->
+	<key>NSCalendarsUsageDescription</key>
+	<string>Nous avons besoin d'accéder à votre calendrier pour synchroniser vos réservations.</string>
+	<key>NSCalendarUsageDescription</key>
+	<string>Nous avons besoin d'accéder à votre calendrier pour synchroniser vos réservations.</string>
+
+	<!-- Réseau - App Transport Security (HTTPS uniquement) -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+		<!-- Domaines autorisés avec certificats valides -->
+		<key>NSIncludesSubdomains</key>
+		<true/>
+	</dict>
+
+	<!-- App Tracking Transparency (iOS 14.5+) -->
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Nous utilisons ces informations pour améliorer votre expérience et vous proposer des campings personnalisés. Vous pouvez modifier cette préférence à tout moment dans les paramètres.</string>
+</dict>
+</plist>
+

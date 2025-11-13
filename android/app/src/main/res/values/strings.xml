@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Campbnb Québec</string>
+    
+    <!-- Mapbox Access Token -->
+    <string name="mapbox_access_token">pk.eyJ1IjoiY2FtcGJuYiIsImEiOiJjbWh3N21wZjAwNDhuMm9weXFwMmt1c2VqIn0.r6bKsNWgKmIb0FzWOcZh8g</string>
+    
+    <!-- Messages de permission -->
+    <string name="permission_location">Nous avons besoin de votre localisation pour trouver des campings près de vous</string>
+    <string name="permission_camera">Nous avons besoin de la caméra pour prendre des photos de votre camping</string>
+    <string name="permission_microphone">Nous avons besoin du microphone pour la recherche vocale</string>
+    <string name="permission_storage">Nous avons besoin d\'accéder au stockage pour sauvegarder vos photos</string>
+    <string name="permission_notification">Nous avons besoin d\'envoyer des notifications pour vous informer de vos réservations</string>
+</resources>
