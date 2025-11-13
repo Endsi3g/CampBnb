@@ -1,60 +1,125 @@
 # Script de migration vers le monorepo (PowerShell)
 # Usage: .\scripts\migrate_to_monorepo.ps1
 
-Write-Host "🚀 Migration vers le monorepo Campbnb Québec..." -ForegroundColor Green
+param(
+    [switch]$SkipExisting
+)
+
+$ErrorActionPreference = "Stop"
+
+# Obtenir le répertoire du script
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectRoot = Split-Path -Parent $ScriptDir
+
+# Changer vers le répertoire racine du projet
+Set-Location $ProjectRoot
+
+Write-Host "Migration vers le monorepo Campbnb Quebec..." -ForegroundColor Green
 
 # Vérifier que nous sommes à la racine du projet
 if (-not (Test-Path "pubspec.yaml")) {
-    Write-Host "❌ Erreur: Ce script doit être exécuté à la racine du projet" -ForegroundColor Red
+    Write-Host "ERREUR: Ce script doit etre execute a la racine du projet" -ForegroundColor Red
+    Write-Host "Repertoire actuel: $ProjectRoot" -ForegroundColor Yellow
     exit 1
 }
 
 # Créer la structure si elle n'existe pas
-Write-Host "📁 Création de la structure..." -ForegroundColor Yellow
-New-Item -ItemType Directory -Force -Path "packages/shared/lib" | Out-Null
-New-Item -ItemType Directory -Force -Path "packages/shared/assets" | Out-Null
+Write-Host "Creation de la structure..." -ForegroundColor Yellow
+$sharedLibPath = "packages\shared\lib"
+$sharedAssetsPath = "packages\shared\assets"
+
+if (-not (Test-Path $sharedLibPath)) {
+    New-Item -ItemType Directory -Force -Path $sharedLibPath | Out-Null
+    Write-Host "  Cree: $sharedLibPath" -ForegroundColor Gray
+}
+
+if (-not (Test-Path $sharedAssetsPath)) {
+    New-Item -ItemType Directory -Force -Path $sharedAssetsPath | Out-Null
+    Write-Host "  Cree: $sharedAssetsPath" -ForegroundColor Gray
+}
+
+# Fonction pour copier un dossier
+function Copy-DirectoryIfExists {
+    param(
+        [string]$Source,
+        [string]$Destination,
+        [string]$Description
+    )
+    
+    if (Test-Path $Source) {
+        Write-Host "$Description..." -ForegroundColor Yellow
+        
+        # Vérifier si la destination existe déjà
+        if ((Test-Path $Destination) -and -not $SkipExisting) {
+            Write-Host "  ATTENTION: $Destination existe deja. Utilisez -SkipExisting pour ecraser." -ForegroundColor Yellow
+            return
+        }
+        
+        # Supprimer la destination si elle existe et qu'on veut écraser
+        if ((Test-Path $Destination) -and $SkipExisting) {
+            Remove-Item -Path $Destination -Recurse -Force
+        }
+        
+        Copy-Item -Path $Source -Destination $Destination -Recurse -Force
+        Write-Host "  OK: $Source -> $Destination" -ForegroundColor Green
+    } else {
+        Write-Host "  SKIP: $Source n'existe pas" -ForegroundColor Gray
+    }
+}
 
 # Déplacer le code
-if (Test-Path "lib/core") {
-    Write-Host "📦 Déplacement de lib/core..." -ForegroundColor Yellow
-    Copy-Item -Path "lib/core" -Destination "packages/shared/lib/" -Recurse -Force
-}
-
-if (Test-Path "lib/features") {
-    Write-Host "📦 Déplacement de lib/features..." -ForegroundColor Yellow
-    Copy-Item -Path "lib/features" -Destination "packages/shared/lib/" -Recurse -Force
-}
-
-if (Test-Path "lib/shared") {
-    Write-Host "📦 Déplacement de lib/shared..." -ForegroundColor Yellow
-    Copy-Item -Path "lib/shared" -Destination "packages/shared/lib/" -Recurse -Force
-}
+Copy-DirectoryIfExists -Source "lib\core" -Destination "$sharedLibPath\core" -Description "Deplacement de lib/core"
+Copy-DirectoryIfExists -Source "lib\features" -Destination "$sharedLibPath\features" -Description "Deplacement de lib/features"
+Copy-DirectoryIfExists -Source "lib\shared" -Destination "$sharedLibPath\shared" -Description "Deplacement de lib/shared"
 
 # Déplacer les assets
 if (Test-Path "assets") {
-    Write-Host "🎨 Déplacement des assets..." -ForegroundColor Yellow
-    Copy-Item -Path "assets" -Destination "packages/shared/" -Recurse -Force
+    Write-Host "Deplacement des assets..." -ForegroundColor Yellow
+    
+    if ((Test-Path $sharedAssetsPath) -and -not $SkipExisting) {
+        Write-Host "  ATTENTION: $sharedAssetsPath existe deja. Utilisez -SkipExisting pour ecraser." -ForegroundColor Yellow
+    } else {
+        if ((Test-Path $sharedAssetsPath) -and $SkipExisting) {
+            Remove-Item -Path $sharedAssetsPath -Recurse -Force
+        }
+        Copy-Item -Path "assets" -Destination "packages\shared\" -Recurse -Force
+        Write-Host "  OK: assets -> packages\shared\assets" -ForegroundColor Green
+    }
+} else {
+    Write-Host "  SKIP: assets n'existe pas" -ForegroundColor Gray
 }
 
 # Déplacer les fichiers de configuration si nécessaire
 if (Test-Path "analysis_options.yaml") {
-    Write-Host "⚙️  Copie de analysis_options.yaml..." -ForegroundColor Yellow
-    Copy-Item -Path "analysis_options.yaml" -Destination "packages/shared/" -Force
+    Write-Host "Copie de analysis_options.yaml..." -ForegroundColor Yellow
+    $destPath = "packages\shared\analysis_options.yaml"
+    
+    if ((Test-Path $destPath) -and -not $SkipExisting) {
+        Write-Host "  ATTENTION: $destPath existe deja. Utilisez -SkipExisting pour ecraser." -ForegroundColor Yellow
+    } else {
+        Copy-Item -Path "analysis_options.yaml" -Destination $destPath -Force
+        Write-Host "  OK: analysis_options.yaml -> $destPath" -ForegroundColor Green
+    }
 }
 
 Write-Host ""
-Write-Host "✅ Migration terminée!" -ForegroundColor Green
+Write-Host "Migration terminee!" -ForegroundColor Green
 Write-Host ""
-Write-Host "📝 Prochaines étapes :" -ForegroundColor Cyan
-Write-Host "   1. Vérifier que le code a été correctement déplacé"
-Write-Host "   2. Installer les dépendances :"
-Write-Host "      cd packages/shared; flutter pub get"
-Write-Host "      cd ..\mobile; flutter pub get"
-Write-Host "      cd ..\web; flutter pub get"
-Write-Host "   3. Tester les applications :"
-Write-Host "      cd packages\mobile; flutter run"
-Write-Host "      cd packages\web; flutter run -d chrome"
+Write-Host "Prochaines etapes :" -ForegroundColor Cyan
+Write-Host "  1. Verifier que le code a ete correctement deplace"
+Write-Host "  2. Installer les dependances :"
+Write-Host "     cd packages\shared"
+Write-Host "     flutter pub get"
+Write-Host "     cd ..\mobile"
+Write-Host "     flutter pub get"
+Write-Host "     cd ..\web"
+Write-Host "     flutter pub get"
+Write-Host "  3. Tester les applications :"
+Write-Host "     cd packages\mobile"
+Write-Host "     flutter run"
+Write-Host "     cd ..\web"
+Write-Host "     flutter run -d chrome"
 Write-Host ""
-Write-Host "⚠️  Note: Le code original dans lib/ n'a pas été supprimé." -ForegroundColor Yellow
-Write-Host "   Vous pouvez le supprimer manuellement après vérification."
+Write-Host "NOTE: Le code original dans lib/ n'a pas ete supprime." -ForegroundColor Yellow
+Write-Host "     Vous pouvez le supprimer manuellement apres verification."
 

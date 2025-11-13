@@ -30,39 +30,32 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          node-version: '18'
-          cache: 'npm'
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
 
       - name: Install dependencies
         run: |
-          if [ -f package.json ]; then
-            npm ci
-          else
-            echo "No package.json found, skipping npm install"
-          fi
+          cd packages/shared && flutter pub get
+          cd ../mobile && flutter pub get
+          cd ../web && flutter pub get
 
-      - name: Run linter
-        continue-on-error: true
+      - name: Generate code
         run: |
-          if [ -f package.json ] && grep -q '"lint"' package.json; then
-            npm run lint || true
-          else
-            echo "No lint script found, skipping"
-          fi
+          cd packages/shared
+          flutter pub run build_runner build --delete-conflicting-outputs || echo "Code generation issues"
 
       - name: Run tests
         continue-on-error: true
         run: |
-          if [ -f package.json ] && grep -q '"test"' package.json; then
-            npm test || true
-          else
-            echo "No test script found, skipping"
-          fi
+          cd packages/shared && flutter test || echo "Tests failed in shared"
+          cd ../mobile && flutter test || echo "Tests failed in mobile"
+          cd ../web && flutter test || echo "Tests failed in web"
 
   # Job: Déploiement des migrations Supabase
   deploy-migrations:
@@ -109,38 +102,37 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          node-version: '18'
-          cache: 'npm'
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
 
       - name: Install dependencies
-        continue-on-error: true
         run: |
-          if [ -f package.json ]; then
-            npm ci
-          else
-            echo "No package.json found, skipping npm install"
-          fi
+          cd packages/shared && flutter pub get
+          cd ../web && flutter pub get
 
-      - name: Build
-        continue-on-error: true
+      - name: Generate code
         run: |
-          if [ -f package.json ] && grep -q '"build"' package.json; then
-            npm run build
-          else
-            echo "No build script found, skipping build"
-          fi
+          cd packages/shared
+          flutter pub run build_runner build --delete-conflicting-outputs || echo "Code generation issues"
+
+      - name: Build Web
+        run: |
+          cd packages/web
+          flutter build web --release
         env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          VITE_MAPBOX_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
         with:
-          args: deploy --dir=dist --prod
+          args: deploy --dir=packages/web/build/web --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

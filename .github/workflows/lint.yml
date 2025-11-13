@@ -20,16 +20,49 @@ jobs:
           channel: 'stable'
           cache: true
       
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Install dependencies - Shared
+        run: |
+          cd packages/shared
+          flutter pub get
       
-      - name: Verify formatting
-        run: dart format --set-exit-if-changed .
+      - name: Install dependencies - Mobile
+        run: |
+          cd packages/mobile
+          flutter pub get
       
-      - name: Analyze code
-        run: flutter analyze
+      - name: Install dependencies - Web
+        run: |
+          cd packages/web
+          flutter pub get
       
-      - name: Run linter
-        run: flutter pub run flutter_lints:lint
+      - name: Verify formatting - Shared
+        run: |
+          cd packages/shared
+          dart format --set-exit-if-changed .
+      
+      - name: Verify formatting - Mobile
+        run: |
+          cd packages/mobile
+          dart format --set-exit-if-changed .
+      
+      - name: Verify formatting - Web
+        run: |
+          cd packages/web
+          dart format --set-exit-if-changed .
+      
+      - name: Analyze code - Shared
+        run: |
+          cd packages/shared
+          flutter analyze
+      
+      - name: Analyze code - Mobile
+        run: |
+          cd packages/mobile
+          flutter analyze
+      
+      - name: Analyze code - Web
+        run: |
+          cd packages/web
+          flutter analyze
 
 
