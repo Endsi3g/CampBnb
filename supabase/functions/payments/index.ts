@@ -45,6 +45,11 @@ serve(async (req) => {
     const url = new URL(req.url)
     const pathParts = url.pathname.split('/').filter(Boolean)
     const endpoint = pathParts[pathParts.length - 1]
+    
+    // Pour GET /payments/status/:id, vérifier si on est sur l'endpoint status
+    const isStatusEndpoint = req.method === 'GET' && 
+                             pathParts.length >= 3 && 
+                             pathParts[pathParts.length - 2] === 'status'
 
     const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
     if (!stripeSecretKey) {
@@ -187,6 +192,99 @@ serve(async (req) => {
 
       return new Response(
         JSON.stringify({ received: true }),
+        {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
+    }
+
+    // GET /payments/status/:payment_intent_id - Vérifier le statut d'un PaymentIntent
+    if (isStatusEndpoint) {
+      const paymentIntentId = pathParts[pathParts.length - 1]
+      
+      if (!paymentIntentId) {
+        return new Response(
+          JSON.stringify({ error: 'payment_intent_id est requis' }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
+
+      // Vérifier que le PaymentIntent appartient à l'utilisateur
+      const stripeResponse = await fetch(`https://api.stripe.com/v1/payment_intents/${paymentIntentId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${stripeSecretKey}`,
+        },
+      })
+
+      if (!stripeResponse.ok) {
+        const error = await stripeResponse.json()
+        return new Response(
+          JSON.stringify({ error: error.message || 'PaymentIntent introuvable' }),
+          {
+            status: 404,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
+
+      const paymentIntent = await stripeResponse.json()
+      
+      // Vérifier que la réservation associée appartient à l'utilisateur
+      const reservationId = paymentIntent.metadata?.reservation_id
+      if (reservationId) {
+        const { data: reservation } = await supabaseClient
+          .from('reservations')
+          .select('guest_id')
+          .eq('id', reservationId)
+          .single()
+
+        if (!reservation || reservation.guest_id !== user.id) {
+          return new Response(
+            JSON.stringify({ error: 'Non autorisé' }),
+            {
+              status: 403,
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            }
+          )
+        }
+      }
+
+      // Mapper le statut Stripe vers notre enum
+      let status = 'pending'
+      switch (paymentIntent.status) {
+        case 'succeeded':
+          status = 'completed'
+          break
+        case 'processing':
+          status = 'processing'
+          break
+        case 'requires_payment_method':
+        case 'requires_confirmation':
+        case 'requires_action':
+          status = 'pending'
+          break
+        case 'canceled':
+          status = 'cancelled'
+          break
+        default:
+          status = 'failed'
+      }
+
+      return new Response(
+        JSON.stringify({
+          data: {
+            payment_intent_id: paymentIntent.id,
+            status: status,
+            amount: paymentIntent.amount / 100,
+            currency: paymentIntent.currency,
+            created: paymentIntent.created,
+          },
+        }),
         {
           status: 200,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },

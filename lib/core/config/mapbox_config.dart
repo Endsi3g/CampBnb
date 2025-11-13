@@ -12,8 +12,9 @@ class MapboxConfig {
  final token = dotenv.env['MAPBOX_ACCESS_TOKEN'];
     if (token == null || token.isEmpty) {
  _logger.w('MAPBOX_ACCESS_TOKEN non défini dans .env');
-      // Fallback pour développement (à retirer en production)
- // return 'pk.eyJ1IjoiY2FtcGJuYiIsImEiOiJjbWh3N21wZjAwNDhuMm9weXFwMmt1c2VqIn0.r6bKsNWgKmIb0FzWOcZh8g';
+      _logger.w('Veuillez ajouter MAPBOX_ACCESS_TOKEN dans votre fichier .env');
+      // Ne pas retourner de fallback pour la sécurité
+      return null;
     }
     return token;
   }

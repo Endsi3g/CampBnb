@@ -1,0 +1,73 @@
+name: Mobile CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'packages/mobile/**'
+      - 'packages/shared/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'packages/mobile/**'
+      - 'packages/shared/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: |
+          cd packages/shared
+          flutter pub get
+          cd ../mobile
+          flutter pub get
+      
+      - name: Analyze code
+        run: |
+          cd packages/shared
+          flutter analyze
+          cd ../mobile
+          flutter analyze
+      
+      - name: Run tests
+        run: |
+          cd packages/shared
+          flutter test
+          cd ../mobile
+          flutter test
+
+  build-android:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: |
+          cd packages/shared
+          flutter pub get
+          cd ../mobile
+          flutter pub get
+      
+      - name: Build APK
+        run: |
+          cd packages/mobile
+          flutter build apk --release
+

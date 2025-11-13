@@ -36,6 +36,48 @@ Future<List<MessageModel>> messages(
   return await repository.getMessages(conversationId);
 }
 
+/// Provider pour récupérer les infos d'une conversation par ID
+@riverpod
+Future<Map<String, dynamic>> conversationById(
+  ConversationByIdRef ref,
+  String conversationId,
+) async {
+  final repository = ref.watch(messageRepositoryProvider);
+  final currentUserId = SupabaseService.client.auth.currentUser?.id ?? '';
+  
+  if (currentUserId.isEmpty) {
+    return {
+      'id': conversationId,
+      'recipientId': '',
+      'recipientName': 'Utilisateur',
+    };
+  }
+  
+  final conversations = await repository.getConversations(currentUserId);
+  
+  final conversation = conversations.firstWhere(
+    (c) => c.id == conversationId,
+    orElse: () => conversations.isNotEmpty ? conversations.first : ConversationModel(
+      id: conversationId,
+      participant1Id: currentUserId,
+      participant2Id: '',
+    ),
+  );
+  
+  // Récupérer le nom du destinataire depuis le profil
+  final recipientId = conversation.participant1Id == currentUserId
+      ? conversation.participant2Id
+      : conversation.participant1Id;
+  
+  // TODO: Récupérer le nom depuis le profil utilisateur via Supabase
+  // Pour l'instant, retourner un nom par défaut
+  return {
+    'id': conversation.id,
+    'recipientId': recipientId,
+    'recipientName': 'Utilisateur', // À remplacer par le vrai nom depuis le profil
+  };
+}
+
 /// Notifier pour gérer les messages
 @riverpod
 class MessageNotifier extends _$MessageNotifier {

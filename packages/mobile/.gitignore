@@ -1,0 +1,42 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.config.dart
+
+# Hive
+*.hive
+*.lock
+
+# Coverage
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Android
+android/app/debug
+android/app/profile
+android/app/release
+android/.gradle/
+android/local.properties
+
+# iOS
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+

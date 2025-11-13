@@ -1,0 +1,137 @@
+name: Create GitHub Package
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version du package (ex: 1.0.0)'
+        required: true
+        type: string
+
+env:
+  FLUTTER_VERSION: '3.24.0'
+
+jobs:
+  build-and-package:
+    name: Build and Create Package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Generate code
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+      
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\/v//')
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+      
+      - name: Build Android APK
+        run: |
+          flutter build apk --release
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      
+      - name: Build Android App Bundle
+        run: |
+          flutter build appbundle --release
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      
+      - name: Create package archive
+        run: |
+          mkdir -p package
+          cp build/app/outputs/flutter-apk/app-release.apk package/campbnb-quebec-${{ steps.version.outputs.version }}.apk
+          cp build/app/outputs/bundle/release/app-release.aab package/campbnb-quebec-${{ steps.version.outputs.version }}.aab
+          cp pubspec.yaml package/
+          cp README.md package/ || echo "# CampBnb Québec" > package/README.md
+          
+          # Créer un fichier de version
+          echo "${{ steps.version.outputs.version }}" > package/VERSION.txt
+          echo "${{ github.sha }}" > package/COMMIT_SHA.txt
+          echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" > package/BUILD_DATE.txt
+      
+      - name: Create release archive
+        run: |
+          cd package
+          tar -czf ../campbnb-quebec-${{ steps.version.outputs.version }}.tar.gz .
+          cd ..
+          zip -r campbnb-quebec-${{ steps.version.outputs.version }}.zip package/
+      
+      - name: Upload package artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: campbnb-package-${{ steps.version.outputs.version }}
+          path: |
+            package/
+            campbnb-quebec-${{ steps.version.outputs.version }}.tar.gz
+            campbnb-quebec-${{ steps.version.outputs.version }}.zip
+          retention-days: 90
+      
+      - name: Create GitHub Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            campbnb-quebec-${{ steps.version.outputs.version }}.tar.gz
+            campbnb-quebec-${{ steps.version.outputs.version }}.zip
+            package/campbnb-quebec-${{ steps.version.outputs.version }}.apk
+            package/campbnb-quebec-${{ steps.version.outputs.version }}.aab
+          body: |
+            ## 🎉 Release ${{ steps.version.outputs.version }}
+            
+            ### 📦 Package Contents
+            - **APK**: `campbnb-quebec-${{ steps.version.outputs.version }}.apk`
+            - **AAB**: `campbnb-quebec-${{ steps.version.outputs.version }}.aab`
+            - **Archive**: `campbnb-quebec-${{ steps.version.outputs.version }}.tar.gz`
+            - **Zip**: `campbnb-quebec-${{ steps.version.outputs.version }}.zip`
+            
+            ### 📋 Build Information
+            - **Commit**: ${{ github.sha }}
+            - **Build Date**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+            - **Flutter Version**: ${{ env.FLUTTER_VERSION }}
+            
+            ### 🚀 Installation
+            1. Téléchargez l'APK ou l'AAB selon votre besoin
+            2. Installez sur votre appareil Android
+            3. Profitez de CampBnb Québec !
+            
+            ---
+            *Généré automatiquement par GitHub Actions*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

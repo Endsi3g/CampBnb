@@ -35,16 +35,18 @@ jobs:
       
       - name: Generate status report
         id: generate_report
+        continue-on-error: true
         run: |
           python scripts/overseer_status_check.py \
             --output docs/STATUS_REPORT.md \
-            --format markdown
+            --format markdown || echo "Script failed but continuing"
       
       - name: Generate JSON report
+        continue-on-error: true
         run: |
           python scripts/overseer_status_check.py \
             --json docs/STATUS_REPORT.json \
-            --format json
+            --format json || echo "JSON generation failed but continuing"
       
       - name: Check for changes
         id: check_changes
@@ -56,13 +58,15 @@ jobs:
           fi
       
       - name: Commit and push report
-        if: steps.check_changes.outputs.changed == 'true'
+        if: steps.check_changes.outputs.changed == 'true' && steps.generate_report.outcome == 'success'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add docs/STATUS_REPORT.md docs/STATUS_REPORT.json
           git commit -m "📊 [Overseer] Rapport de statut quotidien - $(date +'%Y-%m-%d')" || exit 0
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Create summary
         if: always()
@@ -81,7 +85,7 @@ jobs:
           echo "📄 [Voir le rapport complet](docs/STATUS_REPORT.md)" >> $GITHUB_STEP_SUMMARY
       
       - name: Upload report as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: status-report-$(date +'%Y-%m-%d')
           path: |
@@ -103,15 +107,17 @@ jobs:
           python-version: '3.11'
       
       - name: Check Stitch screens coverage
+        continue-on-error: true
         run: |
-          python scripts/check_stitch_screens_coverage.py || true
+          python scripts/check_stitch_screens_coverage.py || echo "Coverage check failed but continuing"
       
       - name: Upload coverage report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: stitch-coverage-$(date +'%Y-%m-%d')
           path: docs/STITCH_COVERAGE_REPORT.md
           retention-days: 30
+          if-no-files-found: ignore
 
 

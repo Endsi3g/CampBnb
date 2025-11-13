@@ -1,0 +1,45 @@
+name: campbnb_web
+description: Application web Campbnb Québec - Flutter Web
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Package partagé
+  campbnb_shared:
+    path: ../shared
+
+  # Web-specific dependencies
+  url_strategy: ^0.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - ../shared/assets/images/
+    - ../shared/assets/icons/
+    - ../shared/assets/animations/
+    - ../shared/assets/translations/
+    - .env
+
+  fonts:
+    - family: PlusJakartaSans
+      fonts:
+        - asset: ../shared/assets/fonts/PlusJakartaSans-Regular.ttf
+        - asset: ../shared/assets/fonts/PlusJakartaSans-Medium.ttf
+          weight: 500
+        - asset: ../shared/assets/fonts/PlusJakartaSans-Bold.ttf
+          weight: 700
+        - asset: ../shared/assets/fonts/PlusJakartaSans-ExtraBold.ttf
+          weight: 800
+

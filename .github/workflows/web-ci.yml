@@ -1,0 +1,79 @@
+name: Web CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'packages/web/**'
+      - 'packages/shared/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'packages/web/**'
+      - 'packages/shared/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: |
+          cd packages/shared
+          flutter pub get
+          cd ../web
+          flutter pub get
+      
+      - name: Analyze code
+        run: |
+          cd packages/shared
+          flutter analyze
+          cd ../web
+          flutter analyze
+      
+      - name: Run tests
+        run: |
+          cd packages/shared
+          flutter test
+          cd ../web
+          flutter test
+
+  build-web:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: |
+          cd packages/shared
+          flutter pub get
+          cd ../web
+          flutter pub get
+      
+      - name: Build Web
+        run: |
+          cd packages/web
+          flutter build web --release
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-build
+          path: packages/web/build/web
+

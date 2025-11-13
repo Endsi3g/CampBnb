@@ -23,7 +23,7 @@
     "storage:setup": "supabase storage create listing-images profile-avatars activity-images",
     "deploy": "bash scripts/deploy.sh",
     "deploy:windows": "powershell -ExecutionPolicy Bypass -File scripts/deploy.ps1",
-    "env:create": "node -e \"const fs=require('fs');const path=require('path');const content='SUPABASE_URL=https://kniaisdkzeflauawmyka.supabase.co\\nSUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuaWFpc2RremVmbGF1YXdteWthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDk2NzMsImV4cCI6MjA3ODYyNTY3M30.HL5ZhIZS7abfeuHnPW54KN8qQgsoXohfYwJhO0Tgyoo\\nMAPBOX_ACCESS_TOKEN=pk.eyJ1IjoiY2FtcGJuYiIsImEiOiJjbWh3N21wZjAwNDhuMm9weXFwMmt1c2VqIn0.r6bKsNWgKmIb0FzWOcZh8g\\n';const envPath=path.join(process.cwd(),'.env');if(!fs.existsSync(envPath)){fs.writeFileSync(envPath,content);console.log('✅ Fichier .env créé avec succès!');}else{console.log('⚠️  Le fichier .env existe déjà.');}\"",
+    "env:create": "node -e \"const fs=require('fs');const path=require('path');const envPath=path.join(process.cwd(),'.env');if(!fs.existsSync(envPath)){const template='SUPABASE_URL=\\nSUPABASE_KEY=\\nMAPBOX_ACCESS_TOKEN=\\nGEMINI_API_KEY=\\nSENTRY_DSN=\\n';fs.writeFileSync(envPath,template);console.log('✅ Fichier .env créé avec le template. Veuillez remplir les valeurs.');}else{console.log('⚠️  Le fichier .env existe déjà.');}\"",
     "env:create:windows": "powershell -ExecutionPolicy Bypass -File scripts/create_env.ps1",
     "test": "echo \"Tests à implémenter\" && exit 0",
     "lint": "echo \"Linter à configurer\" && exit 0",

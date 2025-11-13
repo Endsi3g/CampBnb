@@ -1,21 +1,31 @@
+/// @deprecated Utilisez lib/core/services/gemini_service.dart à la place
+/// Ce fichier est conservé pour compatibilité mais sera supprimé dans une future version
 import 'package:google_generative_ai/google_generative_ai.dart';
 import '../../core/config/app_config.dart';
+import '../../core/services/gemini_service.dart' as core_gemini;
 
+/// @deprecated Utilisez core_gemini.GeminiService() à la place
 class GeminiService {
   GeminiService._();
 
   static GenerativeModel? _model;
 
+  /// @deprecated Utilisez core_gemini.GeminiService().initialize() à la place
   static void initialize() {
+    // Déléguer au service core
+    core_gemini.GeminiService().initialize();
+    
+    // Garder l'ancienne implémentation pour compatibilité
     _model = GenerativeModel(
- model: 'gemini-2.0-flash-exp',
+      model: 'gemini-2.0-flash-exp',
       apiKey: AppConfig.geminiApiKey,
     );
   }
 
+  /// @deprecated Utilisez core_gemini.GeminiService() à la place
   static GenerativeModel get model {
     if (_model == null) {
- throw Exception('Gemini not initialized. Call GeminiService.initialize() first.');
+      throw Exception('Gemini not initialized. Call GeminiService.initialize() first.');
     }
     return _model!;
   }
