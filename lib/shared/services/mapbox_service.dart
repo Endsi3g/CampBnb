@@ -14,17 +14,17 @@ class MapboxService {
       await MapboxMapsFlutter.install();
       _initialized = true;
     } catch (e) {
- throw Exception('Erreur lors de l\'initialisation de Mapbox: $e');
+      throw Exception('Erreur lors de l\'initialisation de Mapbox: $e');
     }
   }
 
- /// Obtenir le token d'accès Mapbox
+  /// Obtenir le token d'accès Mapbox
   static String get accessToken => AppConfig.mapboxAccessToken;
 
   /// Créer un style de carte personnalisé
   static String getCustomStyle() {
     // Style personnalisé inspiré du Québec
- return 'mapbox://styles/mapbox/outdoors-v12';
+    return 'mapbox://styles/mapbox/outdoors-v12';
   }
 
   /// Créer un marqueur personnalisé pour un camping
@@ -43,4 +43,3 @@ class MapboxService {
     );
   }
 }
-

@@ -15,11 +15,11 @@ class ProfileScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
- title: const Text('Profil'),
+        title: const Text('Profil'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
- onPressed: () => context.push('/settings'),
+            onPressed: () => context.push('/settings'),
           ),
         ],
       ),
@@ -48,10 +48,7 @@ class ProfileScreen extends ConsumerWidget {
                           ),
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    user.fullName,
-                    style: AppTextStyles.h2,
-                  ),
+                  Text(user.fullName, style: AppTextStyles.h2),
                   const SizedBox(height: 8),
                   Text(
                     user.email,
@@ -64,38 +61,38 @@ class ProfileScreen extends ConsumerWidget {
                   _buildMenuItem(
                     context,
                     icon: Icons.person,
- title: 'Mon profil',
- onTap: () => context.push('/profile/edit'),
+                    title: 'Mon profil',
+                    onTap: () => context.push('/profile/edit'),
                   ),
                   _buildMenuItem(
                     context,
                     icon: Icons.book_online,
- title: 'Mes réservations',
- onTap: () => context.push('/reservations'),
+                    title: 'Mes réservations',
+                    onTap: () => context.push('/reservations'),
                   ),
                   _buildMenuItem(
                     context,
                     icon: Icons.favorite,
- title: 'Favoris',
- onTap: () => context.push('/favorites'),
+                    title: 'Favoris',
+                    onTap: () => context.push('/favorites'),
                   ),
                   _buildMenuItem(
                     context,
                     icon: Icons.home,
- title: 'Devenir hôte',
- onTap: () => context.push('/host/dashboard'),
+                    title: 'Devenir hôte',
+                    onTap: () => context.push('/host/dashboard'),
                   ),
                   _buildMenuItem(
                     context,
                     icon: Icons.help,
- title: 'Aide et support',
- onTap: () => context.push('/help'),
+                    title: 'Aide et support',
+                    onTap: () => context.push('/help'),
                   ),
                   _buildMenuItem(
                     context,
                     icon: Icons.settings,
- title: 'Paramètres',
- onTap: () => context.push('/settings'),
+                    title: 'Paramètres',
+                    onTap: () => context.push('/settings'),
                   ),
                   const SizedBox(height: 32),
                   // Logout
@@ -105,14 +102,14 @@ class ProfileScreen extends ConsumerWidget {
                       onPressed: () async {
                         await ref.read(authNotifierProvider.notifier).signOut();
                         if (context.mounted) {
- context.go('/welcome');
+                          context.go('/welcome');
                         }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.error,
                         foregroundColor: Colors.white,
                       ),
- child: const Text('Déconnexion'),
+                      child: const Text('Déconnexion'),
                     ),
                   ),
                 ],
@@ -135,4 +132,3 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 }
-

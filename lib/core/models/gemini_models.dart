@@ -18,13 +18,7 @@ enum GeminiRequestType {
 }
 
 /// Statut d'une requête Gemini
-enum GeminiRequestStatus {
-  pending,
-  processing,
-  completed,
-  failed,
-  rateLimited,
-}
+enum GeminiRequestStatus { pending, processing, completed, failed, rateLimited }
 
 /// Modèle pour une requête Gemini
 @freezed
@@ -171,5 +165,3 @@ class GeminiApiStats with _$GeminiApiStats {
   factory GeminiApiStats.fromJson(Map<String, dynamic> json) =>
       _$GeminiApiStatsFromJson(json);
 }
-
-

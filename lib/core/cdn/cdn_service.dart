@@ -10,7 +10,7 @@ class CDNService {
     return CDNConfig.getCdnUrlForRegion(regionCode);
   }
 
- /// Obtient l'URL optimisée d'une image
+  /// Obtient l'URL optimisée d'une image
   static String getOptimizedImageUrl({
     required String imagePath,
     required String regionCode,
@@ -20,22 +20,22 @@ class CDNService {
   }) {
     final cdnUrl = getCdnUrlForRegion(regionCode);
     final params = <String>[];
-    
- if (width != null) params.add('w=$width');
- if (height != null) params.add('h=$height');
- if (format != null) params.add('f=$format');
-    
- final queryString = params.isNotEmpty ? '?${params.join('&')}' : '';
- return '$cdnUrl/images/$imagePath$queryString';
+
+    if (width != null) params.add('w=$width');
+    if (height != null) params.add('h=$height');
+    if (format != null) params.add('f=$format');
+
+    final queryString = params.isNotEmpty ? '?${params.join('&')}' : '';
+    return '$cdnUrl/images/$imagePath$queryString';
   }
 
- /// Obtient l'URL d'un asset statique
+  /// Obtient l'URL d'un asset statique
   static String getAssetUrl({
     required String assetPath,
     required String regionCode,
   }) {
     final cdnUrl = getCdnUrlForRegion(regionCode);
- return '$cdnUrl/assets/$assetPath';
+    return '$cdnUrl/assets/$assetPath';
   }
 
   /// Précharge des assets pour une région
@@ -44,14 +44,12 @@ class CDNService {
     required String regionCode,
   }) async {
     final cdnUrl = getCdnUrlForRegion(regionCode);
- _logger.d('Préchargement de ${assetPaths.length} assets depuis $cdnUrl');
-    
+    _logger.d('Préchargement de ${assetPaths.length} assets depuis $cdnUrl');
+
     // En production, utiliser un service de préchargement
- // Pour l'instant, juste logger
+    // Pour l'instant, juste logger
     for (final path in assetPaths) {
- _logger.d('Préchargement: $path');
+      _logger.d('Préchargement: $path');
     }
   }
 }
-
-

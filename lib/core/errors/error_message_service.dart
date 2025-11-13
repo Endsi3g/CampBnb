@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 /// Service de gestion des messages d'erreur
 class ErrorMessageService {
   static final Logger _logger = Logger();
-  
+
   ErrorMessageService._();
   static final ErrorMessageService instance = ErrorMessageService._();
 
@@ -17,22 +17,24 @@ class ErrorMessageService {
       if (error is DioException) {
         return _handleDioError(error);
       }
-      
+
       // Exception standard
       if (error is Exception) {
         return _handleException(error);
       }
-      
+
       // String
       if (error is String) {
         return error;
       }
-      
+
       // Par défaut
-      return defaultMessage ?? 'Une erreur inattendue s\'est produite. Veuillez réessayer.';
+      return defaultMessage ??
+          'Une erreur inattendue s\'est produite. Veuillez réessayer.';
     } catch (e) {
       _logger.e('Erreur lors de la conversion du message d\'erreur: $e');
-      return defaultMessage ?? 'Une erreur inattendue s\'est produite. Veuillez réessayer.';
+      return defaultMessage ??
+          'Une erreur inattendue s\'est produite. Veuillez réessayer.';
     }
   }
 
@@ -43,23 +45,23 @@ class ErrorMessageService {
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
         return 'Le délai d\'attente a expiré. Vérifiez votre connexion internet et réessayez.';
-      
+
       case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         if (statusCode != null) {
           return _handleHttpStatusCode(statusCode, error.response?.data);
         }
         return 'Erreur lors de la communication avec le serveur.';
-      
+
       case DioExceptionType.cancel:
         return 'La requête a été annulée.';
-      
+
       case DioExceptionType.connectionError:
         return 'Impossible de se connecter au serveur. Vérifiez votre connexion internet.';
-      
+
       case DioExceptionType.badCertificate:
         return 'Erreur de certificat de sécurité. Veuillez contacter le support.';
-      
+
       case DioExceptionType.unknown:
       default:
         return 'Erreur de connexion. Veuillez réessayer.';
@@ -71,14 +73,15 @@ class ErrorMessageService {
     // Essayer d'extraire le message d'erreur du serveur
     String? serverMessage;
     if (responseData is Map<String, dynamic>) {
-      serverMessage = responseData['error'] as String? ?? 
-                     responseData['message'] as String?;
+      serverMessage =
+          responseData['error'] as String? ??
+          responseData['message'] as String?;
     }
-    
+
     if (serverMessage != null && serverMessage.isNotEmpty) {
       return serverMessage;
     }
-    
+
     // Messages par défaut selon le code HTTP
     switch (statusCode) {
       case 400:
@@ -109,32 +112,35 @@ class ErrorMessageService {
   /// Gère les exceptions standard
   String _handleException(Exception error) {
     final errorMessage = error.toString().toLowerCase();
-    
+
     // Erreurs d'authentification
-    if (errorMessage.contains('auth') || errorMessage.contains('authentification')) {
+    if (errorMessage.contains('auth') ||
+        errorMessage.contains('authentification')) {
       return 'Erreur d\'authentification. Veuillez vous reconnecter.';
     }
-    
+
     // Erreurs de validation
-    if (errorMessage.contains('validation') || errorMessage.contains('invalid')) {
+    if (errorMessage.contains('validation') ||
+        errorMessage.contains('invalid')) {
       return 'Les données fournies sont invalides.';
     }
-    
+
     // Erreurs de réseau
-    if (errorMessage.contains('network') || errorMessage.contains('connection')) {
+    if (errorMessage.contains('network') ||
+        errorMessage.contains('connection')) {
       return 'Erreur de connexion. Vérifiez votre connexion internet.';
     }
-    
+
     // Erreurs de timeout
     if (errorMessage.contains('timeout')) {
       return 'Le délai d\'attente a expiré. Veuillez réessayer.';
     }
-    
+
     // Erreurs de paiement
     if (errorMessage.contains('payment') || errorMessage.contains('stripe')) {
       return 'Erreur de paiement. Vérifiez vos informations de paiement.';
     }
-    
+
     // Message générique
     return 'Une erreur s\'est produite: ${error.toString()}';
   }
@@ -154,9 +160,8 @@ class ErrorMessageService {
 
   /// Obtient un message d'erreur pour un contexte spécifique
   String getContextMessage(String context, {String? customMessage}) {
-    return customMessage ?? 
-           contextMessages[context] ?? 
-           'Une erreur s\'est produite. Veuillez réessayer.';
+    return customMessage ??
+        contextMessages[context] ??
+        'Une erreur s\'est produite. Veuillez réessayer.';
   }
 }
-

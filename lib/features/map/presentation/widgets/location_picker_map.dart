@@ -94,18 +94,10 @@ class _LocationPickerMapState extends ConsumerState<LocationPickerMap> {
                       ),
                     ],
                   ),
-                  child: const Icon(
-                    Icons.place,
-                    color: Colors.white,
-                    size: 24,
-                  ),
+                  child: const Icon(Icons.place, color: Colors.white, size: 24),
                 ),
                 const SizedBox(height: 4),
-                Container(
-                  width: 2,
-                  height: 20,
-                  color: AppColors.primary,
-                ),
+                Container(width: 2, height: 20, color: AppColors.primary),
               ],
             ),
           ),
@@ -138,7 +130,7 @@ class _LocationPickerMapState extends ConsumerState<LocationPickerMap> {
                   child: TextField(
                     controller: _searchController,
                     decoration: const InputDecoration(
- hintText: 'Rechercher une adresse...',
+                      hintText: 'Rechercher une adresse...',
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(horizontal: 16),
                     ),
@@ -190,8 +182,8 @@ class _LocationPickerMapState extends ConsumerState<LocationPickerMap> {
                 Expanded(
                   child: Text(
                     _selectedLat != null
- ? 'Emplacement sélectionné \nAppuyez sur la carte pour changer'
- : 'Appuyez sur la carte pour sélectionner un emplacement',
+                        ? 'Emplacement sélectionné \nAppuyez sur la carte pour changer'
+                        : 'Appuyez sur la carte pour sélectionner un emplacement',
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),
@@ -203,4 +195,3 @@ class _LocationPickerMapState extends ConsumerState<LocationPickerMap> {
     );
   }
 }
-

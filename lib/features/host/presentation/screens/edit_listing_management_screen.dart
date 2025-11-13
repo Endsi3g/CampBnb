@@ -10,10 +10,7 @@ import 'add_listing_screen.dart';
 class EditListingManagementScreen extends ConsumerStatefulWidget {
   final ListingModel listing;
 
-  const EditListingManagementScreen({
-    super.key,
-    required this.listing,
-  });
+  const EditListingManagementScreen({super.key, required this.listing});
 
   @override
   ConsumerState<EditListingManagementScreen> createState() =>
@@ -44,23 +41,23 @@ class _EditListingManagementScreenState
             // Image principale
             _buildImageSection(),
             const SizedBox(height: 24),
-            
+
             // Informations de base
             _buildBasicInfoSection(),
             const SizedBox(height: 24),
-            
+
             // Localisation
             _buildLocationSection(),
             const SizedBox(height: 24),
-            
+
             // Prix et capacité
             _buildPricingSection(),
             const SizedBox(height: 24),
-            
+
             // Équipements
             _buildAmenitiesSection(),
             const SizedBox(height: 32),
-            
+
             // Actions
             CustomButton(
               text: 'Enregistrer les modifications',
@@ -93,10 +90,7 @@ class _EditListingManagementScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Images',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Images', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           height: 200,
@@ -136,10 +130,7 @@ class _EditListingManagementScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Informations de base',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Informations de base', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         _buildInfoRow('Titre', widget.listing.title),
         const Divider(),
@@ -154,10 +145,7 @@ class _EditListingManagementScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Localisation',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Localisation', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
@@ -185,10 +173,7 @@ class _EditListingManagementScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Prix et capacité',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Prix et capacité', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
@@ -198,7 +183,10 @@ class _EditListingManagementScreenState
           ),
           child: Column(
             children: [
-              _buildInfoRow('Prix par nuit', '${widget.listing.pricePerNight} \$'),
+              _buildInfoRow(
+                'Prix par nuit',
+                '${widget.listing.pricePerNight} \$',
+              ),
               const Divider(),
               _buildInfoRow('Invités max', '${widget.listing.maxGuests}'),
               const Divider(),
@@ -216,10 +204,7 @@ class _EditListingManagementScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Équipements',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Équipements', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
@@ -273,14 +258,12 @@ class _EditListingManagementScreenState
             onPressed: () {
               // TODO: Implémenter suppression
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Camping supprimé')),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Camping supprimé')));
               Navigator.pop(context);
             },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Supprimer'),
           ),
         ],
@@ -288,4 +271,3 @@ class _EditListingManagementScreenState
     );
   }
 }
-

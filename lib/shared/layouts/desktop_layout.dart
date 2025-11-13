@@ -90,9 +90,11 @@ class _DesktopLayoutState extends State<DesktopLayout> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    icon: Icon(_sidebarExpanded
-                        ? Icons.chevron_left
-                        : Icons.chevron_right),
+                    icon: Icon(
+                      _sidebarExpanded
+                          ? Icons.chevron_left
+                          : Icons.chevron_right,
+                    ),
                     onPressed: () {
                       setState(() {
                         _sidebarExpanded = !_sidebarExpanded;
@@ -110,12 +112,9 @@ class _DesktopLayoutState extends State<DesktopLayout> {
           ),
           const VerticalDivider(thickness: 1, width: 1),
           // Contenu principal
-          Expanded(
-            child: widget.child,
-          ),
+          Expanded(child: widget.child),
         ],
       ),
     );
   }
 }
-

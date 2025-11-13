@@ -36,58 +36,58 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return AnalyticsTracker(
- screenName: 'search',
- screenClass: 'SearchScreen',
+      screenName: 'search',
+      screenClass: 'SearchScreen',
       child: Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: TextField(
-          controller: _searchController,
-          autofocus: true,
-          decoration: InputDecoration(
- hintText: 'Rechercher...',
-            border: InputBorder.none,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          onSubmitted: _handleSearch,
-          onChanged: (value) {
-            if (value.isNotEmpty) {
-              _handleSearch(value);
-            }
-          },
-        ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          // TODO: Intégrer la recherche intelligente avec Gemini
-          // TODO: Afficher les résultats de recherche
-          ListingCard(
-            listing: ListingModel(
- id: '1',
- hostId: '1',
- title: 'Résultat de recherche',
- description: 'Description',
-              type: ListingType.tent,
-              latitude: 46.5,
-              longitude: -75.5,
- address: 'Adresse',
- city: 'Ville',
- province: 'QC',
- postalCode: 'H1A 1A1',
-              pricePerNight: 50.0,
-              maxGuests: 4,
-              bedrooms: 1,
-              bathrooms: 1,
-              images: [],
-              amenities: [],
+          title: TextField(
+            controller: _searchController,
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: 'Rechercher...',
+              border: InputBorder.none,
             ),
-            onTap: () {},
+            onSubmitted: _handleSearch,
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                _handleSearch(value);
+              }
+            },
           ),
-        ],
-      ),
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            // TODO: Intégrer la recherche intelligente avec Gemini
+            // TODO: Afficher les résultats de recherche
+            ListingCard(
+              listing: ListingModel(
+                id: '1',
+                hostId: '1',
+                title: 'Résultat de recherche',
+                description: 'Description',
+                type: ListingType.tent,
+                latitude: 46.5,
+                longitude: -75.5,
+                address: 'Adresse',
+                city: 'Ville',
+                province: 'QC',
+                postalCode: 'H1A 1A1',
+                pricePerNight: 50.0,
+                maxGuests: 4,
+                bedrooms: 1,
+                bathrooms: 1,
+                images: [],
+                amenities: [],
+              ),
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -102,16 +102,11 @@ class _SearchAnalyticsMixin with AnalyticsMixin {
     int? resultsCount,
   }) async {
     await AnalyticsService.instance.logEvent(
- eventName: 'search',
- eventCategory: 'interaction',
- eventType: 'search',
- screenName: 'search',
-      properties: {
- 'query': query,
- 'results_count': resultsCount,
-        ...?filters,
-      },
+      eventName: 'search',
+      eventCategory: 'interaction',
+      eventType: 'search',
+      screenName: 'search',
+      properties: {'query': query, 'results_count': resultsCount, ...?filters},
     );
   }
 }
-

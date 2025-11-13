@@ -277,4 +277,4 @@ CREATE POLICY "Hosts can delete own campsites"
 SELECT 'Migration complète appliquée avec succès !' AS message,
        'Table profiles créée' AS profiles_status,
        'Table campsites créée' AS campsites_status;
-
+   

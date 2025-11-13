@@ -16,13 +16,13 @@ class AdvancedSearchScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
- title: const Text('Filtres avancés'),
+        title: const Text('Filtres avancés'),
         actions: [
           TextButton(
             onPressed: () {
               notifier.clearFilters();
             },
- child: const Text('Réinitialiser'),
+            child: const Text('Réinitialiser'),
           ),
         ],
       ),
@@ -32,7 +32,7 @@ class AdvancedSearchScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Type de camping
- Text('Type de camping', style: AppTextStyles.h4),
+            Text('Type de camping', style: AppTextStyles.h4),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
@@ -55,15 +55,15 @@ class AdvancedSearchScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             // Prix
- Text('Prix par nuit', style: AppTextStyles.h4),
+            Text('Prix par nuit', style: AppTextStyles.h4),
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: TextField(
                     decoration: const InputDecoration(
- labelText: 'Min',
- prefixText: '\$',
+                      labelText: 'Min',
+                      prefixText: '\$',
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
@@ -78,8 +78,8 @@ class AdvancedSearchScreen extends ConsumerWidget {
                 Expanded(
                   child: TextField(
                     decoration: const InputDecoration(
- labelText: 'Max',
- prefixText: '\$',
+                      labelText: 'Max',
+                      prefixText: '\$',
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
@@ -94,53 +94,56 @@ class AdvancedSearchScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             // Région
- Text('Région', style: AppTextStyles.h4),
+            Text('Région', style: AppTextStyles.h4),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
               value: filters.region,
               decoration: const InputDecoration(
- hintText: 'Sélectionner une région',
+                hintText: 'Sélectionner une région',
               ),
               items: const [
- DropdownMenuItem(value: 'montreal', child: Text('Montréal')),
- DropdownMenuItem(value: 'quebec', child: Text('Québec')),
- DropdownMenuItem(value: 'laurentides', child: Text('Laurentides')),
- DropdownMenuItem(value: 'gaspesie', child: Text('Gaspésie')),
- DropdownMenuItem(value: 'saguenay', child: Text('Saguenay')),
+                DropdownMenuItem(value: 'montreal', child: Text('Montréal')),
+                DropdownMenuItem(value: 'quebec', child: Text('Québec')),
+                DropdownMenuItem(
+                  value: 'laurentides',
+                  child: Text('Laurentides'),
+                ),
+                DropdownMenuItem(value: 'gaspesie', child: Text('Gaspésie')),
+                DropdownMenuItem(value: 'saguenay', child: Text('Saguenay')),
               ],
               onChanged: (value) => notifier.setRegion(value),
             ),
             const SizedBox(height: 24),
- // Nombre d'invités
- Text('Nombre d\'invités', style: AppTextStyles.h4),
+            // Nombre d'invités
+            Text('Nombre d\'invités', style: AppTextStyles.h4),
             const SizedBox(height: 8),
             Slider(
               value: (filters.minGuests ?? 1).toDouble(),
               min: 1,
               max: 10,
               divisions: 9,
- label: '${filters.minGuests ?? 1} invités',
+              label: '${filters.minGuests ?? 1} invités',
               onChanged: (value) {
                 notifier.setMinGuests(value.toInt());
               },
             ),
             const SizedBox(height: 24),
             // Note minimum
- Text('Note minimum', style: AppTextStyles.h4),
+            Text('Note minimum', style: AppTextStyles.h4),
             const SizedBox(height: 8),
             Slider(
               value: filters.minRating ?? 0.0,
               min: 0,
               max: 5,
               divisions: 10,
- label: '${(filters.minRating ?? 0.0).toStringAsFixed(1)} ⭐',
+              label: '${(filters.minRating ?? 0.0).toStringAsFixed(1)} ⭐',
               onChanged: (value) {
                 notifier.setMinRating(value);
               },
             ),
             const SizedBox(height: 32),
             CustomButton(
- text: 'Appliquer les filtres',
+              text: 'Appliquer les filtres',
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -154,14 +157,13 @@ class AdvancedSearchScreen extends ConsumerWidget {
   String _getTypeLabel(ListingType type) {
     switch (type) {
       case ListingType.tent:
- return 'Tente';
+        return 'Tente';
       case ListingType.rv:
- return 'VR';
+        return 'VR';
       case ListingType.readyToCamp:
- return 'Prêt-à-camper';
+        return 'Prêt-à-camper';
       case ListingType.wild:
- return 'Sauvage';
+        return 'Sauvage';
     }
   }
 }
-

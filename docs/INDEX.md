@@ -69,11 +69,9 @@ Index complet de toute la documentation Campbnb Québec.
 ### 📚 Documentation Projet
 
 - [README Principal](../README.md)
-- [Résumé du Projet](../PROJET_RESUME.md)
-- [Documentation API](../API_DOCUMENTATION.md)
-- [Intégration Gemini](../GEMINI_INTEGRATION.md)
-- [Intégration Mapbox](../INTEGRATION_MAPBOX_SUMMARY.md)
-- [Overseer](../OVERSEER.md)
+- [Architecture du Projet](ARCHITECTURE.md)
+- [Documentation API](API.md)
+- [Structure des Packages](../PACKAGES_STRUCTURE.md)
 
 ## 🔍 Recherche par Sujet
 
@@ -95,12 +93,10 @@ Index complet de toute la documentation Campbnb Québec.
 ### IA et Recherche
 - [Module IA](technical/modules/ai-module.md)
 - [Agent IA](technical/agents/ai-agent.md)
-- [Intégration Gemini](../GEMINI_INTEGRATION.md)
 
 ### Cartes et Géolocalisation
 - [Module Cartes](technical/modules/map-module.md)
 - [Agent Mapbox](technical/agents/mapbox-agent.md)
-- [Intégration Mapbox](../INTEGRATION_MAPBOX_SUMMARY.md)
 
 ## 📖 Par Rôle
 
@@ -120,7 +116,8 @@ Index complet de toute la documentation Campbnb Québec.
 1. [Architecture](ARCHITECTURE.md)
 2. [Configuration](SETUP.md)
 3. [Documentation Technique](technical/README.md)
-4. [API Documentation](../API_DOCUMENTATION.md)
+4. [API Documentation](API.md)
+5. [Structure Monorepo](../PACKAGES_STRUCTURE.md)
 
 ### DevOps
 1. [Déploiement](DEPLOYMENT.md)

@@ -42,7 +42,9 @@ class _ChatConversationScreenState
     final currentUserId = SupabaseService.client.auth.currentUser?.id;
 
     // Marquer comme lu au chargement
-    ref.read(messageNotifierProvider.notifier).markAsRead(widget.conversationId);
+    ref
+        .read(messageNotifierProvider.notifier)
+        .markAsRead(widget.conversationId);
 
     return Scaffold(
       appBar: AppBar(
@@ -110,14 +112,12 @@ class _ChatConversationScreenState
               error: (error, stack) => Center(
                 child: Text(
                   'Erreur: $error',
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: Colors.red,
-                  ),
+                  style: AppTextStyles.bodyMedium.copyWith(color: Colors.red),
                 ),
               ),
             ),
           ),
-          
+
           // Input
           Container(
             padding: const EdgeInsets.all(16),
@@ -175,7 +175,7 @@ class _ChatConversationScreenState
 
     final notifier = ref.read(messageNotifierProvider.notifier);
     final currentUserId = SupabaseService.client.auth.currentUser?.id;
-    
+
     if (currentUserId == null) return;
 
     // Extraire le receiverId depuis le conversationId ou utiliser un mock
@@ -189,7 +189,7 @@ class _ChatConversationScreenState
     );
 
     _messageController.clear();
-    
+
     // Scroll vers le bas
     Future.delayed(const Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
@@ -204,7 +204,7 @@ class _ChatConversationScreenState
 
   Widget _buildMessageBubble(MessageModel message, bool isMe) {
     final timeFormat = DateFormat('HH:mm');
-    
+
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -244,4 +244,3 @@ class _ChatConversationScreenState
     );
   }
 }
-

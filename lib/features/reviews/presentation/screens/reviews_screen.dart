@@ -7,10 +7,7 @@ import '../../../../shared/models/review_model.dart';
 class ReviewsScreen extends StatelessWidget {
   final String listingId;
 
-  const ReviewsScreen({
-    super.key,
-    required this.listingId,
-  });
+  const ReviewsScreen({super.key, required this.listingId});
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +15,20 @@ class ReviewsScreen extends StatelessWidget {
     final reviews = <ReviewModel>[];
 
     return Scaffold(
-      appBar: AppBar(
- title: const Text('Avis'),
-      ),
+      appBar: AppBar(title: const Text('Avis')),
       body: reviews.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.reviews, size: 64, color: AppColors.textSecondaryLight),
+                  Icon(
+                    Icons.reviews,
+                    size: 64,
+                    color: AppColors.textSecondaryLight,
+                  ),
                   const SizedBox(height: 16),
                   Text(
- 'Aucun avis pour le moment',
+                    'Aucun avis pour le moment',
                     style: AppTextStyles.bodyLarge.copyWith(
                       color: AppColors.textSecondaryLight,
                     ),
@@ -81,7 +80,9 @@ class ReviewsScreen extends StatelessWidget {
                         children: List.generate(
                           5,
                           (index) => Icon(
-                            index < review.rating ? Icons.star : Icons.star_border,
+                            index < review.rating
+                                ? Icons.star
+                                : Icons.star_border,
                             size: 16,
                             color: AppColors.warning,
                           ),
@@ -99,10 +100,7 @@ class ReviewsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Text(
-              review.comment,
-              style: AppTextStyles.bodyMedium,
-            ),
+            Text(review.comment, style: AppTextStyles.bodyMedium),
             if (review.hostResponse != null) ...[
               const SizedBox(height: 12),
               Container(
@@ -115,16 +113,13 @@ class ReviewsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
- 'Réponse de l\'hôte',
+                      'Réponse de l\'hôte',
                       style: AppTextStyles.labelMedium.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      review.hostResponse!,
-                      style: AppTextStyles.bodySmall,
-                    ),
+                    Text(review.hostResponse!, style: AppTextStyles.bodySmall),
                   ],
                 ),
               ),
@@ -140,14 +135,13 @@ class ReviewsScreen extends StatelessWidget {
     final difference = now.difference(date);
 
     if (difference.inDays == 0) {
- return 'Aujourd\'hui';
+      return 'Aujourd\'hui';
     } else if (difference.inDays == 1) {
- return 'Hier';
+      return 'Hier';
     } else if (difference.inDays < 7) {
- return 'Il y a ${difference.inDays} jours';
+      return 'Il y a ${difference.inDays} jours';
     } else {
- return '${date.day}/${date.month}/${date.year}';
+      return '${date.day}/${date.month}/${date.year}';
     }
   }
 }
-

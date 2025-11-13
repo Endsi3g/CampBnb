@@ -12,7 +12,7 @@ class OfflineService {
     if (_initialized) return;
 
     await Hive.initFlutter();
- _cacheBox = await Hive.openBox('campbnb_cache');
+    _cacheBox = await Hive.openBox('campbnb_cache');
     _initialized = true;
   }
 
@@ -25,9 +25,9 @@ class OfflineService {
     if (_cacheBox == null) await initialize();
 
     final cacheData = {
- 'data': data,
- 'timestamp': DateTime.now().millisecondsSinceEpoch,
- 'expiry': expiry?.inMilliseconds,
+      'data': data,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'expiry': expiry?.inMilliseconds,
     };
 
     await _cacheBox!.put(key, jsonEncode(cacheData));
@@ -42,20 +42,20 @@ class OfflineService {
 
     try {
       final cacheData = jsonDecode(cached as String) as Map<String, dynamic>;
-      
- // Vérifier l'expiration
- if (cacheData['expiry'] != null) {
- final timestamp = cacheData['timestamp'] as int;
- final expiry = cacheData['expiry'] as int;
+
+      // Vérifier l'expiration
+      if (cacheData['expiry'] != null) {
+        final timestamp = cacheData['timestamp'] as int;
+        final expiry = cacheData['expiry'] as int;
         final now = DateTime.now().millisecondsSinceEpoch;
-        
+
         if (now - timestamp > expiry) {
           _cacheBox!.delete(key);
           return null;
         }
       }
 
- return cacheData['data'] as T;
+      return cacheData['data'] as T;
     } catch (e) {
       return null;
     }
@@ -85,4 +85,3 @@ class OfflineService {
     return _cacheBox!.keys.map((key) => key.toString()).toList();
   }
 }
-

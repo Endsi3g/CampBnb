@@ -3,19 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'listing_model.freezed.dart';
 part 'listing_model.g.dart';
 
-enum ListingType {
-  tent,
-  rv,
-  readyToCamp,
-  wild,
-}
+enum ListingType { tent, rv, readyToCamp, wild }
 
-enum ListingStatus {
-  active,
-  inactive,
-  pending,
-  rejected,
-}
+enum ListingStatus { active, inactive, pending, rejected }
 
 @freezed
 class ListingModel with _$ListingModel {
@@ -47,4 +37,3 @@ class ListingModel with _$ListingModel {
   factory ListingModel.fromJson(Map<String, dynamic> json) =>
       _$ListingModelFromJson(json);
 }
-

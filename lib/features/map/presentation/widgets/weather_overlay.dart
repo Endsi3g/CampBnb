@@ -37,9 +37,9 @@ class _WeatherOverlayState extends State<WeatherOverlay> {
   }
 
   Future<void> _loadWeather() async {
- // TODO: Configurer l'API météo (OpenWeatherMap, WeatherAPI, etc.)
- // Pour l'instant, retourne des données mockées
-    
+    // TODO: Configurer l'API météo (OpenWeatherMap, WeatherAPI, etc.)
+    // Pour l'instant, retourne des données mockées
+
     setState(() {
       _isLoading = false;
       // Données mockées pour le Québec
@@ -125,7 +125,7 @@ class _WeatherOverlayState extends State<WeatherOverlay> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
- '${_weather!.temperature}°C',
+                  '${_weather!.temperature}°C',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -133,10 +133,7 @@ class _WeatherOverlayState extends State<WeatherOverlay> {
                 ),
                 Text(
                   _weather!.condition,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -164,9 +161,9 @@ class WeatherData {
   });
 
   factory WeatherData.fromOpenWeatherMap(Map<String, dynamic> data) {
- final main = data['main'] as Map<String, dynamic>;
- final weather = (data['weather'] as List).first as Map<String, dynamic>;
- final wind = data['wind'] as Map<String, dynamic>?;
+    final main = data['main'] as Map<String, dynamic>;
+    final weather = (data['weather'] as List).first as Map<String, dynamic>;
+    final wind = data['wind'] as Map<String, dynamic>?;
 
     return WeatherData(
       temperature: (main['temp'] as num).toDouble(),
@@ -181,13 +178,13 @@ class WeatherData {
     // Mapping des codes OpenWeatherMap vers icônes Material
     if (code.startsWith('01')) return Icons.wb_sunny; // Clear sky
     if (code.startsWith('02')) return Icons.wb_cloudy; // Few clouds
-    if (code.startsWith('03') || code.startsWith('04')) return Icons.cloud; // Clouds
-    if (code.startsWith('09') || code.startsWith('10')) return Icons.grain; // Rain
+    if (code.startsWith('03') || code.startsWith('04'))
+      return Icons.cloud; // Clouds
+    if (code.startsWith('09') || code.startsWith('10'))
+      return Icons.grain; // Rain
     if (code.startsWith('11')) return Icons.flash_on; // Thunderstorm
     if (code.startsWith('13')) return Icons.ac_unit; // Snow
     if (code.startsWith('50')) return Icons.blur_on; // Mist
     return Icons.wb_sunny;
   }
 }
-
-

@@ -12,8 +12,8 @@ class EncryptionService {
   static final EncryptionService instance = EncryptionService._();
 
   static const _storage = FlutterSecureStorage();
- static const _keyStorageKey = 'encryption_key';
-  
+  static const _keyStorageKey = 'encryption_key';
+
   encrypt.Encrypter? _encrypter;
   encrypt.Key? _key;
 
@@ -22,7 +22,7 @@ class EncryptionService {
     try {
       // Récupérer ou générer la clé de chiffrement
       final storedKey = await _storage.read(key: _keyStorageKey);
-      
+
       if (storedKey != null) {
         _key = encrypt.Key.fromBase64(storedKey);
       } else {
@@ -36,7 +36,7 @@ class EncryptionService {
       final iv = encrypt.IV.fromSecureRandom(16);
       _encrypter = encrypt.Encrypter(encrypt.AES(_key!));
     } catch (e) {
- AppConfig.logger.e('Erreur lors de l\'initialisation du chiffrement: $e');
+      AppConfig.logger.e('Erreur lors de l\'initialisation du chiffrement: $e');
       rethrow;
     }
   }
@@ -44,16 +44,16 @@ class EncryptionService {
   /// Chiffre une chaîne de caractères
   String encryptString(String plainText) {
     if (_encrypter == null || _key == null) {
- throw Exception('EncryptionService non initialisé');
+      throw Exception('EncryptionService non initialisé');
     }
 
     try {
       final iv = encrypt.IV.fromSecureRandom(16);
       final encrypted = _encrypter!.encrypt(plainText, iv: iv);
       // Retourner IV + données chiffrées en base64
- return '${iv.base64}:${encrypted.base64}';
+      return '${iv.base64}:${encrypted.base64}';
     } catch (e) {
- AppConfig.logger.e('Erreur lors du chiffrement: $e');
+      AppConfig.logger.e('Erreur lors du chiffrement: $e');
       rethrow;
     }
   }
@@ -61,20 +61,20 @@ class EncryptionService {
   /// Déchiffre une chaîne de caractères
   String decryptString(String encryptedData) {
     if (_encrypter == null || _key == null) {
- throw Exception('EncryptionService non initialisé');
+      throw Exception('EncryptionService non initialisé');
     }
 
     try {
- final parts = encryptedData.split(':');
+      final parts = encryptedData.split(':');
       if (parts.length != 2) {
- throw Exception('Format de données chiffrées invalide');
+        throw Exception('Format de données chiffrées invalide');
       }
 
       final iv = encrypt.IV.fromBase64(parts[0]);
       final encrypted = encrypt.Encrypted.fromBase64(parts[1]);
       return _encrypter!.decrypt(encrypted, iv: iv);
     } catch (e) {
- AppConfig.logger.e('Erreur lors du déchiffrement: $e');
+      AppConfig.logger.e('Erreur lors du déchiffrement: $e');
       rethrow;
     }
   }
@@ -82,7 +82,7 @@ class EncryptionService {
   /// Chiffre des données binaires
   Uint8List encryptBytes(Uint8List plainBytes) {
     if (_encrypter == null || _key == null) {
- throw Exception('EncryptionService non initialisé');
+      throw Exception('EncryptionService non initialisé');
     }
 
     try {
@@ -94,7 +94,7 @@ class EncryptionService {
       result.setRange(16, result.length, encrypted);
       return result;
     } catch (e) {
- AppConfig.logger.e('Erreur lors du chiffrement de bytes: $e');
+      AppConfig.logger.e('Erreur lors du chiffrement de bytes: $e');
       rethrow;
     }
   }
@@ -102,7 +102,7 @@ class EncryptionService {
   /// Déchiffre des données binaires
   Uint8List decryptBytes(Uint8List encryptedBytes) {
     if (_encrypter == null || _key == null) {
- throw Exception('EncryptionService non initialisé');
+      throw Exception('EncryptionService non initialisé');
     }
 
     try {
@@ -110,14 +110,14 @@ class EncryptionService {
       final encrypted = encryptedBytes.sublist(16);
       return _encrypter!.decryptBytes(encrypt.Encrypted(encrypted), iv: iv);
     } catch (e) {
- AppConfig.logger.e('Erreur lors du déchiffrement de bytes: $e');
+      AppConfig.logger.e('Erreur lors du déchiffrement de bytes: $e');
       rethrow;
     }
   }
 
   /// Hash une valeur (pour les mots de passe, etc.)
   String hashValue(String value, {String? salt}) {
- final bytes = utf8.encode(value + (salt ?? ''));
+    final bytes = utf8.encode(value + (salt ?? ''));
     final digest = sha256.convert(bytes);
     return digest.toString();
   }
@@ -135,5 +135,3 @@ class EncryptionService {
     _encrypter = null;
   }
 }
-
-

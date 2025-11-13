@@ -14,7 +14,8 @@ import '../../shared/models/user_model.dart';
 
 /// Service de monitoring d'erreurs centralisé
 class ErrorMonitoringService {
-  static final ErrorMonitoringService _instance = ErrorMonitoringService._internal();
+  static final ErrorMonitoringService _instance =
+      ErrorMonitoringService._internal();
   factory ErrorMonitoringService() => _instance;
   ErrorMonitoringService._internal();
 
@@ -43,11 +44,14 @@ class ErrorMonitoringService {
         await SentryFlutter.init(
           (options) {
             options.dsn = sentryDsn;
- options.environment = AppConfig.isProduction ? 'production' : 'development';
- options.release = '${packageInfo.packageName}@${packageInfo.version}+${packageInfo.buildNumber}';
+            options.environment = AppConfig.isProduction
+                ? 'production'
+                : 'development';
+            options.release =
+                '${packageInfo.packageName}@${packageInfo.version}+${packageInfo.buildNumber}';
             options.tracesSampleRate = AppConfig.isProduction ? 0.1 : 1.0;
             options.profilesSampleRate = AppConfig.isProduction ? 0.1 : 1.0;
-            
+
             // Configuration des filtres
             options.beforeSend = (event, {hint}) {
               // Filtrer les données sensibles (RGPD)
@@ -56,10 +60,10 @@ class ErrorMonitoringService {
 
             // Tags par défaut
             options.tags = {
- 'platform': Platform.operatingSystem,
- 'platform_version': Platform.operatingSystemVersion,
- 'app_version': _appVersion ?? 'unknown',
- 'build_number': _buildNumber ?? 'unknown',
+              'platform': Platform.operatingSystem,
+              'platform_version': Platform.operatingSystemVersion,
+              'app_version': _appVersion ?? 'unknown',
+              'build_number': _buildNumber ?? 'unknown',
             };
           },
           appRunner: () {}, // Sera remplacé dans main.dart
@@ -72,9 +76,13 @@ class ErrorMonitoringService {
       }
 
       _initialized = true;
- AppConfig.logger.i(' ErrorMonitoringService initialisé avec succès');
+      AppConfig.logger.i(' ErrorMonitoringService initialisé avec succès');
     } catch (e, stackTrace) {
- AppConfig.logger.e(' Erreur lors de l\'initialisation du monitoring', error: e, stackTrace: stackTrace);
+      AppConfig.logger.e(
+        ' Erreur lors de l\'initialisation du monitoring',
+        error: e,
+        stackTrace: stackTrace,
+      );
     }
   }
 
@@ -91,19 +99,19 @@ class ErrorMonitoringService {
       // Context enrichi
       final enrichedContext = <String, dynamic>{
         ...?context,
- 'app_version': _appVersion,
- 'build_number': _buildNumber,
- 'platform': Platform.operatingSystem,
- 'timestamp': DateTime.now().toIso8601String(),
+        'app_version': _appVersion,
+        'build_number': _buildNumber,
+        'platform': Platform.operatingSystem,
+        'timestamp': DateTime.now().toIso8601String(),
       };
 
       // Ajouter les informations utilisateur si disponibles
       if (userId != null || userEmail != null || _currentUser != null) {
         final user = _currentUser;
- enrichedContext['user'] = {
- 'id': userId ?? user?.id,
- 'email': userEmail ?? user?.email,
- 'is_host': user?.isHost ?? false,
+        enrichedContext['user'] = {
+          'id': userId ?? user?.id,
+          'email': userEmail ?? user?.email,
+          'is_host': user?.isHost ?? false,
         };
       }
 
@@ -119,19 +127,19 @@ class ErrorMonitoringService {
 
       // Logger avec le logger standard
       AppConfig.logger.e(
- 'Exception capturée: ${exception.toString()}',
+        'Exception capturée: ${exception.toString()}',
         error: exception,
         stackTrace: stackTrace,
       );
 
       return sentryId.toString();
     } catch (e) {
- AppConfig.logger.e('Erreur lors de la capture d\'exception', error: e);
+      AppConfig.logger.e('Erreur lors de la capture d\'exception', error: e);
       return null;
     }
   }
 
- /// Capture un message d'erreur
+  /// Capture un message d'erreur
   Future<String?> captureMessage(
     String message, {
     SentryLevel level = SentryLevel.error,
@@ -140,9 +148,9 @@ class ErrorMonitoringService {
     try {
       final enrichedContext = <String, dynamic>{
         ...?context,
- 'app_version': _appVersion,
- 'build_number': _buildNumber,
- 'timestamp': DateTime.now().toIso8601String(),
+        'app_version': _appVersion,
+        'build_number': _buildNumber,
+        'timestamp': DateTime.now().toIso8601String(),
       };
 
       final sentryId = await Sentry.captureMessage(
@@ -156,7 +164,7 @@ class ErrorMonitoringService {
 
       return sentryId.toString();
     } catch (e) {
- AppConfig.logger.e('Erreur lors de la capture de message', error: e);
+      AppConfig.logger.e('Erreur lors de la capture de message', error: e);
       return null;
     }
   }
@@ -172,15 +180,15 @@ class ErrorMonitoringService {
     StackTrace? stackTrace,
   }) async {
     return await captureException(
- exception ?? 'Network Error: $statusCode',
+      exception ?? 'Network Error: $statusCode',
       stackTrace: stackTrace,
       context: {
- 'type': 'network_error',
- 'url': url,
- 'method': method ?? 'GET',
- 'status_code': statusCode,
- 'request_data': requestData,
- 'response_body': responseBody?.substring(0, 500), // Limiter la taille
+        'type': 'network_error',
+        'url': url,
+        'method': method ?? 'GET',
+        'status_code': statusCode,
+        'request_data': requestData,
+        'response_body': responseBody?.substring(0, 500), // Limiter la taille
       },
       severity: _getSeverityFromStatusCode(statusCode),
     );
@@ -194,32 +202,34 @@ class ErrorMonitoringService {
   }) async {
     if (duration.inMilliseconds > 3000) {
       await captureMessage(
- 'Performance issue: $operation took ${duration.inMilliseconds}ms',
+        'Performance issue: $operation took ${duration.inMilliseconds}ms',
         level: SentryLevel.warning,
         context: {
- 'type': 'performance',
- 'operation': operation,
- 'duration_ms': duration.inMilliseconds,
- 'context': context,
+          'type': 'performance',
+          'operation': operation,
+          'duration_ms': duration.inMilliseconds,
+          'context': context,
         },
       );
     }
   }
 
- /// Définit l'utilisateur actuel pour le contexte
+  /// Définit l'utilisateur actuel pour le contexte
   void setUser(UserModel? user) {
     _currentUser = user;
     if (user != null) {
       Sentry.configureScope((scope) {
-        scope.setUser(SentryUser(
-          id: user.id,
-          email: user.email,
-          username: user.fullName,
-          data: {
- 'is_host': user.isHost,
- 'created_at': user.createdAt?.toIso8601String(),
-          },
-        ));
+        scope.setUser(
+          SentryUser(
+            id: user.id,
+            email: user.email,
+            username: user.fullName,
+            data: {
+              'is_host': user.isHost,
+              'created_at': user.createdAt?.toIso8601String(),
+            },
+          ),
+        );
       });
     } else {
       Sentry.configureScope((scope) {
@@ -242,7 +252,7 @@ class ErrorMonitoringService {
     });
   }
 
- /// Crée un breadcrumb (trace d'action)
+  /// Crée un breadcrumb (trace d'action)
   void addBreadcrumb({
     required String message,
     String? category,
@@ -252,7 +262,7 @@ class ErrorMonitoringService {
     Sentry.addBreadcrumb(
       Breadcrumb(
         message: message,
- category: category ?? 'navigation',
+        category: category ?? 'navigation',
         level: level,
         data: data,
         timestamp: DateTime.now(),
@@ -266,18 +276,14 @@ class ErrorMonitoringService {
     String operation, {
     Map<String, dynamic>? data,
   }) {
-    return Sentry.startTransaction(
-      name,
-      operation,
-      bindToScope: true,
-    );
+    return Sentry.startTransaction(name, operation, bindToScope: true);
   }
 
- /// Obtient les statistiques d'erreurs
+  /// Obtient les statistiques d'erreurs
   Future<ErrorStats> getErrorStats() async {
- // Cette méthode pourrait interroger l'API Sentry ou une base locale
+    // Cette méthode pourrait interroger l'API Sentry ou une base locale
     return ErrorStats(
- totalErrors: 0, // À implémenter avec l'API Sentry
+      totalErrors: 0, // À implémenter avec l'API Sentry
       errorsLast24h: 0,
       crashesLast24h: 0,
       networkErrors: 0,
@@ -286,9 +292,9 @@ class ErrorMonitoringService {
 
   /// Nettoie les données sensibles pour la conformité RGPD
   static SentryEvent? _sanitizeEvent(SentryEvent event) {
- // Vérifier le consentement RGPD avant d'envoyer
+    // Vérifier le consentement RGPD avant d'envoyer
     // (à implémenter avec GDPRService)
-    
+
     // Supprimer les données sensibles
     final sanitizedEvent = event.copyWith(
       request: event.request?.copyWith(
@@ -302,21 +308,21 @@ class ErrorMonitoringService {
       ),
       user: event.user?.copyWith(
         email: _anonymizeEmail(event.user?.email),
- ipAddress: null, // Ne pas envoyer l'IP
+        ipAddress: null, // Ne pas envoyer l'IP
       ),
     );
 
     return sanitizedEvent;
   }
 
- /// Anonymise l'email pour la conformité RGPD
+  /// Anonymise l'email pour la conformité RGPD
   static String? _anonymizeEmail(String? email) {
     if (email == null) return null;
     // Remplacer par un hash ou supprimer complètement
     // Exemple: user@example.com -> user_***@example.com
- final parts = email.split('@');
+    final parts = email.split('@');
     if (parts.length != 2) return null;
- return '${parts[0].substring(0, 2)}***@${parts[1]}';
+    return '${parts[0].substring(0, 2)}***@${parts[1]}';
   }
 
   static dynamic _sanitizeData(dynamic data) {
@@ -325,7 +331,7 @@ class ErrorMonitoringService {
       data.forEach((key, value) {
         // Ne pas envoyer les mots de passe, tokens, etc.
         if (_isSensitiveKey(key)) {
- sanitized[key] = '[REDACTED]';
+          sanitized[key] = '[REDACTED]';
         } else if (value is Map) {
           sanitized[key] = _sanitizeData(value);
         } else {
@@ -342,7 +348,7 @@ class ErrorMonitoringService {
     final sanitized = <String, String>{};
     headers.forEach((key, value) {
       if (_isSensitiveKey(key)) {
- sanitized[key] = '[REDACTED]';
+        sanitized[key] = '[REDACTED]';
       } else {
         sanitized[key] = value;
       }
@@ -352,18 +358,20 @@ class ErrorMonitoringService {
 
   static bool _isSensitiveKey(String key) {
     final sensitiveKeys = [
- 'password',
- 'token',
- 'secret',
- 'key',
- 'authorization',
- 'cookie',
- 'credit_card',
- 'cvv',
- 'ssn',
- 'api_key',
+      'password',
+      'token',
+      'secret',
+      'key',
+      'authorization',
+      'cookie',
+      'credit_card',
+      'cvv',
+      'ssn',
+      'api_key',
     ];
-    return sensitiveKeys.any((sensitive) => key.toLowerCase().contains(sensitive));
+    return sensitiveKeys.any(
+      (sensitive) => key.toLowerCase().contains(sensitive),
+    );
   }
 
   static ErrorSeverity _getSeverityFromStatusCode(int statusCode) {
@@ -374,12 +382,7 @@ class ErrorMonitoringService {
 }
 
 /// Niveaux de sévérité d'erreur
-enum ErrorSeverity {
-  info,
-  warning,
-  error,
-  fatal,
-}
+enum ErrorSeverity { info, warning, error, fatal }
 
 /// Statistiques d'erreurs
 class ErrorStats {
@@ -395,4 +398,3 @@ class ErrorStats {
     required this.networkErrors,
   });
 }
-

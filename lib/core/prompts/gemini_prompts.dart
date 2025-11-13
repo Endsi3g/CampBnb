@@ -9,7 +9,7 @@ class GeminiPrompts {
     String? preferences,
     String? groupType,
   }) {
- return '''
+    return '''
 Tu es un expert en camping au Québec. Propose-moi des spots de camping exceptionnels.
 
 Région: $region
@@ -38,7 +38,7 @@ Suggère 3-5 destinations pertinentes. Réponds uniquement en JSON, sans texte s
 
   /// Prompt pour analyser une recherche utilisateur
   static String searchAnalysis(String searchQuery) {
- return '''
+    return '''
 Analyse cette recherche de camping: "$searchQuery"
 
 Extrais et structure les informations suivantes en JSON:
@@ -63,7 +63,7 @@ Réponds uniquement en JSON, sans texte supplémentaire.
     String? preferences,
     String? budget,
   }) {
- return '''
+    return '''
 Crée un itinéraire de camping détaillé pour $destination sur $days jours.
 
 ${preferences != null ? 'Préférences: $preferences' : ''}
@@ -98,7 +98,7 @@ Réponds uniquement en JSON, sans texte supplémentaire.
 
   /// Prompt pour répondre à une FAQ
   static String faqResponse(String question, {String? context}) {
- return '''
+    return '''
 Tu es l'assistant de Campbnb Québec, une plateforme de réservation de campings.
 
 Question: $question
@@ -114,8 +114,8 @@ Réponds en français, de manière amicale et professionnelle.
 
   /// Prompt pour résumer des avis
   static String reviewSummary(List<String> reviews) {
- final reviewsText = reviews.join('\n---\n');
- return '''
+    final reviewsText = reviews.join('\n---\n');
+    return '''
 Analyse ces avis sur un camping et crée un résumé structuré:
 
 $reviewsText
@@ -142,8 +142,8 @@ Réponds uniquement en JSON, sans texte supplémentaire.
 
   /// Prompt pour traduire du texte
   static String translation(String text, {required String targetLanguage}) {
- final languageName = targetLanguage == 'en' ? 'anglais' : 'français';
- return '''
+    final languageName = targetLanguage == 'en' ? 'anglais' : 'français';
+    return '''
 Traduis ce texte en $languageName de manière naturelle et fluide, en préservant le ton et le contexte:
 
 "$text"
@@ -154,7 +154,7 @@ Réponds uniquement avec la traduction, sans texte supplémentaire.
 
   /// Prompt pour analyser une image de camping
   static String imageAnalysis(String imageDescription) {
- return '''
+    return '''
 Analyse cette image de camping: $imageDescription
 
 Extrais les informations suivantes en JSON:
@@ -176,7 +176,7 @@ Réponds uniquement en JSON, sans texte supplémentaire.
     required String location,
     String? preferences,
   }) {
- return '''
+    return '''
 Propose des expériences locales authentiques à découvrir près de $location.
 
 ${preferences != null ? 'Préférences: $preferences' : ''}
@@ -199,7 +199,7 @@ Propose 3-5 expériences variées. Réponds uniquement en JSON, sans texte suppl
   }
 
   /// Prompt système pour le chatbot contextuel
- static String get chatSystemPrompt => '''
+  static String get chatSystemPrompt => '''
 Tu es l'assistant IA de Campbnb Québec, une plateforme de réservation de campings au Québec.
 
 Ton rôle:
@@ -220,7 +220,7 @@ Si tu ne connais pas la réponse, suggère de contacter le support ou de consult
 
   /// Prompt pour le chatbot avec contexte utilisateur
   static String chatPrompt(String userMessage, {String? userContext}) {
- return '''
+    return '''
 ${userContext != null ? 'Contexte utilisateur: $userContext\n' : ''}
 Message utilisateur: $userMessage
 
@@ -228,5 +228,3 @@ Réponds de manière utile et contextuelle.
 ''';
   }
 }
-
-

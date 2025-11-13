@@ -9,30 +9,28 @@ class MessagingInboxScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
- title: const Text('Messages'),
-      ),
+      appBar: AppBar(title: const Text('Messages')),
       body: ListView(
         children: [
           _buildConversationTile(
             context,
- name: 'Jean Dupont',
- lastMessage: 'Bonjour, je suis intéressé par votre camping...',
- time: 'Il y a 2h',
+            name: 'Jean Dupont',
+            lastMessage: 'Bonjour, je suis intéressé par votre camping...',
+            time: 'Il y a 2h',
             unread: true,
           ),
           _buildConversationTile(
             context,
- name: 'Marie Tremblay',
- lastMessage: 'Merci pour votre réponse !',
- time: 'Hier',
+            name: 'Marie Tremblay',
+            lastMessage: 'Merci pour votre réponse !',
+            time: 'Hier',
             unread: false,
           ),
           _buildConversationTile(
             context,
- name: 'Pierre Gagnon',
- lastMessage: 'Parfait, à bientôt !',
- time: 'Il y a 3 jours',
+            name: 'Pierre Gagnon',
+            lastMessage: 'Parfait, à bientôt !',
+            time: 'Il y a 3 jours',
             unread: false,
           ),
         ],
@@ -98,4 +96,3 @@ class MessagingInboxScreen extends StatelessWidget {
     );
   }
 }
-

@@ -38,10 +38,7 @@ class _MapboxMapScreenState extends State<MapboxMapScreen> {
       final marker = PointAnnotation(
         id: listing.id,
         geometry: Point(
-          coordinates: Position(
-            listing.longitude,
-            listing.latitude,
-          ),
+          coordinates: Position(listing.longitude, listing.latitude),
         ),
         textField: listing.title,
         textSize: 12.0,
@@ -62,7 +59,7 @@ class _MapboxMapScreenState extends State<MapboxMapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MapWidget(
- key: const ValueKey('mapbox'),
+        key: const ValueKey('mapbox'),
         cameraOptions: CameraOptions(
           center: widget.selectedListing != null
               ? Point(
@@ -82,4 +79,3 @@ class _MapboxMapScreenState extends State<MapboxMapScreen> {
     );
   }
 }
-

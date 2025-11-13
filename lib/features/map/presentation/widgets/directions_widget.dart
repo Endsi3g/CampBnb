@@ -50,12 +50,12 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
         _route = route;
         _isLoading = false;
         if (route == null) {
- _error = 'Aucun itinéraire trouvé';
+          _error = 'Aucun itinéraire trouvé';
         }
       });
     } catch (e) {
       setState(() {
- _error = 'Erreur lors du chargement des directions';
+        _error = 'Erreur lors du chargement des directions';
         _isLoading = false;
       });
     }
@@ -76,7 +76,7 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _loadDirections,
- child: const Text('Réessayer'),
+              child: const Text('Réessayer'),
             ),
           ],
         ),
@@ -84,7 +84,7 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
     }
 
     if (_route == null) {
- return const Center(child: Text('Aucun itinéraire disponible'));
+      return const Center(child: Text('Aucun itinéraire disponible'));
     }
 
     return Container(
@@ -112,11 +112,8 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
- 'Distance',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
+                    'Distance',
+                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   ),
                   Text(
                     _route!.formattedDistance,
@@ -131,11 +128,8 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
- 'Durée',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
+                    'Durée',
+                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   ),
                   Text(
                     _route!.formattedDuration,
@@ -154,11 +148,8 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
           if (_route!.steps.isNotEmpty) ...[
             const Divider(),
             const Text(
- 'Itinéraire',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              'Itinéraire',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             ..._route!.steps.take(5).map((step) {
@@ -187,23 +178,23 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
                 onPressed: () {
                   // TODO: Afficher toutes les étapes
                 },
- child: const Text('Voir toutes les étapes'),
+                child: const Text('Voir toutes les étapes'),
               ),
           ],
 
- // Bouton d'action
+          // Bouton d'action
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
- // TODO: Ouvrir l'application de navigation
+                // TODO: Ouvrir l'application de navigation
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
               ),
- child: const Text('Ouvrir dans la navigation'),
+              child: const Text('Ouvrir dans la navigation'),
             ),
           ),
         ],
@@ -213,16 +204,14 @@ class _DirectionsWidgetState extends State<DirectionsWidget> {
 
   IconData _getManeuverIcon(String? maneuver) {
     switch (maneuver) {
- case 'turn':
+      case 'turn':
         return Icons.turn_right;
- case 'straight':
+      case 'straight':
         return Icons.straight;
- case 'arrive':
+      case 'arrive':
         return Icons.flag;
       default:
         return Icons.navigation;
     }
   }
 }
-
-

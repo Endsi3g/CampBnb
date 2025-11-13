@@ -7,11 +7,7 @@ class FAQAIWidget extends ConsumerStatefulWidget {
   final String question;
   final String? context;
 
-  const FAQAIWidget({
-    super.key,
-    required this.question,
-    this.context,
-  });
+  const FAQAIWidget({super.key, required this.question, this.context});
 
   @override
   ConsumerState<FAQAIWidget> createState() => _FAQAIWidgetState();
@@ -24,10 +20,7 @@ class _FAQAIWidgetState extends ConsumerState<FAQAIWidget> {
   Widget build(BuildContext context) {
     final answerAsync = ref.watch(
       faqResponseProvider(
-        FAQParams(
-          question: widget.question,
-          context: widget.context,
-        ),
+        FAQParams(question: widget.question, context: widget.context),
       ),
     );
 
@@ -81,7 +74,7 @@ class _FAQAIWidgetState extends ConsumerState<FAQAIWidget> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
- 'Erreur: $error',
+                      'Erreur: $error',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.error,
                       ),
@@ -96,5 +89,3 @@ class _FAQAIWidgetState extends ConsumerState<FAQAIWidget> {
     );
   }
 }
-
-

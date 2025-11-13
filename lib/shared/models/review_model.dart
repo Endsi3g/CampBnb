@@ -22,4 +22,3 @@ class ReviewModel with _$ReviewModel {
   factory ReviewModel.fromJson(Map<String, dynamic> json) =>
       _$ReviewModelFromJson(json);
 }
-

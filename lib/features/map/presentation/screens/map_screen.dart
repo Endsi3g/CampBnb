@@ -10,11 +10,7 @@ class MapScreen extends StatefulWidget {
   final List<ListingModel> listings;
   final ListingModel? selectedListing;
 
-  const MapScreen({
-    super.key,
-    required this.listings,
-    this.selectedListing,
-  });
+  const MapScreen({super.key, required this.listings, this.selectedListing});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -22,7 +18,10 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _mapController;
-  LatLng _currentPosition = const LatLng(46.8139, -71.2080); // Québec par défaut
+  LatLng _currentPosition = const LatLng(
+    46.8139,
+    -71.2080,
+  ); // Québec par défaut
   Set<Marker> _markers = {};
 
   @override
@@ -51,7 +50,7 @@ class _MapScreenState extends State<MapScreen> {
         position: LatLng(listing.latitude, listing.longitude),
         infoWindow: InfoWindow(
           title: listing.title,
- snippet: '\$${listing.pricePerNight.toStringAsFixed(0)}/nuit',
+          snippet: '\$${listing.pricePerNight.toStringAsFixed(0)}/nuit',
         ),
         onTap: () {
           // TODO: Naviguer vers les détails du listing
@@ -106,7 +105,7 @@ class _MapScreenState extends State<MapScreen> {
               ),
               child: TextField(
                 decoration: const InputDecoration(
- hintText: 'Rechercher par région, parc ou ville...',
+                  hintText: 'Rechercher par région, parc ou ville...',
                   border: InputBorder.none,
                   prefixIcon: Icon(Icons.search),
                 ),
@@ -165,4 +164,3 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 }
-

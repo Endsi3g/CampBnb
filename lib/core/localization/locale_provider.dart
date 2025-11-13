@@ -12,8 +12,8 @@ class LocaleNotifier extends StateNotifier<Locale> {
   Future<void> _loadSavedLocale() async {
     try {
       final prefs = await SharedPreferences.getInstance();
- final languageCode = prefs.getString('language_code');
- final countryCode = prefs.getString('country_code');
+      final languageCode = prefs.getString('language_code');
+      final countryCode = prefs.getString('country_code');
 
       if (languageCode != null) {
         final locale = Locale(languageCode, countryCode);
@@ -23,7 +23,7 @@ class LocaleNotifier extends StateNotifier<Locale> {
         }
       }
     } catch (e) {
- // Utiliser la locale par défaut en cas d'erreur
+      // Utiliser la locale par défaut en cas d'erreur
     }
   }
 
@@ -35,11 +35,11 @@ class LocaleNotifier extends StateNotifier<Locale> {
 
     try {
       final prefs = await SharedPreferences.getInstance();
- await prefs.setString('language_code', locale.languageCode);
+      await prefs.setString('language_code', locale.languageCode);
       if (locale.countryCode != null) {
- await prefs.setString('country_code', locale.countryCode!);
+        await prefs.setString('country_code', locale.countryCode!);
       } else {
- await prefs.remove('country_code');
+        await prefs.remove('country_code');
       }
     } catch (e) {
       // Erreur silencieuse
@@ -52,5 +52,3 @@ class LocaleNotifier extends StateNotifier<Locale> {
 final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
   return LocaleNotifier();
 });
-
-

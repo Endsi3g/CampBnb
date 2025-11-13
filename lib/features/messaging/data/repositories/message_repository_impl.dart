@@ -25,11 +25,7 @@ class MessageRepositoryImpl implements MessageRepository {
     try {
       final response = await _dio.get(
         '/messages/conversations',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       final List<dynamic> data = response.data['data'] ?? [];
@@ -44,11 +40,7 @@ class MessageRepositoryImpl implements MessageRepository {
     try {
       final response = await _dio.get(
         '/messages/$conversationId',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       final List<dynamic> data = response.data['data'] ?? [];
@@ -72,11 +64,7 @@ class MessageRepositoryImpl implements MessageRepository {
           'receiver_id': receiverId,
           'content': content,
         },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return MessageModel.fromJson(response.data['data']);
@@ -95,8 +83,10 @@ class MessageRepositoryImpl implements MessageRepository {
       final conversations = await getConversations(_currentUserId!);
       final existing = conversations.firstWhere(
         (c) =>
-            (c.participant1Id == _currentUserId && c.participant2Id == otherUserId) ||
-            (c.participant1Id == otherUserId && c.participant2Id == _currentUserId),
+            (c.participant1Id == _currentUserId &&
+                c.participant2Id == otherUserId) ||
+            (c.participant1Id == otherUserId &&
+                c.participant2Id == _currentUserId),
         orElse: () => throw Exception('Not found'),
       );
 
@@ -106,15 +96,8 @@ class MessageRepositoryImpl implements MessageRepository {
       try {
         final response = await _dio.post(
           '/messages/conversations',
-          data: {
-            'participant_id': otherUserId,
-            'listing_id': listingId,
-          },
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $_authToken',
-            },
-          ),
+          data: {'participant_id': otherUserId, 'listing_id': listingId},
+          options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
         );
 
         return ConversationModel.fromJson(response.data['data']);
@@ -129,11 +112,7 @@ class MessageRepositoryImpl implements MessageRepository {
     try {
       await _dio.put(
         '/messages/$conversationId/read',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
     } catch (e) {
       // Ne pas faire échouer si le marquage échoue
@@ -141,4 +120,3 @@ class MessageRepositoryImpl implements MessageRepository {
     }
   }
 }
-

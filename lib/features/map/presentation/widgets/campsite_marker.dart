@@ -11,24 +11,18 @@ class CampsiteMarker {
   final Logger _logger = Logger();
   String? _annotationId;
 
-  CampsiteMarker({
-    required this.campsite,
-    this.onTap,
-  });
+  CampsiteMarker({required this.campsite, this.onTap});
 
   /// Ajoute le marqueur à la carte
   Future<void> addToMap(MapboxMap mapboxMap) async {
     try {
- // Crée l'icône du marqueur selon le type
+      // Crée l'icône du marqueur selon le type
       final icon = _getIconForType(campsite.type);
-      
- // Crée l'annotation point
+
+      // Crée l'annotation point
       final pointAnnotationOptions = PointAnnotationOptions(
         geometry: Point(
-          coordinates: Position(
-            campsite.longitude,
-            campsite.latitude,
-          ),
+          coordinates: Position(campsite.longitude, campsite.latitude),
         ),
         image: icon,
         iconSize: 1.0,
@@ -36,16 +30,16 @@ class CampsiteMarker {
       );
 
       // Ajoute le point à la carte
- // Note: L'API peut varier selon la version de mapbox_maps_flutter
+      // Note: L'API peut varier selon la version de mapbox_maps_flutter
       // Vérifiez la documentation pour la méthode exacte
       // final manager = await mapboxMap.annotations.createPointAnnotationManager();
       // final annotation = await manager.create(pointAnnotationOptions);
       // _annotationId = annotation.id;
-      
- // Pour l'instant, utilisez une implémentation alternative ou attendez que la carte soit prête
- _logger.w('Ajout de marqueur - API Mapbox à adapter selon la version');
+
+      // Pour l'instant, utilisez une implémentation alternative ou attendez que la carte soit prête
+      _logger.w('Ajout de marqueur - API Mapbox à adapter selon la version');
     } catch (e) {
- _logger.e('Erreur lors de l\'ajout du marqueur: $e');
+      _logger.e('Erreur lors de l\'ajout du marqueur: $e');
     }
   }
 
@@ -54,43 +48,44 @@ class CampsiteMarker {
     if (_annotationId == null) return;
 
     try {
-      final manager = await mapboxMap.annotations.createPointAnnotationManager();
+      final manager = await mapboxMap.annotations
+          .createPointAnnotationManager();
       await manager.delete([_annotationId!]);
       _annotationId = null;
     } catch (e) {
- _logger.e('Erreur lors de la suppression du marqueur: $e');
+      _logger.e('Erreur lors de la suppression du marqueur: $e');
     }
   }
 
- /// Retourne l'icône appropriée selon le type d'emplacement
+  /// Retourne l'icône appropriée selon le type d'emplacement
   String _getIconForType(CampsiteType type) {
     // Ces icônes doivent être ajoutées comme assets ou générées dynamiquement
     switch (type) {
       case CampsiteType.tent:
- return 'tent_icon';
+        return 'tent_icon';
       case CampsiteType.rv:
- return 'rv_icon';
+        return 'rv_icon';
       case CampsiteType.cabin:
- return 'cabin_icon';
+        return 'cabin_icon';
       case CampsiteType.wild:
- return 'wild_icon';
+        return 'wild_icon';
       case CampsiteType.lake:
- return 'lake_icon';
+        return 'lake_icon';
       case CampsiteType.forest:
- return 'forest_icon';
+        return 'forest_icon';
       case CampsiteType.beach:
- return 'beach_icon';
+        return 'beach_icon';
       case CampsiteType.mountain:
- return 'mountain_icon';
+        return 'mountain_icon';
       default:
- return 'default_icon';
+        return 'default_icon';
     }
   }
 }
 
 /// Widget pour créer une icône de marqueur personnalisée
 class MarkerIconBuilder {
- /// Crée une icône SVG personnalisée pour un type d'emplacement
+  /// Crée une icône SVG personnalisée pour un type d'emplacement
   static Widget buildIcon(CampsiteType type, {double size = 40}) {
     final color = _getColorForType(type);
     final iconData = _getIconDataForType(type);
@@ -101,10 +96,7 @@ class MarkerIconBuilder {
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.white,
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white, width: 2),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
@@ -113,11 +105,7 @@ class MarkerIconBuilder {
           ),
         ],
       ),
-      child: Icon(
-        iconData,
-        color: Colors.white,
-        size: size * 0.6,
-      ),
+      child: Icon(iconData, color: Colors.white, size: size * 0.6),
     );
   }
 
@@ -167,4 +155,3 @@ class MarkerIconBuilder {
     }
   }
 }
-

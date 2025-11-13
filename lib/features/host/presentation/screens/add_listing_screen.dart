@@ -42,7 +42,7 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
     // TODO: Créer le listing via le repository
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
- const SnackBar(content: Text('Annonce créée avec succès !')),
+        const SnackBar(content: Text('Annonce créée avec succès !')),
       );
       context.pop();
     }
@@ -51,9 +51,7 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
- title: const Text('Ajouter une annonce'),
-      ),
+      appBar: AppBar(title: const Text('Ajouter une annonce')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -61,18 +59,15 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
- 'Informations de base',
-                style: AppTextStyles.h3,
-              ),
+              Text('Informations de base', style: AppTextStyles.h3),
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _titleController,
- label: 'Titre',
- hint: 'Ex: Camping du Lac Tranquille',
+                label: 'Titre',
+                hint: 'Ex: Camping du Lac Tranquille',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
- return 'Requis';
+                    return 'Requis';
                   }
                   return null;
                 },
@@ -80,21 +75,18 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _descriptionController,
- label: 'Description',
- hint: 'Décrivez votre camping...',
+                label: 'Description',
+                hint: 'Décrivez votre camping...',
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
- return 'Requis';
+                    return 'Requis';
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 24),
-              Text(
- 'Type de camping',
-                style: AppTextStyles.labelLarge,
-              ),
+              Text('Type de camping', style: AppTextStyles.labelLarge),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
@@ -111,18 +103,15 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
                 }).toList(),
               ),
               const SizedBox(height: 24),
-              Text(
- 'Localisation',
-                style: AppTextStyles.h3,
-              ),
+              Text('Localisation', style: AppTextStyles.h3),
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _addressController,
- label: 'Adresse',
- hint: '123 Rue Principale',
+                label: 'Adresse',
+                hint: '123 Rue Principale',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
- return 'Requis';
+                    return 'Requis';
                   }
                   return null;
                 },
@@ -130,59 +119,53 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _cityController,
- label: 'Ville',
- hint: 'Mont-Tremblant',
+                label: 'Ville',
+                hint: 'Mont-Tremblant',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
- return 'Requis';
+                    return 'Requis';
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 24),
-              Text(
- 'Détails',
-                style: AppTextStyles.h3,
-              ),
+              Text('Détails', style: AppTextStyles.h3),
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _priceController,
- label: 'Prix par nuit (\$)',
- hint: '50',
+                label: 'Prix par nuit (\$)',
+                hint: '50',
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
- return 'Requis';
+                    return 'Requis';
                   }
                   if (double.tryParse(value) == null) {
- return 'Prix invalide';
+                    return 'Prix invalide';
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 16),
               _buildCounter(
- 'Invités maximum',
+                'Invités maximum',
                 _maxGuests,
                 (value) => setState(() => _maxGuests = value),
               ),
               const SizedBox(height: 16),
               _buildCounter(
- 'Chambres',
+                'Chambres',
                 _bedrooms,
                 (value) => setState(() => _bedrooms = value),
               ),
               const SizedBox(height: 16),
               _buildCounter(
- 'Salles de bain',
+                'Salles de bain',
                 _bathrooms,
                 (value) => setState(() => _bathrooms = value),
               ),
               const SizedBox(height: 32),
-              CustomButton(
- text: 'Créer l\'annonce',
-                onPressed: _handleSubmit,
-              ),
+              CustomButton(text: 'Créer l\'annonce', onPressed: _handleSubmit),
             ],
           ),
         ),
@@ -193,32 +176,27 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
   String _getTypeLabel(ListingType type) {
     switch (type) {
       case ListingType.tent:
- return 'Tente';
+        return 'Tente';
       case ListingType.rv:
- return 'VR';
+        return 'VR';
       case ListingType.readyToCamp:
- return 'Prêt-à-camper';
+        return 'Prêt-à-camper';
       case ListingType.wild:
- return 'Sauvage';
+        return 'Sauvage';
     }
   }
 
   Widget _buildCounter(String label, int value, ValueChanged<int> onChanged) {
     return Row(
       children: [
-        Expanded(
-          child: Text(label, style: AppTextStyles.bodyLarge),
-        ),
+        Expanded(child: Text(label, style: AppTextStyles.bodyLarge)),
         Row(
           children: [
             IconButton(
               onPressed: value > 1 ? () => onChanged(value - 1) : null,
               icon: const Icon(Icons.remove),
             ),
-            Text(
-              value.toString(),
-              style: AppTextStyles.bodyLarge,
-            ),
+            Text(value.toString(), style: AppTextStyles.bodyLarge),
             IconButton(
               onPressed: () => onChanged(value + 1),
               icon: const Icon(Icons.add),
@@ -229,4 +207,3 @@ class _AddListingScreenState extends ConsumerState<AddListingScreen> {
     );
   }
 }
-

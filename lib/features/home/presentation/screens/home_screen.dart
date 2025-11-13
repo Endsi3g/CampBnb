@@ -50,13 +50,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final isDesktop = PlatformUtils.shouldUseDesktopLayout(context);
-    
+
     return AdaptiveLayout(
       currentIndex: 0,
       onNavigationChanged: _handleNavigation,
       title: 'Campbnb Québec',
       child: SafeArea(
-        child: isDesktop ? _buildDesktopContent(context) : _buildMobileContent(context),
+        child: isDesktop
+            ? _buildDesktopContent(context)
+            : _buildMobileContent(context),
       ),
     );
   }
@@ -69,112 +71,102 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              Icon(
-                Icons.forest,
-                size: 32,
-                color: AppColors.primary,
-              ),
+              Icon(Icons.forest, size: 32, color: AppColors.primary),
               const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'Campbnb Québec',
-                  style: AppTextStyles.h3,
+              Expanded(child: Text('Campbnb Québec', style: AppTextStyles.h3)),
+            ],
+          ),
+        ),
+        // Search Bar
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: 'Lieu, hébergement, dates',
+              prefixIcon: const Icon(Icons.search),
+              filled: true,
+              fillColor: AppColors.surfaceLight,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(24),
+                borderSide: BorderSide.none,
+              ),
+            ),
+            onTap: () => context.push('/search'),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Filter Chips
+        SizedBox(
+          height: 40,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            children: [
+              _buildFilterChip('Prix', isSelected: false),
+              const SizedBox(width: 8),
+              _buildFilterChip('Type', isSelected: true),
+              const SizedBox(width: 8),
+              _buildFilterChip('Région', isSelected: false),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Listings
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              ListingCard(
+                listing: ListingModel(
+                  id: '1',
+                  hostId: '1',
+                  title: 'Camping du Lac Tranquille',
+                  description: 'Un camping paisible au bord du lac',
+                  type: ListingType.readyToCamp,
+                  latitude: 46.5,
+                  longitude: -75.5,
+                  address: 'Parc national du Mont-Tremblant',
+                  city: 'Mont-Tremblant',
+                  province: 'QC',
+                  postalCode: 'J8E 1T1',
+                  pricePerNight: 45.0,
+                  maxGuests: 4,
+                  bedrooms: 1,
+                  bathrooms: 1,
+                  images: [],
+                  amenities: [],
                 ),
+                onTap: () => context.push('/listing/1'),
+              ),
+              const SizedBox(height: 16),
+              ListingCard(
+                listing: ListingModel(
+                  id: '2',
+                  hostId: '2',
+                  title: 'Chalet Évasion Boréale',
+                  description: 'Chalet moderne en forêt boréale',
+                  type: ListingType.readyToCamp,
+                  latitude: 46.3,
+                  longitude: -74.2,
+                  address: 'Saint-Donat',
+                  city: 'Saint-Donat',
+                  province: 'QC',
+                  postalCode: 'J0T 2C0',
+                  pricePerNight: 180.0,
+                  maxGuests: 6,
+                  bedrooms: 2,
+                  bathrooms: 1,
+                  images: [],
+                  amenities: [],
+                ),
+                onTap: () => context.push('/listing/2'),
               ),
             ],
           ),
         ),
-            // Search Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
- hintText: 'Lieu, hébergement, dates',
-                  prefixIcon: const Icon(Icons.search),
-                  filled: true,
-                  fillColor: AppColors.surfaceLight,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
- onTap: () => context.push('/search'),
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Filter Chips
-            SizedBox(
-              height: 40,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: [
- _buildFilterChip('Prix', isSelected: false),
-                  const SizedBox(width: 8),
- _buildFilterChip('Type', isSelected: true),
-                  const SizedBox(width: 8),
- _buildFilterChip('Région', isSelected: false),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Listings
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  ListingCard(
-                    listing: ListingModel(
- id: '1',
- hostId: '1',
- title: 'Camping du Lac Tranquille',
- description: 'Un camping paisible au bord du lac',
-                      type: ListingType.readyToCamp,
-                      latitude: 46.5,
-                      longitude: -75.5,
- address: 'Parc national du Mont-Tremblant',
- city: 'Mont-Tremblant',
- province: 'QC',
- postalCode: 'J8E 1T1',
-                      pricePerNight: 45.0,
-                      maxGuests: 4,
-                      bedrooms: 1,
-                      bathrooms: 1,
-                      images: [],
-                      amenities: [],
-                    ),
- onTap: () => context.push('/listing/1'),
-                  ),
-                  const SizedBox(height: 16),
-                  ListingCard(
-                    listing: ListingModel(
- id: '2',
- hostId: '2',
- title: 'Chalet Évasion Boréale',
- description: 'Chalet moderne en forêt boréale',
-                      type: ListingType.readyToCamp,
-                      latitude: 46.3,
-                      longitude: -74.2,
- address: 'Saint-Donat',
- city: 'Saint-Donat',
- province: 'QC',
- postalCode: 'J0T 2C0',
-                      pricePerNight: 180.0,
-                      maxGuests: 6,
-                      bedrooms: 2,
-                      bathrooms: 1,
-                      images: [],
-                      amenities: [],
-                    ),
- onTap: () => context.push('/listing/2'),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
+      ],
+    );
   }
 
   Widget _buildDesktopContent(BuildContext context) {
@@ -186,16 +178,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // Header desktop
           Row(
             children: [
-              Icon(
-                Icons.forest,
-                size: 40,
-                color: AppColors.primary,
-              ),
+              Icon(Icons.forest, size: 40, color: AppColors.primary),
               const SizedBox(width: 12),
-              Text(
-                'Campbnb Québec',
-                style: AppTextStyles.h2,
-              ),
+              Text('Campbnb Québec', style: AppTextStyles.h2),
             ],
           ),
           const SizedBox(height: 24),
@@ -285,6 +270,4 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-
 }
-

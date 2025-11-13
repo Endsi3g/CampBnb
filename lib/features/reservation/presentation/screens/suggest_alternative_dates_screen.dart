@@ -11,10 +11,7 @@ import '../providers/reservation_provider.dart';
 class SuggestAlternativeDatesScreen extends ConsumerStatefulWidget {
   final ReservationModel reservation;
 
-  const SuggestAlternativeDatesScreen({
-    super.key,
-    required this.reservation,
-  });
+  const SuggestAlternativeDatesScreen({super.key, required this.reservation});
 
   @override
   ConsumerState<SuggestAlternativeDatesScreen> createState() =>
@@ -31,18 +28,13 @@ class _SuggestAlternativeDatesScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Suggérer d\'autres dates'),
-      ),
+      appBar: AppBar(title: const Text('Suggérer d\'autres dates')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Dates originales',
-              style: AppTextStyles.labelLarge,
-            ),
+            Text('Dates originales', style: AppTextStyles.labelLarge),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(16),
@@ -56,10 +48,7 @@ class _SuggestAlternativeDatesScreenState
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Arrivée',
-                        style: AppTextStyles.bodySmall,
-                      ),
+                      Text('Arrivée', style: AppTextStyles.bodySmall),
                       Text(
                         '${widget.reservation.checkIn.day}/${widget.reservation.checkIn.month}/${widget.reservation.checkIn.year}',
                         style: AppTextStyles.bodyLarge,
@@ -69,10 +58,7 @@ class _SuggestAlternativeDatesScreenState
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        'Départ',
-                        style: AppTextStyles.bodySmall,
-                      ),
+                      Text('Départ', style: AppTextStyles.bodySmall),
                       Text(
                         '${widget.reservation.checkOut.day}/${widget.reservation.checkOut.month}/${widget.reservation.checkOut.year}',
                         style: AppTextStyles.bodyLarge,
@@ -83,10 +69,7 @@ class _SuggestAlternativeDatesScreenState
               ),
             ),
             const SizedBox(height: 32),
-            Text(
-              'Nouvelles dates suggérées',
-              style: AppTextStyles.labelLarge,
-            ),
+            Text('Nouvelles dates suggérées', style: AppTextStyles.labelLarge),
             const SizedBox(height: 16),
             TableCalendar(
               firstDay: DateTime.now(),
@@ -162,10 +145,7 @@ class _SuggestAlternativeDatesScreenState
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Nouveau départ',
-                          style: AppTextStyles.bodyMedium,
-                        ),
+                        Text('Nouveau départ', style: AppTextStyles.bodyMedium),
                         Text(
                           '${_selectedEndDate!.day}/${_selectedEndDate!.month}/${_selectedEndDate!.year}',
                           style: AppTextStyles.bodyLarge.copyWith(
@@ -178,10 +158,7 @@ class _SuggestAlternativeDatesScreenState
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Durée',
-                          style: AppTextStyles.bodyMedium,
-                        ),
+                        Text('Durée', style: AppTextStyles.bodyMedium),
                         Text(
                           '${_selectedEndDate!.difference(_selectedStartDate!).inDays} nuit${_selectedEndDate!.difference(_selectedStartDate!).inDays > 1 ? 's' : ''}',
                           style: AppTextStyles.bodyLarge.copyWith(
@@ -198,11 +175,14 @@ class _SuggestAlternativeDatesScreenState
             Consumer(
               builder: (context, ref, child) {
                 final notifier = ref.read(reservationNotifierProvider.notifier);
-                final isLoading = ref.watch(reservationNotifierProvider).isLoading;
+                final isLoading = ref
+                    .watch(reservationNotifierProvider)
+                    .isLoading;
 
                 return CustomButton(
                   text: 'Envoyer la suggestion',
-                  onPressed: (_selectedStartDate != null &&
+                  onPressed:
+                      (_selectedStartDate != null &&
                           _selectedEndDate != null &&
                           !isLoading)
                       ? () async {
@@ -260,4 +240,3 @@ class _SuggestAlternativeDatesScreenState
     }
   }
 }
-

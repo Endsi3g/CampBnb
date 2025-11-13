@@ -19,7 +19,7 @@ class GeminiChatWidget extends ConsumerStatefulWidget {
   /// Callback appelé quand le chat est fermé
   final VoidCallback? onClose;
 
- /// Mode compact (pour intégration dans d'autres écrans)
+  /// Mode compact (pour intégration dans d'autres écrans)
   final bool compact;
 
   const GeminiChatWidget({
@@ -97,7 +97,7 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
         children: [
           // En-tête
           if (!widget.compact) _buildHeader(theme),
-          
+
           // Messages
           Expanded(
             child: chatState.messages.isEmpty
@@ -133,7 +133,11 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
               color: theme.primaryColor,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.auto_awesome, color: Colors.white, size: 20),
+            child: const Icon(
+              Icons.auto_awesome,
+              color: Colors.white,
+              size: 20,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -141,13 +145,13 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
- widget.title ?? 'Assistant Campbnb',
+                  widget.title ?? 'Assistant Campbnb',
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
- 'Comment puis-je vous aider ?',
+                  'Comment puis-je vous aider ?',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.textTheme.bodySmall?.color?.withOpacity(0.7),
                   ),
@@ -187,14 +191,14 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
             ),
             const SizedBox(height: 24),
             Text(
- 'Bonjour ! ',
+              'Bonjour ! ',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
             Text(
- 'Je suis votre assistant IA pour vous aider à trouver le camping parfait.',
+              'Je suis votre assistant IA pour vous aider à trouver le camping parfait.',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
@@ -206,9 +210,9 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
               runSpacing: 8,
               alignment: WrapAlignment.center,
               children: [
- _buildSuggestionChip('Trouver un camping', theme),
- _buildSuggestionChip('Questions sur les réservations', theme),
- _buildSuggestionChip('Conseils de camping', theme),
+                _buildSuggestionChip('Trouver un camping', theme),
+                _buildSuggestionChip('Questions sur les réservations', theme),
+                _buildSuggestionChip('Conseils de camping', theme),
               ],
             ),
           ],
@@ -243,12 +247,13 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
 
   Widget _buildMessageBubble(ChatMessage message, ThemeData theme) {
     final isUser = message.isUser;
-    
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
-        mainAxisAlignment:
-            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isUser) ...[
@@ -259,7 +264,11 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
                 color: theme.primaryColor,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: const Icon(Icons.auto_awesome, color: Colors.white, size: 18),
+              child: const Icon(
+                Icons.auto_awesome,
+                color: Colors.white,
+                size: 18,
+              ),
             ),
             const SizedBox(width: 8),
           ],
@@ -278,7 +287,9 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
               child: Text(
                 message.content,
                 style: TextStyle(
-                  color: isUser ? Colors.white : theme.textTheme.bodyMedium?.color,
+                  color: isUser
+                      ? Colors.white
+                      : theme.textTheme.bodyMedium?.color,
                   fontSize: 15,
                   height: 1.4,
                 ),
@@ -294,11 +305,7 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
                 color: theme.colorScheme.surfaceVariant,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(
-                Icons.person,
-                color: theme.primaryColor,
-                size: 18,
-              ),
+              child: Icon(Icons.person, color: theme.primaryColor, size: 18),
             ),
           ],
         ],
@@ -318,7 +325,11 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
               color: theme.primaryColor,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Icon(Icons.auto_awesome, color: Colors.white, size: 18),
+            child: const Icon(
+              Icons.auto_awesome,
+              color: Colors.white,
+              size: 18,
+            ),
           ),
           const SizedBox(width: 8),
           Container(
@@ -352,7 +363,7 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
- 'Erreur: $error',
+              'Erreur: $error',
               style: TextStyle(color: theme.colorScheme.error),
             ),
           ),
@@ -367,9 +378,7 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         border: Border(
-          top: BorderSide(
-            color: theme.dividerColor.withOpacity(0.1),
-          ),
+          top: BorderSide(color: theme.dividerColor.withOpacity(0.1)),
         ),
       ),
       child: SafeArea(
@@ -380,7 +389,7 @@ class _GeminiChatWidgetState extends ConsumerState<GeminiChatWidget> {
                 controller: _messageController,
                 focusNode: _focusNode,
                 decoration: InputDecoration(
- hintText: widget.inputPlaceholder ?? 'Tapez votre message...',
+                  hintText: widget.inputPlaceholder ?? 'Tapez votre message...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                     borderSide: BorderSide.none,
@@ -444,5 +453,3 @@ class GeminiChatFloatingButton extends ConsumerWidget {
     );
   }
 }
-
-

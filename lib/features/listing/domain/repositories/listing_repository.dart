@@ -32,4 +32,3 @@ abstract class ListingRepository {
   /// Récupérer les listings d'un hôte
   Future<List<ListingModel>> getHostListings(String hostId);
 }
-

@@ -45,7 +45,7 @@ class GeminiMonitoring {
     _events.add(event);
     _eventController.add(event);
 
- // Limiter la taille de l'historique
+    // Limiter la taille de l'historique
     if (_events.length > 1000) {
       _events.removeAt(0);
     }
@@ -76,12 +76,12 @@ class GeminiMonitoring {
   }) {
     logEvent(
       type: success ? MonitoringEventType.success : MonitoringEventType.error,
- message: 'Requête ${requestType.name} ${success ? "réussie" : "échouée"}',
+      message: 'Requête ${requestType.name} ${success ? "réussie" : "échouée"}',
       metadata: {
- 'requestType': requestType.name,
- 'duration': duration.inMilliseconds,
- 'success': success,
- if (error != null) 'error': error,
+        'requestType': requestType.name,
+        'duration': duration.inMilliseconds,
+        'success': success,
+        if (error != null) 'error': error,
       },
     );
 
@@ -89,8 +89,8 @@ class GeminiMonitoring {
     if (duration.inSeconds > 10) {
       logEvent(
         type: MonitoringEventType.warning,
- message: 'Temps de réponse élevé: ${duration.inSeconds}s',
- metadata: {'requestType': requestType.name},
+        message: 'Temps de réponse élevé: ${duration.inSeconds}s',
+        metadata: {'requestType': requestType.name},
       );
     }
   }
@@ -99,8 +99,8 @@ class GeminiMonitoring {
   void logRateLimit(GeminiRequestType requestType) {
     logEvent(
       type: MonitoringEventType.warning,
- message: 'Limite de taux atteinte pour ${requestType.name}',
- metadata: {'requestType': requestType.name},
+      message: 'Limite de taux atteinte pour ${requestType.name}',
+      metadata: {'requestType': requestType.name},
     );
   }
 
@@ -112,10 +112,8 @@ class GeminiMonitoring {
   }) {
     logEvent(
       type: MonitoringEventType.error,
- message: 'Erreur API Gemini: $error',
-      metadata: {
- 'requestType': requestType.name,
-      },
+      message: 'Erreur API Gemini: $error',
+      metadata: {'requestType': requestType.name},
       error: exception,
     );
   }
@@ -125,18 +123,24 @@ class GeminiMonitoring {
     final now = DateTime.now();
     final last24h = now.subtract(const Duration(hours: 24));
 
-    final recentEvents = _events.where((e) => e.timestamp.isAfter(last24h)).toList();
-    
+    final recentEvents = _events
+        .where((e) => e.timestamp.isAfter(last24h))
+        .toList();
+
     return MonitoringStats(
       totalEvents: _events.length,
       eventsLast24h: recentEvents.length,
-      errors: recentEvents.where((e) => e.type == MonitoringEventType.error).length,
-      warnings: recentEvents.where((e) => e.type == MonitoringEventType.warning).length,
+      errors: recentEvents
+          .where((e) => e.type == MonitoringEventType.error)
+          .length,
+      warnings: recentEvents
+          .where((e) => e.type == MonitoringEventType.warning)
+          .length,
       apiStats: GeminiService().getStats(),
     );
   }
 
- /// Obtient l'historique des événements
+  /// Obtient l'historique des événements
   List<MonitoringEvent> getEventHistory({int? limit}) {
     if (limit != null) {
       return _events.reversed.take(limit).toList();
@@ -150,12 +154,12 @@ class GeminiMonitoring {
     final apiStats = stats.apiStats;
 
     // Vérifier les limites
-    final rateLimitReached = apiStats.requestsThisMinute >=
-        GeminiConfig.rateLimitPerMinute;
-    final dailyLimitReached = apiStats.requestsToday >=
-        GeminiConfig.rateLimitPerDay;
+    final rateLimitReached =
+        apiStats.requestsThisMinute >= GeminiConfig.rateLimitPerMinute;
+    final dailyLimitReached =
+        apiStats.requestsToday >= GeminiConfig.rateLimitPerDay;
 
- // Calculer le taux d'erreur
+    // Calculer le taux d'erreur
     final errorRate = apiStats.totalRequests > 0
         ? apiStats.failedRequests / apiStats.totalRequests
         : 0.0;
@@ -187,12 +191,7 @@ class GeminiMonitoring {
 }
 
 /// Type d'événement de monitoring
-enum MonitoringEventType {
-  info,
-  success,
-  warning,
-  error,
-}
+enum MonitoringEventType { info, success, warning, error }
 
 /// Événement de monitoring
 class MonitoringEvent {
@@ -229,11 +228,7 @@ class MonitoringStats {
 }
 
 /// Santé du système
-enum HealthStatus {
-  healthy,
-  warning,
-  degraded,
-}
+enum HealthStatus { healthy, warning, degraded }
 
 class SystemHealth {
   final HealthStatus status;
@@ -250,4 +245,3 @@ class SystemHealth {
     required this.stats,
   });
 }
-

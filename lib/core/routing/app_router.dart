@@ -40,58 +40,56 @@ final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authNotifierProvider);
 
   return GoRouter(
- initialLocation: '/welcome',
+    initialLocation: '/welcome',
     redirect: (context, state) {
       final isLoggedIn = authState.value != null;
- final isOnWelcome = state.matchedLocation == '/welcome';
- final isOnOnboarding = state.matchedLocation == '/onboarding';
- final isOnLogin = state.matchedLocation == '/login';
- final isOnSignup = state.matchedLocation == '/signup';
+      final isOnWelcome = state.matchedLocation == '/welcome';
+      final isOnOnboarding = state.matchedLocation == '/onboarding';
+      final isOnLogin = state.matchedLocation == '/login';
+      final isOnSignup = state.matchedLocation == '/signup';
 
- // Si l'utilisateur n'est pas connecté et n'est pas sur une page d'auth
-      if (!isLoggedIn && !isOnWelcome && !isOnOnboarding && !isOnLogin && !isOnSignup) {
- return '/welcome';
+      // Si l'utilisateur n'est pas connecté et n'est pas sur une page d'auth
+      if (!isLoggedIn &&
+          !isOnWelcome &&
+          !isOnOnboarding &&
+          !isOnLogin &&
+          !isOnSignup) {
+        return '/welcome';
       }
 
- // Si l'utilisateur est connecté et est sur la page welcome
+      // Si l'utilisateur est connecté et est sur la page welcome
       if (isLoggedIn && isOnWelcome) {
- return '/home';
+        return '/home';
       }
 
       return null;
     },
     routes: [
       GoRoute(
- path: '/welcome',
+        path: '/welcome',
         builder: (context, state) => const WelcomeScreen(),
       ),
       GoRoute(
- path: '/onboarding',
+        path: '/onboarding',
         builder: (context, state) => const OnboardingScreen(),
       ),
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
- path: '/login',
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
- path: '/signup',
+        path: '/signup',
         builder: (context, state) => const SignUpScreen(),
       ),
+      GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
       GoRoute(
- path: '/home',
-        builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
- path: '/search',
+        path: '/search',
         builder: (context, state) => const SearchScreen(),
       ),
       GoRoute(
- path: '/listing/:id',
+        path: '/listing/:id',
         builder: (context, state) {
           final listingId = state.pathParameters['id'] ?? '';
           final ref = ProviderScope.containerOf(context);
           final listingAsync = ref.read(listingByIdProvider(listingId));
-          
+
           return FutureBuilder<ListingModel>(
             future: listingAsync,
             builder: (context, snapshot) {
@@ -100,7 +98,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
+
               if (snapshot.hasError || !snapshot.hasData) {
                 return Scaffold(
                   appBar: AppBar(title: const Text('Erreur')),
@@ -108,9 +106,15 @@ final routerProvider = Provider<GoRouter>((ref) {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                        const Icon(
+                          Icons.error_outline,
+                          size: 64,
+                          color: Colors.red,
+                        ),
                         const SizedBox(height: 16),
-                        Text('Erreur: ${snapshot.error ?? 'Listing non trouvé'}'),
+                        Text(
+                          'Erreur: ${snapshot.error ?? 'Listing non trouvé'}',
+                        ),
                         const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () => context.go('/home'),
@@ -121,19 +125,19 @@ final routerProvider = Provider<GoRouter>((ref) {
                   ),
                 );
               }
-              
+
               return ListingDetailsScreen(listing: snapshot.data!);
             },
           );
         },
       ),
       GoRoute(
- path: '/reservation/:id',
+        path: '/reservation/:id',
         builder: (context, state) {
           final listingId = state.pathParameters['id'] ?? '';
           final ref = ProviderScope.containerOf(context);
           final listingAsync = ref.read(listingByIdProvider(listingId));
-          
+
           return FutureBuilder<ListingModel>(
             future: listingAsync,
             builder: (context, snapshot) {
@@ -142,7 +146,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
+
               if (snapshot.hasError || !snapshot.hasData) {
                 return Scaffold(
                   appBar: AppBar(title: const Text('Erreur')),
@@ -150,9 +154,15 @@ final routerProvider = Provider<GoRouter>((ref) {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                        const Icon(
+                          Icons.error_outline,
+                          size: 64,
+                          color: Colors.red,
+                        ),
                         const SizedBox(height: 16),
-                        Text('Erreur: ${snapshot.error ?? 'Listing non trouvé'}'),
+                        Text(
+                          'Erreur: ${snapshot.error ?? 'Listing non trouvé'}',
+                        ),
                         const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () => context.go('/home'),
@@ -163,18 +173,18 @@ final routerProvider = Provider<GoRouter>((ref) {
                   ),
                 );
               }
-              
+
               return ReservationProcessScreen(listing: snapshot.data!);
             },
           );
         },
       ),
       GoRoute(
- path: '/map',
+        path: '/map',
         builder: (context, state) {
           final ref = ProviderScope.containerOf(context);
           final campsitesAsync = ref.read(campsitesProvider);
-          
+
           return FutureBuilder<List<CampsiteLocation>>(
             future: campsitesAsync,
             builder: (context, snapshot) {
@@ -183,36 +193,40 @@ final routerProvider = Provider<GoRouter>((ref) {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
-              final listings = snapshot.data?.map((campsite) {
-                return ListingModel(
-                  id: campsite.id,
-                  hostId: campsite.hostId,
-                  title: campsite.name,
-                  description: campsite.description ?? '',
-                  type: _mapCampsiteTypeToListingType(campsite.type),
-                  latitude: campsite.latitude,
-                  longitude: campsite.longitude,
-                  address: campsite.address ?? '',
-                  city: campsite.city ?? '',
-                  province: campsite.province ?? 'QC',
-                  postalCode: '',
-                  pricePerNight: campsite.pricePerNight ?? 0.0,
-                  maxGuests: 4,
-                  bedrooms: 0,
-                  bathrooms: 0,
-                  images: campsite.imageUrl != null ? [campsite.imageUrl!] : [],
-                  amenities: [],
-                );
-              }).toList() ?? [];
-              
+
+              final listings =
+                  snapshot.data?.map((campsite) {
+                    return ListingModel(
+                      id: campsite.id,
+                      hostId: campsite.hostId,
+                      title: campsite.name,
+                      description: campsite.description ?? '',
+                      type: _mapCampsiteTypeToListingType(campsite.type),
+                      latitude: campsite.latitude,
+                      longitude: campsite.longitude,
+                      address: campsite.address ?? '',
+                      city: campsite.city ?? '',
+                      province: campsite.province ?? 'QC',
+                      postalCode: '',
+                      pricePerNight: campsite.pricePerNight ?? 0.0,
+                      maxGuests: 4,
+                      bedrooms: 0,
+                      bathrooms: 0,
+                      images: campsite.imageUrl != null
+                          ? [campsite.imageUrl!]
+                          : [],
+                      amenities: [],
+                    );
+                  }).toList() ??
+                  [];
+
               return MapScreen(listings: listings);
             },
           );
         },
       ),
       GoRoute(
- path: '/profile',
+        path: '/profile',
         builder: (context, state) => const ProfileScreen(),
       ),
       GoRoute(
@@ -232,7 +246,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const HostDashboardScreen(),
       ),
       GoRoute(
- path: '/host/add-listing',
+        path: '/host/add-listing',
         builder: (context, state) => const AddListingScreen(),
       ),
       GoRoute(
@@ -245,8 +259,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           final conversationId = state.pathParameters['conversationId'] ?? '';
           final ref = ProviderScope.containerOf(context);
           // Récupérer les infos de conversation depuis le provider
-          final conversationAsync = ref.read(conversationByIdProvider(conversationId));
-          
+          final conversationAsync = ref.read(
+            conversationByIdProvider(conversationId),
+          );
+
           return FutureBuilder<Map<String, dynamic>>(
             future: conversationAsync,
             builder: (context, snapshot) {
@@ -255,9 +271,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
-              final recipientName = snapshot.data?['recipientName'] as String? ?? 'Utilisateur';
-              
+
+              final recipientName =
+                  snapshot.data?['recipientName'] as String? ?? 'Utilisateur';
+
               return ChatConversationScreen(
                 conversationId: conversationId,
                 recipientName: recipientName,
@@ -268,7 +285,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/reservations',
-        builder: (context, state) => const ReservationRequestsManagementScreen(),
+        builder: (context, state) =>
+            const ReservationRequestsManagementScreen(),
       ),
       GoRoute(
         path: '/reservation/:id/details',
@@ -277,9 +295,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           final extra = state.extra as Map<String, dynamic>?;
           final isHost = extra?['isHost'] as bool? ?? false;
           final ref = ProviderScope.containerOf(context);
-          
-          final reservationAsync = ref.read(reservationByIdProvider(reservationId));
-          
+
+          final reservationAsync = ref.read(
+            reservationByIdProvider(reservationId),
+          );
+
           return FutureBuilder<ReservationModel>(
             future: reservationAsync,
             builder: (context, snapshot) {
@@ -288,31 +308,34 @@ final routerProvider = Provider<GoRouter>((ref) {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
+
               if (snapshot.hasError || !snapshot.hasData) {
                 return const Scaffold(
                   body: Center(child: Text('Réservation non trouvée')),
                 );
               }
-              
+
               final reservation = snapshot.data!;
-              final listingAsync = ref.read(listingByIdProvider(reservation.listingId));
-              
+              final listingAsync = ref.read(
+                listingByIdProvider(reservation.listingId),
+              );
+
               return FutureBuilder<ListingModel>(
                 future: listingAsync,
                 builder: (context, listingSnapshot) {
-                  if (listingSnapshot.connectionState == ConnectionState.waiting) {
+                  if (listingSnapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return const Scaffold(
                       body: Center(child: CircularProgressIndicator()),
                     );
                   }
-                  
+
                   if (listingSnapshot.hasError || !listingSnapshot.hasData) {
                     return const Scaffold(
                       body: Center(child: Text('Listing non trouvé')),
                     );
                   }
-                  
+
                   return ReservationRequestDetailsScreen(
                     reservation: reservation,
                     listing: listingSnapshot.data!,
@@ -329,8 +352,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final reservationId = state.pathParameters['id'] ?? '';
           final ref = ProviderScope.containerOf(context);
-          final reservationAsync = ref.read(reservationByIdProvider(reservationId));
-          
+          final reservationAsync = ref.read(
+            reservationByIdProvider(reservationId),
+          );
+
           return FutureBuilder<ReservationModel>(
             future: reservationAsync,
             builder: (context, snapshot) {
@@ -339,13 +364,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
+
               if (snapshot.hasError || !snapshot.hasData) {
                 return const Scaffold(
                   body: Center(child: Text('Réservation non trouvée')),
                 );
               }
-              
+
               return SuggestAlternativeDatesScreen(reservation: snapshot.data!);
             },
           );
@@ -357,14 +382,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           final listingId = state.pathParameters['id'] ?? '';
           final listing = state.extra as ListingModel?;
           final ref = ProviderScope.containerOf(context);
-          
+
           if (listing != null) {
             return EditListingManagementScreen(listing: listing);
           }
-          
+
           // Récupérer depuis le provider si non fourni
           final listingAsync = ref.read(listingByIdProvider(listingId));
-          
+
           return FutureBuilder<ListingModel>(
             future: listingAsync,
             builder: (context, snapshot) {
@@ -373,13 +398,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
+
               if (snapshot.hasError || !snapshot.hasData) {
                 return const Scaffold(
                   body: Center(child: Text('Camping non trouvé')),
                 );
               }
-              
+
               return EditListingManagementScreen(listing: snapshot.data!);
             },
           );
@@ -401,9 +426,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/help/chat',
         builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Assistant IA'),
-            ),
+            appBar: AppBar(title: const Text('Assistant IA')),
             body: GeminiChatWidget(
               title: 'Assistant Campbnb',
               userContext: 'Aide et support',
@@ -449,4 +472,3 @@ ListingType _mapCampsiteTypeToListingType(CampsiteType type) {
       return ListingType.tent;
   }
 }
-

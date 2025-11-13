@@ -62,10 +62,9 @@ class _ReservationRequestsManagementScreenState
 
   Widget _buildReservationsList(ReservationStatus status) {
     // Récupérer les réservations depuis le provider
-    final reservationsAsync = ref.watch(reservationsProvider(
-      status: status,
-      isHost: true,
-    ));
+    final reservationsAsync = ref.watch(
+      reservationsProvider(status: status, isHost: true),
+    );
 
     return reservationsAsync.when(
       data: (reservations) {
@@ -97,7 +96,9 @@ class _ReservationRequestsManagementScreenState
           itemBuilder: (context, index) {
             final reservation = reservations[index];
             // TODO: Récupérer le listing depuis le provider
-            final listing = _getMockListingForReservation(reservation.listingId);
+            final listing = _getMockListingForReservation(
+              reservation.listingId,
+            );
             return _buildReservationCard(reservation, listing);
           },
         );
@@ -107,17 +108,11 @@ class _ReservationRequestsManagementScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 64,
-              color: Colors.red,
-            ),
+            Icon(Icons.error_outline, size: 64, color: Colors.red),
             const SizedBox(height: 16),
             Text(
               'Erreur: $error',
-              style: AppTextStyles.bodyLarge.copyWith(
-                color: Colors.red,
-              ),
+              style: AppTextStyles.bodyLarge.copyWith(color: Colors.red),
               textAlign: TextAlign.center,
             ),
           ],
@@ -149,7 +144,10 @@ class _ReservationRequestsManagementScreenState
     );
   }
 
-  Widget _buildReservationCard(ReservationModel reservation, ListingModel listing) {
+  Widget _buildReservationCard(
+    ReservationModel reservation,
+    ListingModel listing,
+  ) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: InkWell(
@@ -183,7 +181,11 @@ class _ReservationRequestsManagementScreenState
               const SizedBox(height: 12),
               Row(
                 children: [
-                  Icon(Icons.calendar_today, size: 16, color: AppColors.textSecondaryLight),
+                  Icon(
+                    Icons.calendar_today,
+                    size: 16,
+                    color: AppColors.textSecondaryLight,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     '${reservation.checkIn.day}/${reservation.checkIn.month}/${reservation.checkIn.year} - ${reservation.checkOut.day}/${reservation.checkOut.month}/${reservation.checkOut.year}',
@@ -194,7 +196,11 @@ class _ReservationRequestsManagementScreenState
               const SizedBox(height: 8),
               Row(
                 children: [
-                  Icon(Icons.people, size: 16, color: AppColors.textSecondaryLight),
+                  Icon(
+                    Icons.people,
+                    size: 16,
+                    color: AppColors.textSecondaryLight,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     '${reservation.numberOfGuests} invité${reservation.numberOfGuests > 1 ? 's' : ''}',
@@ -269,6 +275,4 @@ class _ReservationRequestsManagementScreenState
         return 'terminée';
     }
   }
-
 }
-

@@ -24,15 +24,15 @@ class _NotificationSettingsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
-      ),
+      appBar: AppBar(title: const Text('Notifications')),
       body: ListView(
         children: [
           _buildSectionTitle('Types de notifications'),
           SwitchListTile(
             title: const Text('Réservations'),
-            subtitle: const Text('Nouvelles réservations, confirmations, annulations'),
+            subtitle: const Text(
+              'Nouvelles réservations, confirmations, annulations',
+            ),
             value: _reservationsEnabled,
             onChanged: (value) {
               setState(() {
@@ -70,11 +70,13 @@ class _NotificationSettingsScreenState
               });
             },
           ),
-          
+
           _buildSectionTitle('Canaux de notification'),
           SwitchListTile(
             title: const Text('Notifications push'),
-            subtitle: const Text('Recevoir des notifications sur votre appareil'),
+            subtitle: const Text(
+              'Recevoir des notifications sur votre appareil',
+            ),
             value: _pushEnabled,
             onChanged: (value) {
               setState(() {
@@ -102,7 +104,7 @@ class _NotificationSettingsScreenState
               });
             },
           ),
-          
+
           const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.all(16),
@@ -130,4 +132,3 @@ class _NotificationSettingsScreenState
     );
   }
 }
-

@@ -31,10 +31,7 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) ...[
-          Text(
-            label!,
-            style: AppTextStyles.labelLarge,
-          ),
+          Text(label!, style: AppTextStyles.labelLarge),
           const SizedBox(height: 8),
         ],
         TextFormField(
@@ -44,13 +41,9 @@ class CustomTextField extends StatelessWidget {
           validator: validator,
           onChanged: onChanged,
           maxLines: maxLines,
-          decoration: InputDecoration(
-            hintText: hint,
-            suffixIcon: suffixIcon,
-          ),
+          decoration: InputDecoration(hintText: hint, suffixIcon: suffixIcon),
         ),
       ],
     );
   }
 }
-

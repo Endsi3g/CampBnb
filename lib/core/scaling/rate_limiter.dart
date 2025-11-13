@@ -4,30 +4,29 @@ import 'dart:collection';
 
 class RateLimiter {
   static final Logger _logger = Logger();
-  
+
   final int maxRequests;
   final Duration window;
   final Map<String, Queue<DateTime>> _requestHistory = {};
 
-  RateLimiter({
-    required this.maxRequests,
-    required this.window,
-  });
+  RateLimiter({required this.maxRequests, required this.window});
 
   /// Vérifie si une requête peut être effectuée
   bool canMakeRequest(String identifier) {
     final now = DateTime.now();
-    final history = _requestHistory.putIfAbsent(identifier, () => Queue<DateTime>());
+    final history = _requestHistory.putIfAbsent(
+      identifier,
+      () => Queue<DateTime>(),
+    );
 
     // Nettoyer les requêtes expirées
-    while (history.isNotEmpty && 
-           now.difference(history.first) > window) {
+    while (history.isNotEmpty && now.difference(history.first) > window) {
       history.removeFirst();
     }
 
     // Vérifier la limite
     if (history.length >= maxRequests) {
- _logger.w('Rate limit atteint pour $identifier');
+      _logger.w('Rate limit atteint pour $identifier');
       return false;
     }
 
@@ -36,7 +35,7 @@ class RateLimiter {
     return true;
   }
 
- /// Réinitialise l'historique pour un identifiant
+  /// Réinitialise l'historique pour un identifiant
   void reset(String identifier) {
     _requestHistory.remove(identifier);
   }
@@ -52,12 +51,10 @@ class RateLimiter {
     if (history == null) return maxRequests;
 
     final now = DateTime.now();
-    final validRequests = history.where(
-      (timestamp) => now.difference(timestamp) <= window,
-    ).length;
+    final validRequests = history
+        .where((timestamp) => now.difference(timestamp) <= window)
+        .length;
 
     return maxRequests - validRequests;
   }
 }
-
-

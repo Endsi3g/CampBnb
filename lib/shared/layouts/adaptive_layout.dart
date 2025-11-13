@@ -39,4 +39,3 @@ class AdaptiveLayout extends StatelessWidget {
     }
   }
 }
-

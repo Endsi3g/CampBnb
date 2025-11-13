@@ -13,10 +13,7 @@ ListingRepository listingRepository(ListingRepositoryRef ref) {
 
 /// Provider pour récupérer un listing par ID
 @riverpod
-Future<ListingModel> listingById(
-  ListingByIdRef ref,
-  String id,
-) async {
+Future<ListingModel> listingById(ListingByIdRef ref, String id) async {
   final repository = ref.watch(listingRepositoryProvider);
   return await repository.getListingById(id);
 }
@@ -79,11 +76,11 @@ class ListingNotifier extends _$ListingNotifier {
   Future<ListingModel> createListing(ListingModel listing) async {
     final repository = ref.read(listingRepositoryProvider);
     final created = await repository.createListing(listing);
-    
+
     // Invalider les providers pour rafraîchir les listes
     ref.invalidate(listingsProvider);
     ref.invalidate(hostListingsProvider(listing.hostId));
-    
+
     return created;
   }
 
@@ -91,12 +88,12 @@ class ListingNotifier extends _$ListingNotifier {
   Future<ListingModel> updateListing(ListingModel listing) async {
     final repository = ref.read(listingRepositoryProvider);
     final updated = await repository.updateListing(listing);
-    
+
     // Invalider les providers
     ref.invalidate(listingByIdProvider(listing.id));
     ref.invalidate(listingsProvider);
     ref.invalidate(hostListingsProvider(listing.hostId));
-    
+
     return updated;
   }
 
@@ -104,11 +101,10 @@ class ListingNotifier extends _$ListingNotifier {
   Future<void> deleteListing(String id, String hostId) async {
     final repository = ref.read(listingRepositoryProvider);
     await repository.deleteListing(id);
-    
+
     // Invalider les providers
     ref.invalidate(listingByIdProvider(id));
     ref.invalidate(listingsProvider);
     ref.invalidate(hostListingsProvider(hostId));
   }
 }
-

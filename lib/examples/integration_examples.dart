@@ -17,7 +17,7 @@ class SearchScreenExample extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
- appBar: AppBar(title: const Text('Recherche')),
+      appBar: AppBar(title: const Text('Recherche')),
       body: ListView(
         children: [
           // Barre de recherche normale
@@ -25,7 +25,7 @@ class SearchScreenExample extends ConsumerWidget {
             padding: EdgeInsets.all(16.0),
             child: TextField(
               decoration: InputDecoration(
- hintText: 'Rechercher un camping...',
+                hintText: 'Rechercher un camping...',
                 prefixIcon: Icon(Icons.search),
               ),
             ),
@@ -33,13 +33,13 @@ class SearchScreenExample extends ConsumerWidget {
 
           // Suggestions IA basées sur la recherche
           DestinationSuggestionsWidget(
- region: 'Mauricie',
- month: 'octobre',
- groupType: 'familles',
- preferences: 'près d\'un lac',
+            region: 'Mauricie',
+            month: 'octobre',
+            groupType: 'familles',
+            preferences: 'près d\'un lac',
             onSuggestionTap: (suggestion) {
               // Naviguer vers les détails du camping
- Navigator.pushNamed(context, '/campsite/${suggestion.name}');
+              Navigator.pushNamed(context, '/campsite/${suggestion.name}');
             },
           ),
 
@@ -52,13 +52,14 @@ class SearchScreenExample extends ConsumerWidget {
                   context: context,
                   isScrollControlled: true,
                   builder: (context) => GeminiChatWidget(
- title: 'Aide à la recherche',
- userContext: 'Utilisateur recherchant un camping en Mauricie',
+                    title: 'Aide à la recherche',
+                    userContext:
+                        'Utilisateur recherchant un camping en Mauricie',
                   ),
                 );
               },
               icon: const Icon(Icons.auto_awesome),
- label: const Text('Demander à l\'assistant IA'),
+              label: const Text('Demander à l\'assistant IA'),
             ),
           ),
         ],
@@ -85,7 +86,7 @@ class CampsiteDetailsScreenExample extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
- appBar: AppBar(title: const Text('Détails du camping')),
+      appBar: AppBar(title: const Text('Détails du camping')),
       body: ListView(
         children: [
           // Description avec traduction
@@ -95,35 +96,32 @@ class CampsiteDetailsScreenExample extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
- 'Description',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  'Description',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 TranslationWidget(
                   text: campsiteDescription,
- targetLanguage: 'en',
+                  targetLanguage: 'en',
                 ),
               ],
             ),
           ),
 
- // Résumé d'avis IA
+          // Résumé d'avis IA
           ReviewSummaryWidget(reviews: reviews),
 
           // Expériences locales suggérées
           LocalExperiencesWidget(
             location: location,
- preferences: 'nature et activités en plein air',
+            preferences: 'nature et activités en plein air',
           ),
 
           // Bouton flottant pour le chatbot
         ],
       ),
       floatingActionButton: GeminiChatFloatingButton(
- userContext: 'Consultation du camping $campsiteId',
+        userContext: 'Consultation du camping $campsiteId',
       ),
     );
   }
@@ -136,19 +134,17 @@ class HelpSupportScreenExample extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
- appBar: AppBar(title: const Text('Aide et support')),
+      appBar: AppBar(title: const Text('Aide et support')),
       body: ListView(
         children: [
           // FAQ avec réponses IA
           FAQAIWidget(
- question: 'Comment annuler une réservation ?',
- context: 'Utilisateur avec réservation active',
+            question: 'Comment annuler une réservation ?',
+            context: 'Utilisateur avec réservation active',
           ),
+          FAQAIWidget(question: 'Quels sont les modes de paiement acceptés ?'),
           FAQAIWidget(
- question: 'Quels sont les modes de paiement acceptés ?',
-          ),
-          FAQAIWidget(
- question: 'Puis-je modifier les dates de ma réservation ?',
+            question: 'Puis-je modifier les dates de ma réservation ?',
           ),
 
           // Chatbot intégré
@@ -157,10 +153,10 @@ class HelpSupportScreenExample extends ConsumerWidget {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton.icon(
               onPressed: () {
- Navigator.pushNamed(context, '/ai-chat');
+                Navigator.pushNamed(context, '/ai-chat');
               },
               icon: const Icon(Icons.chat),
- label: const Text('Chatter avec l\'assistant IA'),
+              label: const Text('Chatter avec l\'assistant IA'),
             ),
           ),
         ],
@@ -176,13 +172,11 @@ class ReservationScreenExample extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
- appBar: AppBar(title: const Text('Réserver votre séjour')),
-      body: const Center(
- child: Text('Formulaire de réservation...'),
-      ),
+      appBar: AppBar(title: const Text('Réserver votre séjour')),
+      body: const Center(child: Text('Formulaire de réservation...')),
       // Chatbot flottant pour assistance
       floatingActionButton: GeminiChatFloatingButton(
- userContext: 'Processus de réservation en cours',
+        userContext: 'Processus de réservation en cours',
       ),
     );
   }
@@ -198,20 +192,16 @@ class ItineraryScreenExample extends ConsumerWidget {
     // final itineraryAsync = ref.watch(
     //   itineraryProvider(
     //     ItineraryParams(
- // destination: 'Parc national de la Mauricie',
+    // destination: 'Parc national de la Mauricie',
     //       days: 3,
- // preferences: 'activités familiales',
+    // preferences: 'activités familiales',
     //     ),
     //   ),
     // );
 
     return Scaffold(
- appBar: AppBar(title: const Text('Mon itinéraire')),
-      body: const Center(
- child: Text('Itinéraire généré par IA...'),
-      ),
+      appBar: AppBar(title: const Text('Mon itinéraire')),
+      body: const Center(child: Text('Itinéraire généré par IA...')),
     );
   }
 }
-
-

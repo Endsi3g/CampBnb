@@ -6,11 +6,7 @@ class VoiceSearchButton extends StatefulWidget {
   final Function(String)? onResult;
   final Function(String)? onError;
 
-  const VoiceSearchButton({
-    super.key,
-    this.onResult,
-    this.onError,
-  });
+  const VoiceSearchButton({super.key, this.onResult, this.onError});
 
   @override
   State<VoiceSearchButton> createState() => _VoiceSearchButtonState();
@@ -35,7 +31,7 @@ class _VoiceSearchButtonState extends State<VoiceSearchButton> {
       );
     } catch (e) {
       setState(() => _isListening = false);
- widget.onError?.call('Erreur: $e');
+      widget.onError?.call('Erreur: $e');
     }
   }
 
@@ -56,4 +52,3 @@ class _VoiceSearchButtonState extends State<VoiceSearchButton> {
     );
   }
 }
-

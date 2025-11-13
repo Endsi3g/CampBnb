@@ -18,19 +18,19 @@ class AppLocalizations {
 
   String translate(String key, [Map<String, String>? params]) {
     String translation = _localizedStrings[key] ?? key;
-    
+
     if (params != null) {
       params.forEach((key, value) {
- translation = translation.replaceAll('{{$key}}', value);
+        translation = translation.replaceAll('{{$key}}', value);
       });
     }
-    
+
     return translation;
   }
 
   // Formatage des dates
   String formatDate(DateTime date, {String? format}) {
-    final dateFormat = format != null 
+    final dateFormat = format != null
         ? DateFormat(format, locale.languageCode)
         : DateFormat.yMMMd(locale.languageCode);
     return dateFormat.format(date);
@@ -67,24 +67,24 @@ class AppLocalizations {
   String formatDistance(double distanceInKm, {bool useImperial = false}) {
     if (useImperial || _shouldUseImperial(locale)) {
       final miles = distanceInKm * 0.621371;
- return '${miles.toStringAsFixed(1)} mi';
+      return '${miles.toStringAsFixed(1)} mi';
     }
- return '${distanceInKm.toStringAsFixed(1)} km';
+    return '${distanceInKm.toStringAsFixed(1)} km';
   }
 
   // Formatage des températures
   String formatTemperature(double celsius, {bool useFahrenheit = false}) {
     if (useFahrenheit || _shouldUseFahrenheit(locale)) {
       final fahrenheit = (celsius * 9 / 5) + 32;
- return '${fahrenheit.toStringAsFixed(0)}°F';
+      return '${fahrenheit.toStringAsFixed(0)}°F';
     }
- return '${celsius.toStringAsFixed(0)}°C';
+    return '${celsius.toStringAsFixed(0)}°C';
   }
 
   // Helpers privés
   String _getCurrencyForLocale(Locale locale) {
- final countryCode = locale.countryCode ?? 'US';
- return _currencyMap[countryCode] ?? 'USD';
+    final countryCode = locale.countryCode ?? 'US';
+    return _currencyMap[countryCode] ?? 'USD';
   }
 
   String _getCurrencySymbol(String currencyCode) {
@@ -92,63 +92,61 @@ class AppLocalizations {
   }
 
   bool _shouldUseImperial(Locale locale) {
- return ['US', 'LR', 'MM'].contains(locale.countryCode);
+    return ['US', 'LR', 'MM'].contains(locale.countryCode);
   }
 
   bool _shouldUseFahrenheit(Locale locale) {
- return ['US', 'BS', 'BZ', 'KY', 'PW'].contains(locale.countryCode);
+    return ['US', 'BS', 'BZ', 'KY', 'PW'].contains(locale.countryCode);
   }
 
   static const Map<String, String> _currencyMap = {
- 'US': 'USD',
- 'CA': 'CAD',
- 'FR': 'EUR',
- 'ES': 'EUR',
- 'IT': 'EUR',
- 'DE': 'EUR',
- 'GB': 'GBP',
- 'MX': 'MXN',
- 'BR': 'BRL',
- 'AR': 'ARS',
- 'CL': 'CLP',
- 'CO': 'COP',
- 'PE': 'PEN',
- 'AU': 'AUD',
- 'NZ': 'NZD',
- 'JP': 'JPY',
- 'CN': 'CNY',
- 'IN': 'INR',
- 'KR': 'KRW',
- 'SG': 'SGD',
- 'CH': 'CHF',
- 'SE': 'SEK',
- 'NO': 'NOK',
- 'DK': 'DKK',
+    'US': 'USD',
+    'CA': 'CAD',
+    'FR': 'EUR',
+    'ES': 'EUR',
+    'IT': 'EUR',
+    'DE': 'EUR',
+    'GB': 'GBP',
+    'MX': 'MXN',
+    'BR': 'BRL',
+    'AR': 'ARS',
+    'CL': 'CLP',
+    'CO': 'COP',
+    'PE': 'PEN',
+    'AU': 'AUD',
+    'NZ': 'NZD',
+    'JP': 'JPY',
+    'CN': 'CNY',
+    'IN': 'INR',
+    'KR': 'KRW',
+    'SG': 'SGD',
+    'CH': 'CHF',
+    'SE': 'SEK',
+    'NO': 'NOK',
+    'DK': 'DKK',
   };
 
   static const Map<String, String> _currencySymbols = {
- 'USD': '\$',
- 'CAD': 'C\$',
- 'EUR': '€',
- 'GBP': '£',
- 'MXN': '\$',
- 'BRL': 'R\$',
- 'ARS': '\$',
- 'CLP': '\$',
- 'COP': '\$',
- 'PEN': 'S/',
- 'AUD': 'A\$',
- 'NZD': 'NZ\$',
- 'JPY': '¥',
- 'CNY': '¥',
- 'INR': '₹',
- 'KRW': '₩',
- 'SGD': 'S\$',
- 'CHF': 'CHF',
- 'SEK': 'kr',
- 'NOK': 'kr',
- 'DKK': 'kr',
+    'USD': '\$',
+    'CAD': 'C\$',
+    'EUR': '€',
+    'GBP': '£',
+    'MXN': '\$',
+    'BRL': 'R\$',
+    'ARS': '\$',
+    'CLP': '\$',
+    'COP': '\$',
+    'PEN': 'S/',
+    'AUD': 'A\$',
+    'NZD': 'NZ\$',
+    'JPY': '¥',
+    'CNY': '¥',
+    'INR': '₹',
+    'KRW': '₩',
+    'SGD': 'S\$',
+    'CHF': 'CHF',
+    'SEK': 'kr',
+    'NOK': 'kr',
+    'DKK': 'kr',
   };
 }
-
-

@@ -25,10 +25,16 @@ abstract class ReservationRepository {
   Future<ReservationModel> acceptReservation(String reservationId);
 
   /// Refuser une réservation (hôte)
-  Future<ReservationModel> rejectReservation(String reservationId, {String? reason});
+  Future<ReservationModel> rejectReservation(
+    String reservationId, {
+    String? reason,
+  });
 
   /// Annuler une réservation (guest ou host)
-  Future<ReservationModel> cancelReservation(String reservationId, {String? reason});
+  Future<ReservationModel> cancelReservation(
+    String reservationId, {
+    String? reason,
+  });
 
   /// Suggérer des dates alternatives
   Future<void> suggestAlternativeDates({
@@ -38,4 +44,3 @@ abstract class ReservationRepository {
     String? message,
   });
 }
-

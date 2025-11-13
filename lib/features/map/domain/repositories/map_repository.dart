@@ -10,7 +10,7 @@ abstract class MapRepository {
     required double west,
   });
 
- /// Récupère les emplacements de camping à proximité d'un point
+  /// Récupère les emplacements de camping à proximité d'un point
   Future<List<CampsiteLocation>> getCampsitesNearby({
     required double latitude,
     required double longitude,
@@ -44,5 +44,3 @@ abstract class MapRepository {
   /// Supprime un emplacement
   Future<void> deleteCampsite(String id);
 }
-
-

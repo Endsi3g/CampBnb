@@ -26,12 +26,9 @@ class NetworkErrorInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Ajouter un breadcrumb pour tracer les requêtes
     _errorService.addBreadcrumb(
- message: '${options.method} ${options.uri}',
- category: 'network',
-      data: {
- 'method': options.method,
- 'url': options.uri.toString(),
-      },
+      message: '${options.method} ${options.uri}',
+      category: 'network',
+      data: {'method': options.method, 'url': options.uri.toString()},
     );
 
     super.onRequest(options, handler);
@@ -40,12 +37,13 @@ class NetworkErrorInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     // Tracer les réponses lentes
- final duration = response.extra['duration'] as Duration?;
+    final duration = response.extra['duration'] as Duration?;
     if (duration != null && duration.inMilliseconds > 2000) {
       _errorService.capturePerformanceIssue(
- operation: '${response.requestOptions.method} ${response.requestOptions.uri}',
+        operation:
+            '${response.requestOptions.method} ${response.requestOptions.uri}',
         duration: duration,
- context: 'Network request took longer than expected',
+        context: 'Network request took longer than expected',
       );
     }
 
@@ -63,17 +61,14 @@ class MonitoredHttpClient {
   Future<http.Response> get(Uri url, {Map<String, String>? headers}) async {
     final stopwatch = Stopwatch()..start();
     try {
-      _errorService.addBreadcrumb(
- message: 'GET $url',
- category: 'network',
-      );
+      _errorService.addBreadcrumb(message: 'GET $url', category: 'network');
 
       final response = await _client.get(url, headers: headers);
       stopwatch.stop();
 
       if (stopwatch.elapsedMilliseconds > 2000) {
         _errorService.capturePerformanceIssue(
- operation: 'GET $url',
+          operation: 'GET $url',
           duration: stopwatch.elapsed,
         );
       }
@@ -82,7 +77,7 @@ class MonitoredHttpClient {
         await _errorService.captureNetworkError(
           url: url.toString(),
           statusCode: response.statusCode,
- method: 'GET',
+          method: 'GET',
           responseBody: response.body.substring(0, 500),
         );
       }
@@ -92,7 +87,7 @@ class MonitoredHttpClient {
       await _errorService.captureNetworkError(
         url: url.toString(),
         statusCode: 0,
- method: 'GET',
+        method: 'GET',
         exception: e,
         stackTrace: stackTrace,
       );
@@ -107,17 +102,14 @@ class MonitoredHttpClient {
   }) async {
     final stopwatch = Stopwatch()..start();
     try {
-      _errorService.addBreadcrumb(
- message: 'POST $url',
- category: 'network',
-      );
+      _errorService.addBreadcrumb(message: 'POST $url', category: 'network');
 
       final response = await _client.post(url, headers: headers, body: body);
       stopwatch.stop();
 
       if (stopwatch.elapsedMilliseconds > 2000) {
         _errorService.capturePerformanceIssue(
- operation: 'POST $url',
+          operation: 'POST $url',
           duration: stopwatch.elapsed,
         );
       }
@@ -126,7 +118,7 @@ class MonitoredHttpClient {
         await _errorService.captureNetworkError(
           url: url.toString(),
           statusCode: response.statusCode,
- method: 'POST',
+          method: 'POST',
           requestData: body is Map ? body : null,
           responseBody: response.body.substring(0, 500),
         );
@@ -137,7 +129,7 @@ class MonitoredHttpClient {
       await _errorService.captureNetworkError(
         url: url.toString(),
         statusCode: 0,
- method: 'POST',
+        method: 'POST',
         requestData: body is Map ? body : null,
         exception: e,
         stackTrace: stackTrace,
@@ -148,4 +140,3 @@ class MonitoredHttpClient {
 
   void close() => _client.close();
 }
-

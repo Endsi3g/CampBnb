@@ -21,12 +21,13 @@ class UserModel with _$UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
-
-  String get fullName {
-    if (firstName != null && lastName != null) {
- return '$firstName $lastName';
-    }
- return firstName ?? lastName ?? email.split('@').first;
-  }
 }
 
+extension UserModelExtension on UserModel {
+  String get fullName {
+    if (firstName != null && lastName != null) {
+      return '$firstName $lastName';
+    }
+    return firstName ?? lastName ?? email.split('@').first;
+  }
+}

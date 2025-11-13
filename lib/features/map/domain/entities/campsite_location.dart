@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 
 /// Type d'emplacement de camping
 enum CampsiteType {
-  tent,        // Tente
-  rv,          // VR (Véhicule récréatif)
-  cabin,       // Chalet/Prêt-à-camper
-  wild,        // Camping sauvage
- lake, // Emplacement au bord d'un lac
-  forest,      // Emplacement en forêt
-  beach,       // Emplacement sur la plage
-  mountain,    // Emplacement en montagne
+  tent, // Tente
+  rv, // VR (Véhicule récréatif)
+  cabin, // Chalet/Prêt-à-camper
+  wild, // Camping sauvage
+  lake, // Emplacement au bord d'un lac
+  forest, // Emplacement en forêt
+  beach, // Emplacement sur la plage
+  mountain, // Emplacement en montagne
 }
 
 /// Entité représentant un emplacement de camping sur la carte
@@ -83,21 +83,21 @@ class CampsiteLocation extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        latitude,
-        longitude,
-        type,
-        description,
-        pricePerNight,
-        hostId,
-        imageUrl,
-        rating,
-        reviewCount,
-        isAvailable,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    name,
+    latitude,
+    longitude,
+    type,
+    description,
+    pricePerNight,
+    hostId,
+    imageUrl,
+    rating,
+    reviewCount,
+    isAvailable,
+    createdAt,
+    updatedAt,
+  ];
 }
 
 /// Cluster de plusieurs emplacements proches
@@ -119,5 +119,3 @@ class CampsiteCluster extends Equatable {
   @override
   List<Object?> get props => [id, latitude, longitude, pointCount, campsiteIds];
 }
-
-

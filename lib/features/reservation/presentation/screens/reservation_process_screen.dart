@@ -9,16 +9,15 @@ import '../../../../shared/models/listing_model.dart';
 class ReservationProcessScreen extends ConsumerStatefulWidget {
   final ListingModel listing;
 
-  const ReservationProcessScreen({
-    super.key,
-    required this.listing,
-  });
+  const ReservationProcessScreen({super.key, required this.listing});
 
   @override
-  ConsumerState<ReservationProcessScreen> createState() => _ReservationProcessScreenState();
+  ConsumerState<ReservationProcessScreen> createState() =>
+      _ReservationProcessScreenState();
 }
 
-class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScreen> {
+class _ReservationProcessScreenState
+    extends ConsumerState<ReservationProcessScreen> {
   DateTime? _selectedStartDate;
   DateTime? _selectedEndDate;
   DateTime _focusedDay = DateTime.now();
@@ -56,9 +55,7 @@ class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScr
     final total = _calculateTotal();
 
     return Scaffold(
-      appBar: AppBar(
- title: const Text('Réserver votre séjour'),
-      ),
+      appBar: AppBar(title: const Text('Réserver votre séjour')),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,10 +66,7 @@ class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScr
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
- 'Sélectionnez vos dates',
-                    style: AppTextStyles.h2,
-                  ),
+                  Text('Sélectionnez vos dates', style: AppTextStyles.h2),
                   const SizedBox(height: 16),
                   TableCalendar(
                     firstDay: DateTime.now(),
@@ -119,15 +113,12 @@ class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScr
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
- 'Qui vous accompagne ?',
-                    style: AppTextStyles.h2,
-                  ),
+                  Text('Qui vous accompagne ?', style: AppTextStyles.h2),
                   const SizedBox(height: 16),
                   _buildGuestCounter(
                     icon: Icons.person,
- label: 'Adultes',
- subtitle: '13 ans et plus',
+                    label: 'Adultes',
+                    subtitle: '13 ans et plus',
                     count: _adults,
                     onDecrement: () {
                       if (_adults > 1) {
@@ -141,8 +132,8 @@ class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScr
                   const SizedBox(height: 16),
                   _buildGuestCounter(
                     icon: Icons.child_care,
- label: 'Enfants',
- subtitle: '2-12 ans',
+                    label: 'Enfants',
+                    subtitle: '2-12 ans',
                     count: _children,
                     onDecrement: () {
                       if (_children > 0) {
@@ -180,20 +171,21 @@ class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScr
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
- '\$${total.toStringAsFixed(2)}',
+                    '\$${total.toStringAsFixed(2)}',
                     style: AppTextStyles.h3,
                   ),
                   TextButton(
                     onPressed: () {
                       // TODO: Afficher les détails du prix
                     },
- child: const Text('Détails du prix'),
+                    child: const Text('Détails du prix'),
                   ),
                 ],
               ),
               CustomButton(
- text: 'Confirmer la demande',
-                onPressed: (_selectedStartDate != null && _selectedEndDate != null)
+                text: 'Confirmer la demande',
+                onPressed:
+                    (_selectedStartDate != null && _selectedEndDate != null)
                     ? () {
                         // TODO: Créer la réservation
                       }
@@ -251,10 +243,7 @@ class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScr
               ),
             ),
             const SizedBox(width: 16),
-            Text(
-              count.toString(),
-              style: AppTextStyles.bodyLarge,
-            ),
+            Text(count.toString(), style: AppTextStyles.bodyLarge),
             const SizedBox(width: 16),
             IconButton(
               onPressed: onIncrement,
@@ -271,4 +260,3 @@ class _ReservationProcessScreenState extends ConsumerState<ReservationProcessScr
     );
   }
 }
-

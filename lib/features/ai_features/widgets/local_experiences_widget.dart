@@ -18,10 +18,7 @@ class LocalExperiencesWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final experiencesAsync = ref.watch(
       localExperiencesProvider(
-        LocalExperienceParams(
-          location: location,
-          preferences: preferences,
-        ),
+        LocalExperienceParams(location: location, preferences: preferences),
       ),
     );
 
@@ -41,10 +38,10 @@ class LocalExperiencesWidget extends ConsumerWidget {
                   const Icon(Icons.auto_awesome, size: 20),
                   const SizedBox(width: 8),
                   Text(
- 'Expériences locales',
+                    'Expériences locales',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -68,7 +65,7 @@ class LocalExperiencesWidget extends ConsumerWidget {
       error: (error, stack) => Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
- 'Erreur: $error',
+          'Erreur: $error',
           style: TextStyle(color: Theme.of(context).colorScheme.error),
         ),
       ),
@@ -120,7 +117,9 @@ class _ExperienceCard extends StatelessWidget {
                       Text(
                         experience.category,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.textTheme.bodySmall?.color?.withOpacity(0.7),
+                          color: theme.textTheme.bodySmall?.color?.withOpacity(
+                            0.7,
+                          ),
                         ),
                       ),
                     ],
@@ -129,21 +128,20 @@ class _ExperienceCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Text(
-              experience.description,
-              style: theme.textTheme.bodyMedium,
-            ),
+            Text(experience.description, style: theme.textTheme.bodyMedium),
             if (experience.tags != null && experience.tags!.isNotEmpty) ...[
               const SizedBox(height: 12),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: experience.tags!
-                    .map((tag) => Chip(
-                          label: Text(tag),
-                          labelStyle: const TextStyle(fontSize: 12),
-                          padding: EdgeInsets.zero,
-                        ))
+                    .map(
+                      (tag) => Chip(
+                        label: Text(tag),
+                        labelStyle: const TextStyle(fontSize: 12),
+                        padding: EdgeInsets.zero,
+                      ),
+                    )
                     .toList(),
               ),
             ],
@@ -155,18 +153,16 @@ class _ExperienceCard extends StatelessWidget {
 
   IconData _getCategoryIcon(String category) {
     switch (category.toLowerCase()) {
- case 'gastronomie':
+      case 'gastronomie':
         return Icons.restaurant;
- case 'nature':
+      case 'nature':
         return Icons.forest;
- case 'culture':
+      case 'culture':
         return Icons.museum;
- case 'sport':
+      case 'sport':
         return Icons.sports;
       default:
         return Icons.explore;
     }
   }
 }
-
-

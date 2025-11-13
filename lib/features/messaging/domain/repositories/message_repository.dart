@@ -104,4 +104,3 @@ abstract class MessageRepository {
   /// Marquer les messages comme lus
   Future<void> markAsRead(String conversationId);
 }
-

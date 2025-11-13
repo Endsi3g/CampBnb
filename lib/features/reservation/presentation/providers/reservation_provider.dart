@@ -39,7 +39,9 @@ Future<List<ReservationModel>> reservations(
 
 /// Provider pour les réservations en attente (hôte)
 @riverpod
-Future<List<ReservationModel>> pendingReservations(PendingReservationsRef ref) async {
+Future<List<ReservationModel>> pendingReservations(
+  PendingReservationsRef ref,
+) async {
   final repository = ref.watch(reservationRepositoryProvider);
   return await repository.getReservations(
     status: ReservationStatus.pending,
@@ -65,15 +67,9 @@ class ReservationNotifierState {
   final bool isLoading;
   final String? error;
 
-  ReservationNotifierState({
-    this.isLoading = false,
-    this.error,
-  });
+  ReservationNotifierState({this.isLoading = false, this.error});
 
-  ReservationNotifierState copyWith({
-    bool? isLoading,
-    String? error,
-  }) {
+  ReservationNotifierState copyWith({bool? isLoading, String? error}) {
     return ReservationNotifierState(
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
@@ -107,11 +103,11 @@ class ReservationNotifier extends _$ReservationNotifier {
         numberOfGuests: numberOfGuests,
         message: message,
       );
-      
+
       // Invalider les providers pour rafraîchir les listes
       ref.invalidate(reservationsProvider);
       ref.invalidate(pendingReservationsProvider);
-      
+
       state = state.copyWith(isLoading: false);
       return reservation;
     } catch (e) {
@@ -126,13 +122,13 @@ class ReservationNotifier extends _$ReservationNotifier {
     try {
       final repository = ref.read(reservationRepositoryProvider);
       await repository.acceptReservation(reservationId);
-      
+
       // Invalider les providers
       ref.invalidate(reservationByIdProvider(reservationId));
       ref.invalidate(reservationsProvider);
       ref.invalidate(pendingReservationsProvider);
       ref.invalidate(confirmedReservationsProvider);
-      
+
       state = state.copyWith(isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -146,12 +142,12 @@ class ReservationNotifier extends _$ReservationNotifier {
     try {
       final repository = ref.read(reservationRepositoryProvider);
       await repository.rejectReservation(reservationId, reason: reason);
-      
+
       // Invalider les providers
       ref.invalidate(reservationByIdProvider(reservationId));
       ref.invalidate(reservationsProvider);
       ref.invalidate(pendingReservationsProvider);
-      
+
       state = state.copyWith(isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -165,12 +161,12 @@ class ReservationNotifier extends _$ReservationNotifier {
     try {
       final repository = ref.read(reservationRepositoryProvider);
       await repository.cancelReservation(reservationId, reason: reason);
-      
+
       // Invalider les providers
       ref.invalidate(reservationByIdProvider(reservationId));
       ref.invalidate(reservationsProvider);
       ref.invalidate(confirmedReservationsProvider);
-      
+
       state = state.copyWith(isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -194,4 +190,3 @@ class ReservationNotifier extends _$ReservationNotifier {
     );
   }
 }
-

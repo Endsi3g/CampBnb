@@ -12,8 +12,8 @@ class TranslationWidget extends ConsumerStatefulWidget {
   const TranslationWidget({
     super.key,
     required this.text,
- this.sourceLanguage = 'fr',
- this.targetLanguage = 'en',
+    this.sourceLanguage = 'fr',
+    this.targetLanguage = 'en',
     this.builder,
   });
 
@@ -52,7 +52,7 @@ class _TranslationWidgetState extends ConsumerState<TranslationWidget> {
             });
           },
           icon: const Icon(Icons.translate, size: 18),
- label: Text(_showTranslation ? 'Masquer la traduction' : 'Traduire'),
+          label: Text(_showTranslation ? 'Masquer la traduction' : 'Traduire'),
         ),
 
         // Texte traduit
@@ -107,7 +107,7 @@ class _TranslationWidgetState extends ConsumerState<TranslationWidget> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
- 'Erreur de traduction: $error',
+                      'Erreur de traduction: $error',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.error,
                       ),
@@ -121,5 +121,3 @@ class _TranslationWidgetState extends ConsumerState<TranslationWidget> {
     );
   }
 }
-
-

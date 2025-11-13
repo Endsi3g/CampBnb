@@ -18,7 +18,7 @@ class SpeechRecognitionService {
 
     _isAvailable = await _speech.initialize(
       onStatus: (status) {
- if (status == 'done' || status == 'notListening') {
+        if (status == 'done' || status == 'notListening') {
           _isListening = false;
         }
       },
@@ -30,7 +30,7 @@ class SpeechRecognitionService {
     return _isAvailable;
   }
 
- /// Démarrer l'écoute
+  /// Démarrer l'écoute
   static Future<String?> startListening({
     Function(String)? onResult,
     Function(String)? onError,
@@ -38,7 +38,7 @@ class SpeechRecognitionService {
     if (!_isAvailable) {
       final initialized = await initialize();
       if (!initialized) {
- onError?.call('Reconnaissance vocale non disponible');
+        onError?.call('Reconnaissance vocale non disponible');
         return null;
       }
     }
@@ -60,13 +60,13 @@ class SpeechRecognitionService {
       },
       listenFor: const Duration(seconds: 30),
       pauseFor: const Duration(seconds: 3),
- localeId: 'fr_CA', // Français québécois
+      localeId: 'fr_CA', // Français québécois
     );
 
     return finalResult;
   }
 
- /// Arrêter l'écoute
+  /// Arrêter l'écoute
   static Future<void> stopListening() async {
     if (_isListening) {
       await _speech.stop();
@@ -74,7 +74,7 @@ class SpeechRecognitionService {
     }
   }
 
- /// Annuler l'écoute
+  /// Annuler l'écoute
   static Future<void> cancelListening() async {
     if (_isListening) {
       await _speech.cancel();
@@ -82,10 +82,9 @@ class SpeechRecognitionService {
     }
   }
 
- /// Vérifier si l'écoute est en cours
+  /// Vérifier si l'écoute est en cours
   static bool get isListening => _isListening;
 
   /// Vérifier si le service est disponible
   static bool get isAvailable => _isAvailable;
 }
-

@@ -13,7 +13,7 @@ class LocationServiceImpl implements LocationService {
       final status = await Permission.location.status;
       return status.isGranted;
     } catch (e) {
- _logger.e('Erreur lors de la vérification des permissions: $e');
+      _logger.e('Erreur lors de la vérification des permissions: $e');
       return false;
     }
   }
@@ -23,16 +23,16 @@ class LocationServiceImpl implements LocationService {
     try {
       final status = await Permission.location.request();
       if (status.isGranted) {
- _logger.i('Permission de localisation accordée');
+        _logger.i('Permission de localisation accordée');
         return true;
       } else if (status.isPermanentlyDenied) {
- _logger.w('Permission de localisation refusée définitivement');
- // Optionnel: ouvrir les paramètres de l'app
+        _logger.w('Permission de localisation refusée définitivement');
+        // Optionnel: ouvrir les paramètres de l'app
         // await openAppSettings();
       }
       return false;
     } catch (e) {
- _logger.e('Erreur lors de la demande de permission: $e');
+      _logger.e('Erreur lors de la demande de permission: $e');
       return false;
     }
   }
@@ -40,10 +40,10 @@ class LocationServiceImpl implements LocationService {
   @override
   Future<Position?> getCurrentPosition() async {
     try {
- // Vérifie d'abord si le service est activé
+      // Vérifie d'abord si le service est activé
       final serviceEnabled = await isLocationServiceEnabled();
       if (!serviceEnabled) {
- _logger.w('Service de localisation désactivé');
+        _logger.w('Service de localisation désactivé');
         return null;
       }
 
@@ -52,7 +52,7 @@ class LocationServiceImpl implements LocationService {
       if (!hasPermission) {
         final granted = await requestLocationPermission();
         if (!granted) {
- _logger.w('Permission de localisation refusée');
+          _logger.w('Permission de localisation refusée');
           return null;
         }
       }
@@ -63,10 +63,12 @@ class LocationServiceImpl implements LocationService {
         timeLimit: const Duration(seconds: 10),
       );
 
- _logger.i('Position récupérée: ${position.latitude}, ${position.longitude}');
+      _logger.i(
+        'Position récupérée: ${position.latitude}, ${position.longitude}',
+      );
       return position;
     } catch (e) {
- _logger.e('Erreur lors de la récupération de la position: $e');
+      _logger.e('Erreur lors de la récupération de la position: $e');
       return null;
     }
   }
@@ -85,12 +87,7 @@ class LocationServiceImpl implements LocationService {
   }
 
   @override
-  double calculateDistance(
-    double lat1,
-    double lon1,
-    double lat2,
-    double lon2,
-  ) {
+  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     return Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
   }
 
@@ -99,10 +96,8 @@ class LocationServiceImpl implements LocationService {
     try {
       return await Geolocator.isLocationServiceEnabled();
     } catch (e) {
- _logger.e('Erreur lors de la vérification du service: $e');
+      _logger.e('Erreur lors de la vérification du service: $e');
       return false;
     }
   }
 }
-
-

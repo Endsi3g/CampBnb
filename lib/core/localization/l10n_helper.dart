@@ -18,27 +18,36 @@ extension LocalizationExtension on BuildContext {
 
   /// Formate une monnaie
   String formatCurrency(double amount, {String? currencyCode}) {
-    return l10n?.formatCurrency(amount, currencyCode: currencyCode) ?? 
-           amount.toStringAsFixed(2);
+    return l10n?.formatCurrency(amount, currencyCode: currencyCode) ??
+        amount.toStringAsFixed(2);
   }
 
   /// Formate une distance
   String formatDistance(double distanceInKm, {bool? useImperial}) {
     final locale = Localizations.localeOf(this);
-    final shouldUseImperial = useImperial ?? 
- (locale.countryCode == 'US' || locale.countryCode == 'LR' || locale.countryCode == 'MM');
-    return l10n?.formatDistance(distanceInKm, useImperial: shouldUseImperial) ?? 
- '${distanceInKm.toStringAsFixed(1)} km';
+    final shouldUseImperial =
+        useImperial ??
+        (locale.countryCode == 'US' ||
+            locale.countryCode == 'LR' ||
+            locale.countryCode == 'MM');
+    return l10n?.formatDistance(distanceInKm, useImperial: shouldUseImperial) ??
+        '${distanceInKm.toStringAsFixed(1)} km';
   }
 
   /// Formate une température
   String formatTemperature(double celsius, {bool? useFahrenheit}) {
     final locale = Localizations.localeOf(this);
-    final shouldUseFahrenheit = useFahrenheit ?? 
- (locale.countryCode == 'US' || locale.countryCode == 'BS' || 
- locale.countryCode == 'BZ' || locale.countryCode == 'KY' || locale.countryCode == 'PW');
-    return l10n?.formatTemperature(celsius, useFahrenheit: shouldUseFahrenheit) ?? 
- '${celsius.toStringAsFixed(0)}°C';
+    final shouldUseFahrenheit =
+        useFahrenheit ??
+        (locale.countryCode == 'US' ||
+            locale.countryCode == 'BS' ||
+            locale.countryCode == 'BZ' ||
+            locale.countryCode == 'KY' ||
+            locale.countryCode == 'PW');
+    return l10n?.formatTemperature(
+          celsius,
+          useFahrenheit: shouldUseFahrenheit,
+        ) ??
+        '${celsius.toStringAsFixed(0)}°C';
   }
 }
-

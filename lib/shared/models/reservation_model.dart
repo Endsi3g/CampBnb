@@ -3,12 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'reservation_model.freezed.dart';
 part 'reservation_model.g.dart';
 
-enum ReservationStatus {
-  pending,
-  confirmed,
-  cancelled,
-  completed,
-}
+enum ReservationStatus { pending, confirmed, cancelled, completed }
 
 @freezed
 class ReservationModel with _$ReservationModel {
@@ -30,9 +25,10 @@ class ReservationModel with _$ReservationModel {
 
   factory ReservationModel.fromJson(Map<String, dynamic> json) =>
       _$ReservationModelFromJson(json);
+}
 
+extension ReservationModelExtension on ReservationModel {
   int get numberOfNights {
     return checkOut.difference(checkIn).inDays;
   }
 }
-

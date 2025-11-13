@@ -16,21 +16,23 @@ class AnalyticsDashboardScreen extends ConsumerStatefulWidget {
   const AnalyticsDashboardScreen({super.key});
 
   @override
-  ConsumerState<AnalyticsDashboardScreen> createState() => _AnalyticsDashboardScreenState();
+  ConsumerState<AnalyticsDashboardScreen> createState() =>
+      _AnalyticsDashboardScreenState();
 }
 
-class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScreen> {
+class _AnalyticsDashboardScreenState
+    extends ConsumerState<AnalyticsDashboardScreen> {
   DateTime _selectedDate = DateTime.now();
- String _selectedPeriod = 'daily'; // 'daily', 'weekly', 'monthly'
+  String _selectedPeriod = 'daily'; // 'daily', 'weekly', 'monthly'
 
   @override
   Widget build(BuildContext context) {
     return AnalyticsTracker(
- screenName: 'analytics_dashboard',
- screenClass: 'AnalyticsDashboardScreen',
+      screenName: 'analytics_dashboard',
+      screenClass: 'AnalyticsDashboardScreen',
       child: Scaffold(
         appBar: AppBar(
- title: const Text('Dashboard Analytics'),
+          title: const Text('Dashboard Analytics'),
           actions: [
             IconButton(
               icon: const Icon(Icons.settings),
@@ -81,9 +83,9 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
         Expanded(
           child: SegmentedButton<String>(
             segments: const [
- ButtonSegment(value: 'daily', label: Text('Jour')),
- ButtonSegment(value: 'weekly', label: Text('Semaine')),
- ButtonSegment(value: 'monthly', label: Text('Mois')),
+              ButtonSegment(value: 'daily', label: Text('Jour')),
+              ButtonSegment(value: 'weekly', label: Text('Semaine')),
+              ButtonSegment(value: 'monthly', label: Text('Mois')),
             ],
             selected: {_selectedPeriod},
             onSelectionChanged: (Set<String> newSelection) {
@@ -123,7 +125,7 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
         }
 
         if (snapshot.hasError) {
- return Text('Erreur: ${snapshot.error}');
+          return Text('Erreur: ${snapshot.error}');
         }
 
         final metrics = snapshot.data ?? {};
@@ -131,10 +133,7 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
- 'Métriques principales',
-              style: AppTextStyles.h2,
-            ),
+            Text('Métriques principales', style: AppTextStyles.h2),
             const SizedBox(height: 16),
             GridView.count(
               crossAxisCount: 2,
@@ -145,32 +144,34 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
               childAspectRatio: 1.5,
               children: [
                 MetricsCard(
- title: 'Utilisateurs actifs',
- value: '${metrics['active_users'] ?? 0}',
+                  title: 'Utilisateurs actifs',
+                  value: '${metrics['active_users'] ?? 0}',
                   icon: Icons.people,
                   color: AppColors.primary,
- trend: metrics['active_users_trend'] as double?,
+                  trend: metrics['active_users_trend'] as double?,
                 ),
                 MetricsCard(
- title: 'Sessions',
- value: '${metrics['sessions'] ?? 0}',
+                  title: 'Sessions',
+                  value: '${metrics['sessions'] ?? 0}',
                   icon: Icons.timeline,
                   color: AppColors.secondary,
- trend: metrics['sessions_trend'] as double?,
+                  trend: metrics['sessions_trend'] as double?,
                 ),
                 MetricsCard(
- title: 'Taux de rétention',
- value: '${(metrics['retention_rate'] ?? 0.0).toStringAsFixed(1)}%',
+                  title: 'Taux de rétention',
+                  value:
+                      '${(metrics['retention_rate'] ?? 0.0).toStringAsFixed(1)}%',
                   icon: Icons.trending_up,
                   color: Colors.green,
- trend: metrics['retention_trend'] as double?,
+                  trend: metrics['retention_trend'] as double?,
                 ),
                 MetricsCard(
- title: 'Taux de conversion',
- value: '${(metrics['conversion_rate'] ?? 0.0).toStringAsFixed(1)}%',
+                  title: 'Taux de conversion',
+                  value:
+                      '${(metrics['conversion_rate'] ?? 0.0).toStringAsFixed(1)}%',
                   icon: Icons.check_circle,
                   color: Colors.orange,
- trend: metrics['conversion_trend'] as double?,
+                  trend: metrics['conversion_trend'] as double?,
                 ),
               ],
             ),
@@ -184,15 +185,9 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
- 'Funnel de conversion',
-          style: AppTextStyles.h2,
-        ),
+        Text('Funnel de conversion', style: AppTextStyles.h2),
         const SizedBox(height: 16),
-        ConversionFunnelWidget(
-          period: _selectedPeriod,
-          date: _selectedDate,
-        ),
+        ConversionFunnelWidget(period: _selectedPeriod, date: _selectedDate),
       ],
     );
   }
@@ -201,15 +196,9 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
- 'Satisfaction utilisateur',
-          style: AppTextStyles.h2,
-        ),
+        Text('Satisfaction utilisateur', style: AppTextStyles.h2),
         const SizedBox(height: 16),
-        SatisfactionChartWidget(
-          period: _selectedPeriod,
-          date: _selectedDate,
-        ),
+        SatisfactionChartWidget(period: _selectedPeriod, date: _selectedDate),
       ],
     );
   }
@@ -218,15 +207,9 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
- 'Analyse comportementale',
-          style: AppTextStyles.h2,
-        ),
+        Text('Analyse comportementale', style: AppTextStyles.h2),
         const SizedBox(height: 16),
-        UserBehaviorWidget(
-          period: _selectedPeriod,
-          date: _selectedDate,
-        ),
+        UserBehaviorWidget(period: _selectedPeriod, date: _selectedDate),
       ],
     );
   }
@@ -235,10 +218,7 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
- 'Événements récents',
-          style: AppTextStyles.h2,
-        ),
+        Text('Événements récents', style: AppTextStyles.h2),
         const SizedBox(height: 16),
         FutureBuilder<List<Map<String, dynamic>>>(
           future: _fetchRecentEvents(),
@@ -248,7 +228,7 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
             }
 
             if (snapshot.hasError || !snapshot.hasData) {
- return const Text('Aucun événement récent');
+              return const Text('Aucun événement récent');
             }
 
             final events = snapshot.data!;
@@ -263,18 +243,18 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
                   margin: const EdgeInsets.only(bottom: 8),
                   child: ListTile(
                     leading: Icon(
- _getEventIcon(event['event_type'] as String?),
+                      _getEventIcon(event['event_type'] as String?),
                       color: AppColors.primary,
                     ),
- title: Text(event['event_name'] as String? ?? ''),
+                    title: Text(event['event_name'] as String? ?? ''),
                     subtitle: Text(
- DateFormat('dd/MM/yyyy HH:mm').format(
- DateTime.parse(event['created_at'] as String),
-                      ),
+                      DateFormat(
+                        'dd/MM/yyyy HH:mm',
+                      ).format(DateTime.parse(event['created_at'] as String)),
                     ),
                     trailing: Chip(
                       label: Text(
- event['event_category'] as String? ?? '',
+                        event['event_category'] as String? ?? '',
                         style: const TextStyle(fontSize: 10),
                       ),
                     ),
@@ -290,15 +270,15 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
 
   IconData _getEventIcon(String? eventType) {
     switch (eventType) {
- case 'screen_view':
+      case 'screen_view':
         return Icons.visibility;
- case 'button_click':
+      case 'button_click':
         return Icons.touch_app;
- case 'search':
+      case 'search':
         return Icons.search;
- case 'listing_view':
+      case 'listing_view':
         return Icons.home;
- case 'reservation':
+      case 'reservation':
         return Icons.calendar_today;
       default:
         return Icons.event;
@@ -312,58 +292,61 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
       final endDate = _selectedDate.add(const Duration(days: 1));
 
       // Utilisateurs actifs
- final activeUsersResponse = await SupabaseService.from('analytics_sessions')
- .select('user_id, anonymous_id')
- .gte('started_at', startDate.toIso8601String())
- .lt('started_at', endDate.toIso8601String());
+      final activeUsersResponse =
+          await SupabaseService.from('analytics_sessions')
+              .select('user_id, anonymous_id')
+              .gte('started_at', startDate.toIso8601String())
+              .lt('started_at', endDate.toIso8601String());
 
       final activeUsers = (activeUsersResponse as List)
- .map((e) => e['user_id'] ?? e['anonymous_id'])
+          .map((e) => e['user_id'] ?? e['anonymous_id'])
           .toSet()
           .length;
 
       // Sessions
- final sessionsResponse = await SupabaseService.from('analytics_sessions')
- .select('id')
- .gte('started_at', startDate.toIso8601String())
- .lt('started_at', endDate.toIso8601String());
+      final sessionsResponse = await SupabaseService.from('analytics_sessions')
+          .select('id')
+          .gte('started_at', startDate.toIso8601String())
+          .lt('started_at', endDate.toIso8601String());
 
       final sessions = (sessionsResponse as List).length;
 
       // Conversions
- final conversionsResponse = await SupabaseService.from('analytics_conversions')
- .select('id')
- .gte('created_at', startDate.toIso8601String())
- .lt('created_at', endDate.toIso8601String());
+      final conversionsResponse =
+          await SupabaseService.from('analytics_conversions')
+              .select('id')
+              .gte('created_at', startDate.toIso8601String())
+              .lt('created_at', endDate.toIso8601String());
 
       final conversions = (conversionsResponse as List).length;
 
       // Rétention (simplifié)
       final retentionRate = sessions > 0 ? (activeUsers / sessions * 100) : 0.0;
-      final conversionRate = sessions > 0 ? (conversions / sessions * 100) : 0.0;
+      final conversionRate = sessions > 0
+          ? (conversions / sessions * 100)
+          : 0.0;
 
       return {
- 'active_users': activeUsers,
- 'sessions': sessions,
- 'retention_rate': retentionRate,
- 'conversion_rate': conversionRate,
+        'active_users': activeUsers,
+        'sessions': sessions,
+        'retention_rate': retentionRate,
+        'conversion_rate': conversionRate,
       };
     } catch (e) {
       return {
- 'active_users': 0,
- 'sessions': 0,
- 'retention_rate': 0.0,
- 'conversion_rate': 0.0,
+        'active_users': 0,
+        'sessions': 0,
+        'retention_rate': 0.0,
+        'conversion_rate': 0.0,
       };
     }
   }
 
   Future<List<Map<String, dynamic>>> _fetchRecentEvents() async {
     try {
- final response = await SupabaseService.from('analytics_events')
-          .select()
- .order('created_at', ascending: false)
-          .limit(10);
+      final response = await SupabaseService.from(
+        'analytics_events',
+      ).select().order('created_at', ascending: false).limit(10);
 
       return (response as List).cast<Map<String, dynamic>>();
     } catch (e) {
@@ -373,15 +356,20 @@ class _AnalyticsDashboardScreenState extends ConsumerState<AnalyticsDashboardScr
 
   DateTime _getStartDate() {
     switch (_selectedPeriod) {
- case 'daily':
-        return DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day);
- case 'weekly':
-        return _selectedDate.subtract(Duration(days: _selectedDate.weekday - 1));
- case 'monthly':
+      case 'daily':
+        return DateTime(
+          _selectedDate.year,
+          _selectedDate.month,
+          _selectedDate.day,
+        );
+      case 'weekly':
+        return _selectedDate.subtract(
+          Duration(days: _selectedDate.weekday - 1),
+        );
+      case 'monthly':
         return DateTime(_selectedDate.year, _selectedDate.month, 1);
       default:
         return _selectedDate;
     }
   }
 }
-

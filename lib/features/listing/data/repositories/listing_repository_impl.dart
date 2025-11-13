@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../core/config/app_config.dart';
+import '../../../../core/cache/cache_service.dart';
 import '../../../../shared/models/listing_model.dart';
 import '../../../../shared/services/supabase_service.dart';
 import '../../domain/repositories/listing_repository.dart';
@@ -7,6 +8,7 @@ import '../../domain/repositories/listing_repository.dart';
 class ListingRepositoryImpl implements ListingRepository {
   final Dio _dio = Dio();
   final String _baseUrl;
+  final CacheService _cacheService = CacheService();
 
   ListingRepositoryImpl() : _baseUrl = AppConfig.supabaseUrl {
     _dio.options.baseUrl = '$_baseUrl/functions/v1';
@@ -103,6 +105,12 @@ class ListingRepositoryImpl implements ListingRepository {
   @override
   Future<ListingModel> getListingById(String id) async {
     try {
+      // Vérifier le cache d'abord
+      final cached = _cacheService.getCachedListing(id);
+      if (cached != null) {
+        return _mapToListingModel(cached);
+      }
+
       final response = await _dio.get(
         '/listings/$id',
         options: Options(
@@ -112,8 +120,19 @@ class ListingRepositoryImpl implements ListingRepository {
         ),
       );
 
-      return _mapToListingModel(response.data['data'] as Map<String, dynamic>);
+      final data = response.data['data'] as Map<String, dynamic>;
+      final listing = _mapToListingModel(data);
+
+      // Mettre en cache
+      await _cacheService.cacheListing(id, data);
+
+      return listing;
     } catch (e) {
+      // En cas d'erreur réseau, essayer le cache
+      final cached = _cacheService.getCachedListing(id);
+      if (cached != null) {
+        return _mapToListingModel(cached);
+      }
       throw Exception('Erreur lors de la récupération du listing: $e');
     }
   }
@@ -130,6 +149,25 @@ class ListingRepositoryImpl implements ListingRepository {
     int? limit,
   }) async {
     try {
+      // Générer une clé de cache basée sur les paramètres
+      final cacheKey = _generateCacheKey(
+        city: city,
+        province: province,
+        type: type,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        minGuests: minGuests,
+        page: page,
+      );
+
+      // Vérifier le cache d'abord (seulement pour la première page)
+      if (page == null || page == 1) {
+        final cached = _cacheService.getCachedListings(searchKey: cacheKey);
+        if (cached != null) {
+          return cached.map((json) => _mapToListingModel(json)).toList();
+        }
+      }
+
       final queryParams = <String, dynamic>{};
       if (city != null) queryParams['city'] = city;
       if (province != null) queryParams['province'] = province;
@@ -153,17 +191,89 @@ class ListingRepositoryImpl implements ListingRepository {
       );
 
       final data = response.data['data'] as List<dynamic>;
-      return data
+      final listings = data
           .map((json) => _mapToListingModel(json as Map<String, dynamic>))
           .toList();
+
+      // Mettre en cache (seulement pour la première page)
+      if (page == null || page == 1) {
+        final listingsJson = data.cast<Map<String, dynamic>>();
+        await _cacheService.cacheListings(listingsJson, searchKey: cacheKey);
+      }
+
+      return listings;
     } catch (e) {
+      // En cas d'erreur réseau, essayer le cache
+      final cacheKey = _generateCacheKey(
+        city: city,
+        province: province,
+        type: type,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        minGuests: minGuests,
+        page: 1,
+      );
+      final cached = _cacheService.getCachedListings(searchKey: cacheKey);
+      if (cached != null) {
+        return cached.map((json) => _mapToListingModel(json)).toList();
+      }
       throw Exception('Erreur lors de la récupération des listings: $e');
     }
+  }
+
+  String _generateCacheKey({
+    String? city,
+    String? province,
+    ListingType? type,
+    double? minPrice,
+    double? maxPrice,
+    int? minGuests,
+    int? page,
+  }) {
+    final parts = <String>[];
+    if (city != null) parts.add('city:$city');
+    if (province != null) parts.add('province:$province');
+    if (type != null) parts.add('type:${type.name}');
+    if (minPrice != null) parts.add('minPrice:$minPrice');
+    if (maxPrice != null) parts.add('maxPrice:$maxPrice');
+    if (minGuests != null) parts.add('minGuests:$minGuests');
+    if (page != null) parts.add('page:$page');
+    return parts.join('|');
   }
 
   @override
   Future<List<ListingModel>> searchListings(String query) async {
     try {
+      // Vérifier le cache d'abord
+      final cacheKey = 'search:$query';
+      final cached = _cacheService.getCachedListings(searchKey: cacheKey);
+      if (cached != null) {
+        return cached.map((json) => _mapToListingModel(json)).toList();
+      }
+
+      // Utiliser la fonction full-text search optimisée si disponible
+      // Sinon, fallback sur l'endpoint standard
+      try {
+        final response = await SupabaseService.client.rpc(
+          'search_listings_fulltext',
+          params: {'search_query': query, 'p_limit': 20, 'p_page': 1},
+        );
+
+        if (response != null && response is List) {
+          final listings = (response as List)
+              .map((json) => _mapToListingModel(json as Map<String, dynamic>))
+              .toList();
+
+          // Mettre en cache
+          final listingsJson = response.cast<Map<String, dynamic>>();
+          await _cacheService.cacheListings(listingsJson, searchKey: cacheKey);
+
+          return listings;
+        }
+      } catch (rpcError) {
+        // Fallback sur l'endpoint standard si RPC échoue
+      }
+
       final response = await _dio.get(
         '/listings',
         queryParameters: {'search': query},
@@ -175,10 +285,22 @@ class ListingRepositoryImpl implements ListingRepository {
       );
 
       final data = response.data['data'] as List<dynamic>;
-      return data
+      final listings = data
           .map((json) => _mapToListingModel(json as Map<String, dynamic>))
           .toList();
+
+      // Mettre en cache
+      final listingsJson = data.cast<Map<String, dynamic>>();
+      await _cacheService.cacheListings(listingsJson, searchKey: cacheKey);
+
+      return listings;
     } catch (e) {
+      // En cas d'erreur réseau, essayer le cache
+      final cacheKey = 'search:$query';
+      final cached = _cacheService.getCachedListings(searchKey: cacheKey);
+      if (cached != null) {
+        return cached.map((json) => _mapToListingModel(json)).toList();
+      }
       throw Exception('Erreur lors de la recherche de listings: $e');
     }
   }
@@ -220,14 +342,12 @@ class ListingRepositoryImpl implements ListingRepository {
           'bathrooms': listing.bathrooms,
           'amenities': listing.amenities,
           'base_price_per_night': listing.pricePerNight,
-          'cover_image_url': listing.images.isNotEmpty ? listing.images.first : null,
+          'cover_image_url': listing.images.isNotEmpty
+              ? listing.images.first
+              : null,
           'image_urls': listing.images,
         },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return _mapToListingModel(response.data['data'] as Map<String, dynamic>);
@@ -272,14 +392,12 @@ class ListingRepositoryImpl implements ListingRepository {
           'bathrooms': listing.bathrooms,
           'amenities': listing.amenities,
           'base_price_per_night': listing.pricePerNight,
-          'cover_image_url': listing.images.isNotEmpty ? listing.images.first : null,
+          'cover_image_url': listing.images.isNotEmpty
+              ? listing.images.first
+              : null,
           'image_urls': listing.images,
         },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return _mapToListingModel(response.data['data'] as Map<String, dynamic>);
@@ -293,11 +411,7 @@ class ListingRepositoryImpl implements ListingRepository {
     try {
       await _dio.delete(
         '/listings/$id',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
     } catch (e) {
       throw Exception('Erreur lors de la suppression du listing: $e');
@@ -322,8 +436,9 @@ class ListingRepositoryImpl implements ListingRepository {
           .map((json) => _mapToListingModel(json as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      throw Exception('Erreur lors de la récupération des listings de l\'hôte: $e');
+      throw Exception(
+        'Erreur lors de la récupération des listings de l\'hôte: $e',
+      );
     }
   }
 }
-

@@ -111,11 +111,11 @@ class _FullMapScreenState extends ConsumerState<FullMapScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(campsite.name),
- content: Text(campsite.description ?? 'Aucune description'),
+        content: Text(campsite.description ?? 'Aucune description'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
- child: const Text('Fermer'),
+            child: const Text('Fermer'),
           ),
         ],
       ),
@@ -135,15 +135,15 @@ class _FullMapScreenState extends ConsumerState<FullMapScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
- title: const Text('Ajouter un emplacement'),
+        title: const Text('Ajouter un emplacement'),
         content: Text(
- 'Voulez-vous créer un nouvel emplacement à cet endroit ?\n\n'
- 'Coordonnées: $lat, $lon',
+          'Voulez-vous créer un nouvel emplacement à cet endroit ?\n\n'
+          'Coordonnées: $lat, $lon',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
- child: const Text('Annuler'),
+            child: const Text('Annuler'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -162,7 +162,7 @@ class _FullMapScreenState extends ConsumerState<FullMapScreen> {
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
             ),
- child: const Text('Créer'),
+            child: const Text('Créer'),
           ),
         ],
       ),
@@ -180,7 +180,7 @@ class _FullMapScreenState extends ConsumerState<FullMapScreen> {
   }
 
   void _onMyLocationTap() {
- // Centre la carte sur la position de l'utilisateur
+    // Centre la carte sur la position de l'utilisateur
     // TODO: Implémenter le centrage
   }
 
@@ -193,5 +193,3 @@ class _FullMapScreenState extends ConsumerState<FullMapScreen> {
     // TODO: Implémenter le filtrage
   }
 }
-
-

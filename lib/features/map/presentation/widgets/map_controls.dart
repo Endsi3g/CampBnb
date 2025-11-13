@@ -70,16 +70,10 @@ class _ControlButton extends StatelessWidget {
             width: 56,
             height: 56,
             alignment: Alignment.center,
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 28,
-            ),
+            child: Icon(icon, color: Colors.white, size: 28),
           ),
         ),
       ),
     );
   }
 }
-
-

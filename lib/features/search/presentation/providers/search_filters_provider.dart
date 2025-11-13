@@ -59,4 +59,3 @@ class SearchFiltersNotifier extends _$SearchFiltersNotifier {
     state = const SearchFilters();
   }
 }
-

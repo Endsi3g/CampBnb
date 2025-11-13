@@ -66,24 +66,21 @@ docs/
 │ └── api-reference.md # Référence complète
 │
 ├── ARCHITECTURE.md # Architecture du projet
-├── API.md # Documentation API (legacy)
+├── API.md # Documentation API
 ├── DEPLOYMENT.md # Guide de déploiement
 ├── GIT_WORKFLOW.md # Processus Git
-├── STITCH_SCREENS.md # Synchronisation screens
-├── CHANGELOG.md # Historique des versions
-└── CONTRIBUTORS.md # Liste des contributeurs
+├── SECURITY.md # Sécurité
+├── SETUP.md # Configuration
+└── CHANGELOG.md # Historique des versions
 ```
 
 ## Navigation Rapide
 
-### ⚡ Configuration GitHub (Nouveau !)
+### ⚡ Configuration
 
-- **Quick Start** → [QUICK_START_GITHUB.md](../QUICK_START_GITHUB.md) - Configuration en 3 étapes
-- **Guide Complet** → [GUIDE_CONFIGURATION_COMPLETE.md](GUIDE_CONFIGURATION_COMPLETE.md) - Checklist complète
-- **Secrets GitHub** → [CONFIGURER_SECRETS_GITHUB.md](CONFIGURER_SECRETS_GITHUB.md) - Configuration des secrets
-- **Branch Protection** → [CONFIGURER_BRANCH_PROTECTION.md](CONFIGURER_BRANCH_PROTECTION.md) - Protection des branches
-- **Labels GitHub** → [CONFIGURER_LABELS_GITHUB.md](CONFIGURER_LABELS_GITHUB.md) - Configuration des labels
-- **Index Configuration** → [INDEX_CONFIGURATION.md](INDEX_CONFIGURATION.md) - Index des guides
+- **Setup** → [SETUP.md](SETUP.md) - Configuration initiale
+- **Architecture** → [ARCHITECTURE.md](ARCHITECTURE.md) - Architecture du projet
+- **Déploiement** → [DEPLOYMENT.md](DEPLOYMENT.md) - Guide de déploiement
 
 ### Pour les Utilisateurs
 
@@ -95,7 +92,7 @@ docs/
 ### ️ Pour les Développeurs
 
 - **Commencer le développement** → [Architecture](ARCHITECTURE.md) → [Setup](SETUP.md)
-- **Configurer GitHub** → [GUIDE_CONFIGURATION_COMPLETE.md](GUIDE_CONFIGURATION_COMPLETE.md)
+- **Structure Monorepo** → [PACKAGES_STRUCTURE.md](../PACKAGES_STRUCTURE.md)
 - **Comprendre un module** → [Documentation Technique](technical/README.md)
 - **Contribuer** → [Git Workflow](GIT_WORKFLOW.md)
 - **Déployer** → [Guide de Déploiement](DEPLOYMENT.md)

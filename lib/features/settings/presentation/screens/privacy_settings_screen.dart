@@ -11,14 +11,15 @@ class PrivacySettingsScreen extends ConsumerStatefulWidget {
   const PrivacySettingsScreen({super.key});
 
   @override
-  ConsumerState<PrivacySettingsScreen> createState() => _PrivacySettingsScreenState();
+  ConsumerState<PrivacySettingsScreen> createState() =>
+      _PrivacySettingsScreenState();
 }
 
 class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
   bool _analyticsEnabled = true;
   bool _personalizationEnabled = true;
   bool _dataSharingEnabled = false;
- String _anonymizationLevel = 'standard';
+  String _anonymizationLevel = 'standard';
   int _dataRetentionDays = 365;
   bool _isLoading = false;
 
@@ -64,7 +65,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
- content: Text('Paramètres de confidentialité sauvegardés'),
+            content: Text('Paramètres de confidentialité sauvegardés'),
             backgroundColor: Colors.green,
           ),
         );
@@ -73,7 +74,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
- content: Text('Erreur: ${e.toString()}'),
+            content: Text('Erreur: ${e.toString()}'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -88,12 +89,10 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return AnalyticsTracker(
- screenName: 'privacy_settings',
- screenClass: 'PrivacySettingsScreen',
+      screenName: 'privacy_settings',
+      screenClass: 'PrivacySettingsScreen',
       child: Scaffold(
-        appBar: AppBar(
- title: const Text('Confidentialité et Données'),
-        ),
+        appBar: AppBar(title: const Text('Confidentialité et Données')),
         body: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
@@ -102,13 +101,10 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // En-tête
-                    Text(
- 'Gestion de vos données',
-                      style: AppTextStyles.h2,
-                    ),
+                    Text('Gestion de vos données', style: AppTextStyles.h2),
                     const SizedBox(height: 8),
                     Text(
- 'Contrôlez comment vos données sont collectées et utilisées pour améliorer votre expérience.',
+                      'Contrôlez comment vos données sont collectées et utilisées pour améliorer votre expérience.',
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondaryLight,
                       ),
@@ -116,12 +112,13 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                     const SizedBox(height: 32),
                     // Analytics
                     _buildSection(
- title: 'Analytics et Mesures',
- description: 'Autoriser la collecte de données d\'utilisation pour améliorer l\'application',
+                      title: 'Analytics et Mesures',
+                      description:
+                          'Autoriser la collecte de données d\'utilisation pour améliorer l\'application',
                       child: SwitchListTile(
- title: const Text('Analytics activé'),
+                        title: const Text('Analytics activé'),
                         subtitle: const Text(
- 'Collecte anonyme de données d\'utilisation (écrans visités, actions, etc.)',
+                          'Collecte anonyme de données d\'utilisation (écrans visités, actions, etc.)',
                         ),
                         value: _analyticsEnabled,
                         onChanged: (value) {
@@ -135,12 +132,13 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                     const SizedBox(height: 24),
                     // Personnalisation
                     _buildSection(
- title: 'Personnalisation',
- description: 'Utiliser vos données pour personnaliser votre expérience',
+                      title: 'Personnalisation',
+                      description:
+                          'Utiliser vos données pour personnaliser votre expérience',
                       child: SwitchListTile(
- title: const Text('Personnalisation activée'),
+                        title: const Text('Personnalisation activée'),
                         subtitle: const Text(
- 'Recommandations personnalisées basées sur vos préférences',
+                          'Recommandations personnalisées basées sur vos préférences',
                         ),
                         value: _personalizationEnabled,
                         onChanged: _analyticsEnabled
@@ -156,12 +154,13 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                     const SizedBox(height: 24),
                     // Partage de données
                     _buildSection(
- title: 'Partage de données',
- description: 'Autoriser le partage de données anonymisées avec des partenaires',
+                      title: 'Partage de données',
+                      description:
+                          'Autoriser le partage de données anonymisées avec des partenaires',
                       child: SwitchListTile(
- title: const Text('Partage de données'),
+                        title: const Text('Partage de données'),
                         subtitle: const Text(
- 'Partage de données agrégées et anonymisées pour la recherche',
+                          'Partage de données agrégées et anonymisées pour la recherche',
                         ),
                         value: _dataSharingEnabled,
                         onChanged: _analyticsEnabled
@@ -175,16 +174,17 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
- // Niveau d'anonymisation
+                    // Niveau d'anonymisation
                     _buildSection(
- title: 'Niveau d\'anonymisation',
- description: 'Choisissez le niveau de protection de vos données',
+                      title: 'Niveau d\'anonymisation',
+                      description:
+                          'Choisissez le niveau de protection de vos données',
                       child: Column(
                         children: [
                           RadioListTile<String>(
- title: const Text('Minimal'),
- subtitle: const Text('Données de base uniquement'),
- value: 'minimal',
+                            title: const Text('Minimal'),
+                            subtitle: const Text('Données de base uniquement'),
+                            value: 'minimal',
                             groupValue: _anonymizationLevel,
                             onChanged: (value) {
                               setState(() {
@@ -194,9 +194,9 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                             },
                           ),
                           RadioListTile<String>(
- title: const Text('Standard'),
- subtitle: const Text('Anonymisation recommandée'),
- value: 'standard',
+                            title: const Text('Standard'),
+                            subtitle: const Text('Anonymisation recommandée'),
+                            value: 'standard',
                             groupValue: _anonymizationLevel,
                             onChanged: (value) {
                               setState(() {
@@ -206,9 +206,9 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                             },
                           ),
                           RadioListTile<String>(
- title: const Text('Maximum'),
- subtitle: const Text('Anonymisation maximale'),
- value: 'maximum',
+                            title: const Text('Maximum'),
+                            subtitle: const Text('Anonymisation maximale'),
+                            value: 'maximum',
                             groupValue: _anonymizationLevel,
                             onChanged: (value) {
                               setState(() {
@@ -223,8 +223,9 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                     const SizedBox(height: 24),
                     // Rétention des données
                     _buildSection(
- title: 'Rétention des données',
- description: 'Durée de conservation de vos données anonymes',
+                      title: 'Rétention des données',
+                      description:
+                          'Durée de conservation de vos données anonymes',
                       child: Column(
                         children: [
                           Slider(
@@ -232,7 +233,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                             min: 30,
                             max: 730,
                             divisions: 14,
- label: '$_dataRetentionDays jours',
+                            label: '$_dataRetentionDays jours',
                             onChanged: (value) {
                               setState(() {
                                 _dataRetentionDays = value.toInt();
@@ -243,7 +244,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                             },
                           ),
                           Text(
- 'Vos données anonymes seront conservées pendant $_dataRetentionDays jours',
+                            'Vos données anonymes seront conservées pendant $_dataRetentionDays jours',
                             style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondaryLight,
                             ),
@@ -262,7 +263,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
                           _showDeleteDataDialog();
                         },
                         child: Text(
- 'Supprimer toutes mes données',
+                          'Supprimer toutes mes données',
                           style: AppTextStyles.bodyMedium.copyWith(
                             color: AppColors.error,
                           ),
@@ -284,10 +285,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.h3,
-        ),
+        Text(title, style: AppTextStyles.h3),
         const SizedBox(height: 4),
         Text(
           description,
@@ -296,9 +294,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
           ),
         ),
         const SizedBox(height: 12),
-        Card(
-          child: child,
-        ),
+        Card(child: child),
       ],
     );
   }
@@ -312,23 +308,23 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
- 'Vos droits',
+              'Vos droits',
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
             Text(
- '• Accès à vos données\n'
- '• Rectification des données\n'
- '• Suppression des données\n'
- '• Portabilité des données\n'
- '• Opposition au traitement',
+              '• Accès à vos données\n'
+              '• Rectification des données\n'
+              '• Suppression des données\n'
+              '• Portabilité des données\n'
+              '• Opposition au traitement',
               style: AppTextStyles.bodySmall,
             ),
             const SizedBox(height: 16),
             Text(
- 'Toutes les données sont anonymisées et ne peuvent pas être liées à votre identité personnelle.',
+              'Toutes les données sont anonymisées et ne peuvent pas être liées à votre identité personnelle.',
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondaryLight,
                 fontStyle: FontStyle.italic,
@@ -344,15 +340,15 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
- title: const Text('Supprimer toutes les données'),
+        title: const Text('Supprimer toutes les données'),
         content: const Text(
- 'Cette action supprimera définitivement toutes vos données analytics. '
- 'Cette action est irréversible.',
+          'Cette action supprimera définitivement toutes vos données analytics. '
+          'Cette action est irréversible.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
- child: const Text('Annuler'),
+            child: const Text('Annuler'),
           ),
           TextButton(
             onPressed: () {
@@ -360,18 +356,15 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen> {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
- content: Text('Suppression des données en cours...'),
+                  content: Text('Suppression des données en cours...'),
                 ),
               );
             },
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
-            ),
- child: const Text('Supprimer'),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
     );
   }
 }
-

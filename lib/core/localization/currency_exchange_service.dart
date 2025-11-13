@@ -9,14 +9,15 @@ import 'currency_service.dart';
 class CurrencyExchangeService {
   static final Logger _logger = Logger();
   static CurrencyExchangeService? _instance;
-  
-  factory CurrencyExchangeService() => _instance ??= CurrencyExchangeService._internal();
+
+  factory CurrencyExchangeService() =>
+      _instance ??= CurrencyExchangeService._internal();
   CurrencyExchangeService._internal();
 
   // API gratuite : exchangerate-api.com
   static const String _baseUrl = 'https://api.exchangerate-api.com/v4/latest';
   static const Duration _cacheDuration = Duration(hours: 1);
-  
+
   Map<String, Map<String, double>> _exchangeRates = {};
   DateTime? _lastUpdate;
 
@@ -32,16 +33,16 @@ class CurrencyExchangeService {
   Future<void> refreshRates() async {
     try {
       _logger.d('🔄 Actualisation des taux de change...');
-      
+
       // Récupérer les taux depuis USD (devise de référence)
-      final response = await http.get(
-        Uri.parse('$_baseUrl/USD'),
-      ).timeout(const Duration(seconds: 10));
+      final response = await http
+          .get(Uri.parse('$_baseUrl/USD'))
+          .timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body) as Map<String, dynamic>;
         final rates = data['rates'] as Map<String, dynamic>;
-        
+
         // Convertir en Map<String, double>
         _exchangeRates['USD'] = rates.map(
           (key, value) => MapEntry(key, (value as num).toDouble()),
@@ -49,10 +50,12 @@ class CurrencyExchangeService {
 
         _lastUpdate = DateTime.now();
         await _saveCachedRates();
-        
+
         _logger.i('✅ Taux de change actualisés avec succès');
       } else {
-        _logger.w('⚠️ Erreur lors de la récupération des taux: ${response.statusCode}');
+        _logger.w(
+          '⚠️ Erreur lors de la récupération des taux: ${response.statusCode}',
+        );
         // Utiliser les taux en cache si disponibles
         if (_exchangeRates.isEmpty) {
           _loadFallbackRates();
@@ -99,7 +102,9 @@ class CurrencyExchangeService {
     } else {
       final fromRate = usdRates[fromCurrency];
       if (fromRate == null) {
-        _logger.w('⚠️ Taux non trouvé pour $fromCurrency, utilisation du service statique');
+        _logger.w(
+          '⚠️ Taux non trouvé pour $fromCurrency, utilisation du service statique',
+        );
         return CurrencyService.convertCurrency(
           amount: amount,
           fromCurrency: fromCurrency,
@@ -116,7 +121,9 @@ class CurrencyExchangeService {
 
     final toRate = usdRates[toCurrency];
     if (toRate == null) {
-      _logger.w('⚠️ Taux non trouvé pour $toCurrency, utilisation du service statique');
+      _logger.w(
+        '⚠️ Taux non trouvé pour $toCurrency, utilisation du service statique',
+      );
       return CurrencyService.convertCurrency(
         amount: amount,
         fromCurrency: fromCurrency,
@@ -180,7 +187,10 @@ class CurrencyExchangeService {
   Future<void> _saveCachedRates() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('currency_exchange_rates', json.encode(_exchangeRates));
+      await prefs.setString(
+        'currency_exchange_rates',
+        json.encode(_exchangeRates),
+      );
       await prefs.setString(
         'currency_exchange_last_update',
         _lastUpdate?.toIso8601String() ?? DateTime.now().toIso8601String(),
@@ -199,4 +209,3 @@ class CurrencyExchangeService {
   /// Obtient la date de dernière mise à jour
   DateTime? get lastUpdate => _lastUpdate;
 }
-

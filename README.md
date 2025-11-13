@@ -11,15 +11,17 @@ Plateforme de réservation de campings au Québec développée avec Flutter et S
 ## ✨ Fonctionnalités Principales
 
 - 🔐 **Authentification sécurisée** - Connexion via email, Google, Apple
-- 🗺️ **Recherche intelligente** - Recherche de campings avec filtres avancés et IA
-- 📅 **Réservations** - Système de réservation complet avec gestion des dates
+- 🗺️ **Recherche intelligente** - Recherche de campings avec filtres avancés et IA (full-text search optimisée)
+- 📅 **Réservations** - Système de réservation complet avec timeouts automatiques (24h)
 - 💳 **Paiements** - Intégration Stripe pour les transactions sécurisées
 - 💬 **Messagerie** - Communication en temps réel entre hôtes et invités
 - ⭐ **Avis et évaluations** - Système de notation et commentaires
 - 🤖 **IA Gemini** - Suggestions intelligentes, analyse de recherche, génération d'itinéraires
 - 🗺️ **Cartographie** - Intégration Mapbox pour la visualisation interactive
-- 🌍 **Multilingue** - Support FR/EN avec traduction automatique
-- 📱 **Multiplateforme** - iOS, Android et Web
+- 🌍 **Multilingue** - Support 13 langues avec traduction automatique
+- 📱 **Multiplateforme** - iOS, Android, Web, Windows, macOS, Linux
+- 💾 **Cache persistant** - Support offline et amélioration des performances
+- ⚡ **Performance optimisée** - Recherche 10x plus rapide avec full-text search
 
 ## 🏗️ Architecture
 

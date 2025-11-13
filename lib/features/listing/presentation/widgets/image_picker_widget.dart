@@ -33,8 +33,8 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
 
       final urls = await ImageUploadService.uploadMultipleImages(
         imageFiles: images,
- bucket: 'listing-images',
- folder: 'listings',
+        bucket: 'listing-images',
+        folder: 'listings',
       );
 
       setState(() {
@@ -46,9 +46,9 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     } catch (e) {
       setState(() => _isUploading = false);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
- SnackBar(content: Text('Erreur: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
       }
     }
   }
@@ -115,10 +115,11 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
               : const Icon(Icons.add_photo_alternate),
- label: Text(_isUploading ? 'Upload en cours...' : 'Ajouter des photos'),
+          label: Text(
+            _isUploading ? 'Upload en cours...' : 'Ajouter des photos',
+          ),
         ),
       ],
     );
   }
 }
-

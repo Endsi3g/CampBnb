@@ -22,17 +22,9 @@ class RatingWidget extends StatelessWidget {
       children: [
         ...List.generate(maxRating, (index) {
           if (index < rating.floor()) {
-            return Icon(
-              Icons.star,
-              size: size,
-              color: AppColors.warning,
-            );
+            return Icon(Icons.star, size: size, color: AppColors.warning);
           } else if (index < rating) {
-            return Icon(
-              Icons.star_half,
-              size: size,
-              color: AppColors.warning,
-            );
+            return Icon(Icons.star_half, size: size, color: AppColors.warning);
           } else {
             return Icon(
               Icons.star_border,
@@ -55,4 +47,3 @@ class RatingWidget extends StatelessWidget {
     );
   }
 }
-

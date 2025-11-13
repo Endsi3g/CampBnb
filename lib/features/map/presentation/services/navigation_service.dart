@@ -9,14 +9,14 @@ class NavigationService {
   final Logger _logger = Logger();
 
   NavigationService({MapboxService? mapboxService})
-      : _mapboxService = mapboxService ?? MapboxService();
+    : _mapboxService = mapboxService ?? MapboxService();
 
   /// Récupère les directions vers un emplacement de camping
   Future<NavigationRoute?> getDirectionsToCampsite({
     required double startLat,
     required double startLon,
     required CampsiteLocation destination,
- String profile = 'driving', // driving, walking, cycling
+    String profile = 'driving', // driving, walking, cycling
   }) async {
     try {
       final routeData = await _mapboxService.getDirections(
@@ -31,12 +31,12 @@ class NavigationService {
 
       return NavigationRoute.fromMapboxResponse(routeData);
     } catch (e) {
- _logger.e('Erreur lors de la récupération des directions: $e');
+      _logger.e('Erreur lors de la récupération des directions: $e');
       return null;
     }
   }
 
- /// Récupère les POI à proximité d'un emplacement
+  /// Récupère les POI à proximité d'un emplacement
   Future<List<PointOfInterest>> getNearbyPOI({
     required double lat,
     required double lon,
@@ -46,13 +46,15 @@ class NavigationService {
       final poiData = await _mapboxService.searchPOI(
         lat: lat,
         lon: lon,
- category: 'camping,restaurant,gas_station,pharmacy',
+        category: 'camping,restaurant,gas_station,pharmacy',
         radius: radius,
       );
 
-      return poiData.map((data) => PointOfInterest.fromMapboxData(data)).toList();
+      return poiData
+          .map((data) => PointOfInterest.fromMapboxData(data))
+          .toList();
     } catch (e) {
- _logger.e('Erreur lors de la récupération des POI: $e');
+      _logger.e('Erreur lors de la récupération des POI: $e');
       return [];
     }
   }
@@ -73,17 +75,21 @@ class NavigationRoute {
   });
 
   factory NavigationRoute.fromMapboxResponse(Map<String, dynamic> data) {
- final distance = (data['distance'] as num).toDouble();
- final duration = (data['duration'] as num).toDouble();
- final geometry = data['geometry'] as Map<String, dynamic>;
- final legs = data['legs'] as List?;
-    
+    final distance = (data['distance'] as num).toDouble();
+    final duration = (data['duration'] as num).toDouble();
+    final geometry = data['geometry'] as Map<String, dynamic>;
+    final legs = data['legs'] as List?;
+
     final steps = <RouteStep>[];
     if (legs != null && legs.isNotEmpty) {
       final firstLeg = legs[0] as Map<String, dynamic>;
- final legSteps = firstLeg['steps'] as List?;
+      final legSteps = firstLeg['steps'] as List?;
       if (legSteps != null) {
-        steps.addAll(legSteps.map((s) => RouteStep.fromMapboxData(s as Map<String, dynamic>)));
+        steps.addAll(
+          legSteps.map(
+            (s) => RouteStep.fromMapboxData(s as Map<String, dynamic>),
+          ),
+        );
       }
     }
 
@@ -97,19 +103,19 @@ class NavigationRoute {
 
   String get formattedDistance {
     if (distance < 1000) {
- return '${distance.toInt()} m';
+      return '${distance.toInt()} m';
     }
- return '${(distance / 1000).toStringAsFixed(1)} km';
+    return '${(distance / 1000).toStringAsFixed(1)} km';
   }
 
   String get formattedDuration {
     final hours = (duration / 3600).floor();
     final minutes = ((duration % 3600) / 60).floor();
-    
+
     if (hours > 0) {
- return '${hours}h ${minutes}min';
+      return '${hours}h ${minutes}min';
     }
- return '${minutes}min';
+    return '${minutes}min';
   }
 }
 
@@ -129,10 +135,10 @@ class RouteStep {
 
   factory RouteStep.fromMapboxData(Map<String, dynamic> data) {
     return RouteStep(
- distance: (data['distance'] as num).toDouble(),
- duration: (data['duration'] as num).toDouble(),
- instruction: data['maneuver']?['instruction'] as String? ?? '',
- maneuver: data['maneuver']?['type'] as String?,
+      distance: (data['distance'] as num).toDouble(),
+      duration: (data['duration'] as num).toDouble(),
+      instruction: data['maneuver']?['instruction'] as String? ?? '',
+      maneuver: data['maneuver']?['type'] as String?,
     );
   }
 }
@@ -156,18 +162,16 @@ class PointOfInterest {
   });
 
   factory PointOfInterest.fromMapboxData(Map<String, dynamic> data) {
- final geometry = data['geometry'] as Map<String, dynamic>;
- final coordinates = geometry['coordinates'] as List;
- final properties = data['properties'] as Map<String, dynamic>?;
+    final geometry = data['geometry'] as Map<String, dynamic>;
+    final coordinates = geometry['coordinates'] as List;
+    final properties = data['properties'] as Map<String, dynamic>?;
 
     return PointOfInterest(
- id: data['id'] as String,
- name: properties?['name'] as String? ?? 'POI',
- category: properties?['category'] as String? ?? 'unknown',
+      id: data['id'] as String,
+      name: properties?['name'] as String? ?? 'POI',
+      category: properties?['category'] as String? ?? 'unknown',
       latitude: (coordinates[1] as num).toDouble(),
       longitude: (coordinates[0] as num).toDouble(),
     );
   }
 }
-
-

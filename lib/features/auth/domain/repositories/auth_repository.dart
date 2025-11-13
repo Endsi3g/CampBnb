@@ -8,10 +8,7 @@ abstract class AuthRepository {
     String? lastName,
   });
 
-  Future<UserModel> signIn({
-    required String email,
-    required String password,
-  });
+  Future<UserModel> signIn({required String email, required String password});
 
   Future<void> signOut();
 
@@ -19,4 +16,3 @@ abstract class AuthRepository {
 
   Stream<UserModel?> watchCurrentUser();
 }
-

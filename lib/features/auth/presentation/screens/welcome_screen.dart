@@ -14,7 +14,7 @@ class WelcomeScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: const NetworkImage(
- 'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=800',
+              'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=800',
             ),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
@@ -30,21 +30,15 @@ class WelcomeScreen extends StatelessWidget {
               // Logo Section
               Column(
                 children: [
-                  Icon(
-                    Icons.outdoor_grill,
-                    size: 64,
-                    color: AppColors.neutral,
-                  ),
+                  Icon(Icons.outdoor_grill, size: 64, color: AppColors.neutral),
                   const SizedBox(height: 16),
                   Text(
- 'Campbnb Québec',
-                    style: AppTextStyles.h1.copyWith(
-                      color: AppColors.neutral,
-                    ),
+                    'Campbnb Québec',
+                    style: AppTextStyles.h1.copyWith(color: AppColors.neutral),
                   ),
                   const SizedBox(height: 8),
                   Text(
- 'Votre aventure commence ici.',
+                    'Votre aventure commence ici.',
                     style: AppTextStyles.bodyLarge.copyWith(
                       color: AppColors.neutral.withOpacity(0.9),
                     ),
@@ -58,15 +52,15 @@ class WelcomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomButton(
- text: 'Inscription',
- onPressed: () => context.push('/signup'),
+                      text: 'Inscription',
+                      onPressed: () => context.push('/signup'),
                       backgroundColor: AppColors.primary,
                       textColor: Colors.white,
                     ),
                     const SizedBox(height: 12),
                     CustomButton(
- text: 'Connexion',
- onPressed: () => context.push('/login'),
+                      text: 'Connexion',
+                      onPressed: () => context.push('/login'),
                       backgroundColor: Colors.white.withOpacity(0.2),
                       textColor: Colors.white,
                       borderColor: Colors.white.withOpacity(0.3),
@@ -81,4 +75,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-

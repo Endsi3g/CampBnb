@@ -12,12 +12,13 @@ class AnalyticsEventModel with _$AnalyticsEventModel {
     required String sessionId,
     String? anonymousId,
     required String eventName,
- required String eventCategory, // 'navigation', 'interaction', 'conversion', 'error', 'performance'
- required String eventType, // 'screen_view', 'button_click', 'search', etc.
+    required String
+    eventCategory, // 'navigation', 'interaction', 'conversion', 'error', 'performance'
+    required String eventType, // 'screen_view', 'button_click', 'search', etc.
     String? screenName,
     String? screenClass,
     String? previousScreen,
- @JsonKey(name: 'event_properties') Map<String, dynamic>? eventProperties,
+    @JsonKey(name: 'event_properties') Map<String, dynamic>? eventProperties,
     String? appVersion,
     String? platform,
     String? osVersion,
@@ -79,9 +80,9 @@ class AnalyticsConversionModel with _$AnalyticsConversionModel {
     String? userId,
     String? sessionId,
     String? anonymousId,
- required String conversionType, // 'signup', 'reservation_confirmed', etc.
+    required String conversionType, // 'signup', 'reservation_confirmed', etc.
     double? conversionValue,
- @Default('CAD') String currency,
+    @Default('CAD') String currency,
     String? listingId,
     String? reservationId,
     String? funnelStep,
@@ -89,7 +90,7 @@ class AnalyticsConversionModel with _$AnalyticsConversionModel {
     String? source,
     String? campaign,
     String? referrer,
- @JsonKey(name: 'event_properties') Map<String, dynamic>? eventProperties,
+    @JsonKey(name: 'event_properties') Map<String, dynamic>? eventProperties,
     DateTime? createdAt,
   }) = _AnalyticsConversionModel;
 
@@ -104,13 +105,13 @@ class AnalyticsSatisfactionModel with _$AnalyticsSatisfactionModel {
     String? id,
     String? userId,
     String? anonymousId,
- required String feedbackType, // 'nps', 'csat', 'ces', 'rating', etc.
+    required String feedbackType, // 'nps', 'csat', 'ces', 'rating', etc.
     int? npsScore,
     int? csatScore,
     int? cesScore,
     int? rating,
     String? comment,
- String? sentiment, // 'positive', 'neutral', 'negative'
+    String? sentiment, // 'positive', 'neutral', 'negative'
     double? sentimentScore,
     String? screenName,
     String? listingId,
@@ -133,8 +134,9 @@ class AnalyticsUserBehaviorModel with _$AnalyticsUserBehaviorModel {
     String? userId,
     required String anonymousId,
     required DateTime analysisDate,
- required String analysisPeriod, // 'daily', 'weekly', 'monthly'
-    required Map<String, dynamic> behaviors, // Patterns, insights, recommendations
+    required String analysisPeriod, // 'daily', 'weekly', 'monthly'
+    required Map<String, dynamic>
+    behaviors, // Patterns, insights, recommendations
     @Default(0) int sessionsCount,
     @Default(0) int totalTimeMinutes,
     @Default(0) int screensViewed,
@@ -148,7 +150,8 @@ class AnalyticsUserBehaviorModel with _$AnalyticsUserBehaviorModel {
     double? personalizationScore,
     double? engagementScore,
     double? retentionProbability,
- @JsonKey(name: 'ai_recommendations') List<Map<String, dynamic>>? aiRecommendations,
+    @JsonKey(name: 'ai_recommendations')
+    List<Map<String, dynamic>>? aiRecommendations,
     String? aiInsights,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -169,7 +172,7 @@ class AnalyticsPrivacyConsentModel with _$AnalyticsPrivacyConsentModel {
     @Default(true) bool personalizationEnabled,
     @Default(false) bool dataSharingEnabled,
     @Default(365) int dataRetentionDays,
- @Default('standard') String anonymizationLevel,
+    @Default('standard') String anonymizationLevel,
     required String consentVersion,
     required DateTime consentGivenAt,
     DateTime? consentUpdatedAt,
@@ -178,6 +181,3 @@ class AnalyticsPrivacyConsentModel with _$AnalyticsPrivacyConsentModel {
   factory AnalyticsPrivacyConsentModel.fromJson(Map<String, dynamic> json) =>
       _$AnalyticsPrivacyConsentModelFromJson(json);
 }
-
-
-

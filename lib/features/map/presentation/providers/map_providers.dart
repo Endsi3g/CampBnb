@@ -29,39 +29,50 @@ final campsitesProvider = FutureProvider<List<CampsiteLocation>>((ref) async {
 });
 
 /// Provider pour les campsites filtrés
-final filteredCampsitesProvider = Provider.family<List<CampsiteLocation>, MapFilters>((ref, filters) {
-  final allCampsites = ref.watch(campsitesProvider);
-  
-  return allCampsites.when(
-    data: (campsites) {
-      var filtered = campsites;
+final filteredCampsitesProvider =
+    Provider.family<List<CampsiteLocation>, MapFilters>((ref, filters) {
+      final allCampsites = ref.watch(campsitesProvider);
 
-      // Filtre par type
-      if (filters.types != null && filters.types!.isNotEmpty) {
-        filtered = filtered.where((c) => filters.types!.contains(c.type)).toList();
-      }
+      return allCampsites.when(
+        data: (campsites) {
+          var filtered = campsites;
 
-      // Filtre par prix
-      if (filters.minPrice != null) {
-        filtered = filtered.where((c) => 
-          c.pricePerNight != null && c.pricePerNight! >= filters.minPrice!
-        ).toList();
-      }
-      if (filters.maxPrice != null) {
-        filtered = filtered.where((c) => 
-          c.pricePerNight != null && c.pricePerNight! <= filters.maxPrice!
-        ).toList();
-      }
+          // Filtre par type
+          if (filters.types != null && filters.types!.isNotEmpty) {
+            filtered = filtered
+                .where((c) => filters.types!.contains(c.type))
+                .toList();
+          }
 
-      // Filtre par région (nécessite un champ région dans CampsiteLocation)
- // TODO: Ajouter le champ région à l'entité
+          // Filtre par prix
+          if (filters.minPrice != null) {
+            filtered = filtered
+                .where(
+                  (c) =>
+                      c.pricePerNight != null &&
+                      c.pricePerNight! >= filters.minPrice!,
+                )
+                .toList();
+          }
+          if (filters.maxPrice != null) {
+            filtered = filtered
+                .where(
+                  (c) =>
+                      c.pricePerNight != null &&
+                      c.pricePerNight! <= filters.maxPrice!,
+                )
+                .toList();
+          }
 
-      return filtered;
-    },
-    loading: () => [],
-    error: (_, __) => [],
-  );
-});
+          // Filtre par région (nécessite un champ région dans CampsiteLocation)
+          // TODO: Ajouter le champ région à l'entité
+
+          return filtered;
+        },
+        loading: () => [],
+        error: (_, __) => [],
+      );
+    });
 
 /// Modèle pour les filtres de carte
 class MapFilters {

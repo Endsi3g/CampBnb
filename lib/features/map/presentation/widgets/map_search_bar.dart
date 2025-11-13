@@ -7,11 +7,7 @@ class MapSearchBar extends StatefulWidget {
   final Function(String)? onSearch;
   final Function(String)? onRegionSelected;
 
-  const MapSearchBar({
-    super.key,
-    this.onSearch,
-    this.onRegionSelected,
-  });
+  const MapSearchBar({super.key, this.onSearch, this.onRegionSelected});
 
   @override
   State<MapSearchBar> createState() => _MapSearchBarState();
@@ -41,8 +37,7 @@ class _MapSearchBarState extends State<MapSearchBar> {
 
     // Recherche dans les régions du Québec
     final matchingRegions = MapboxConfig.quebecRegions
-        .where((region) =>
-            region.toLowerCase().contains(value.toLowerCase()))
+        .where((region) => region.toLowerCase().contains(value.toLowerCase()))
         .take(5)
         .toList();
 
@@ -97,7 +92,7 @@ class _MapSearchBarState extends State<MapSearchBar> {
                   focusNode: _focusNode,
                   onChanged: _onSearchChanged,
                   decoration: const InputDecoration(
- hintText: 'Rechercher par région, parc ou ville...',
+                    hintText: 'Rechercher par région, parc ou ville...',
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(horizontal: 16),
                   ),
@@ -135,7 +130,10 @@ class _MapSearchBarState extends State<MapSearchBar> {
               children: _suggestions.map((suggestion) {
                 return ListTile(
                   title: Text(suggestion),
-                  leading: const Icon(Icons.location_on, color: AppColors.primary),
+                  leading: const Icon(
+                    Icons.location_on,
+                    color: AppColors.primary,
+                  ),
                   onTap: () => _onSuggestionTap(suggestion),
                 );
               }).toList(),
@@ -145,5 +143,3 @@ class _MapSearchBarState extends State<MapSearchBar> {
     );
   }
 }
-
-

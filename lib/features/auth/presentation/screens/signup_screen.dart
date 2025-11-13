@@ -38,7 +38,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     try {
-      await ref.read(authNotifierProvider.notifier).signUp(
+      await ref
+          .read(authNotifierProvider.notifier)
+          .signUp(
             email: _emailController.text.trim(),
             password: _passwordController.text,
             firstName: _firstNameController.text.trim(),
@@ -46,13 +48,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           );
 
       if (mounted) {
- context.go('/home');
+        context.go('/home');
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
- content: Text('Erreur: ${e.toString()}'),
+            content: Text('Erreur: ${e.toString()}'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -79,13 +81,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
- 'Inscription',
-                  style: AppTextStyles.h1,
-                ),
+                Text('Inscription', style: AppTextStyles.h1),
                 const SizedBox(height: 8),
                 Text(
- 'Créez votre compte pour commencer',
+                  'Créez votre compte pour commencer',
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondaryLight,
                   ),
@@ -96,11 +95,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     Expanded(
                       child: CustomTextField(
                         controller: _firstNameController,
- label: 'Prénom',
- hint: 'Jean',
+                        label: 'Prénom',
+                        hint: 'Jean',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
- return 'Requis';
+                            return 'Requis';
                           }
                           return null;
                         },
@@ -110,11 +109,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     Expanded(
                       child: CustomTextField(
                         controller: _lastNameController,
- label: 'Nom',
- hint: 'Dupont',
+                        label: 'Nom',
+                        hint: 'Dupont',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
- return 'Requis';
+                            return 'Requis';
                           }
                           return null;
                         },
@@ -125,15 +124,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _emailController,
- label: 'Email',
- hint: 'votre@email.com',
+                  label: 'Email',
+                  hint: 'votre@email.com',
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
- return 'Veuillez entrer votre email';
+                      return 'Veuillez entrer votre email';
                     }
- if (!value.contains('@')) {
- return 'Email invalide';
+                    if (!value.contains('@')) {
+                      return 'Email invalide';
                     }
                     return null;
                   },
@@ -141,12 +140,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _passwordController,
- label: 'Mot de passe',
- hint: '••••••••',
+                  label: 'Mot de passe',
+                  hint: '••••••••',
                   obscureText: _obscurePassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                      _obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
@@ -156,10 +157,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
- return 'Veuillez entrer un mot de passe';
+                      return 'Veuillez entrer un mot de passe';
                     }
                     if (value.length < 8) {
- return 'Minimum 8 caractères';
+                      return 'Minimum 8 caractères';
                     }
                     return null;
                   },
@@ -167,12 +168,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _confirmPasswordController,
- label: 'Confirmer le mot de passe',
- hint: '••••••••',
+                  label: 'Confirmer le mot de passe',
+                  hint: '••••••••',
                   obscureText: _obscureConfirmPassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                      _obscureConfirmPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
@@ -182,17 +185,17 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
- return 'Veuillez confirmer votre mot de passe';
+                      return 'Veuillez confirmer votre mot de passe';
                     }
                     if (value != _passwordController.text) {
- return 'Les mots de passe ne correspondent pas';
+                      return 'Les mots de passe ne correspondent pas';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 32),
                 CustomButton(
- text: 'S\'inscrire',
+                  text: 'S\'inscrire',
                   onPressed: authState.isLoading ? null : _handleSignUp,
                   isLoading: authState.isLoading,
                 ),
@@ -200,14 +203,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
- 'Déjà un compte ? ',
-                      style: AppTextStyles.bodyMedium,
-                    ),
+                    Text('Déjà un compte ? ', style: AppTextStyles.bodyMedium),
                     TextButton(
- onPressed: () => context.push('/login'),
+                      onPressed: () => context.push('/login'),
                       child: Text(
- 'Se connecter',
+                        'Se connecter',
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.primary,
                         ),
@@ -223,4 +223,3 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     );
   }
 }
-

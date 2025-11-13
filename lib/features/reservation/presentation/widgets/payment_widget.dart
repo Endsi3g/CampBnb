@@ -31,20 +31,20 @@ class _PaymentWidgetState extends ConsumerState<PaymentWidget> {
       final session = await PaymentService.createPaymentSession(
         reservationId: widget.reservationId,
         amount: widget.amount,
- currency: 'CAD',
- successUrl: 'campbnb://payment/success',
- cancelUrl: 'campbnb://payment/cancel',
+        currency: 'CAD',
+        successUrl: 'campbnb://payment/success',
+        cancelUrl: 'campbnb://payment/cancel',
       );
 
- // TODO: Ouvrir l'URL de paiement Stripe dans un navigateur ou WebView
- // Pour l'instant, on simule un succès
+      // TODO: Ouvrir l'URL de paiement Stripe dans un navigateur ou WebView
+      // Pour l'instant, on simule un succès
       await Future.delayed(const Duration(seconds: 2));
 
       if (mounted) {
         widget.onPaymentComplete?.call(true);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
- content: Text('Paiement réussi !'),
+            content: Text('Paiement réussi !'),
             backgroundColor: AppColors.success,
           ),
         );
@@ -54,7 +54,7 @@ class _PaymentWidgetState extends ConsumerState<PaymentWidget> {
         widget.onPaymentComplete?.call(false);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
- content: Text('Erreur de paiement: $e'),
+            content: Text('Erreur de paiement: $e'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -74,35 +74,27 @@ class _PaymentWidgetState extends ConsumerState<PaymentWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
- 'Paiement',
-              style: AppTextStyles.h4,
-            ),
+            Text('Paiement', style: AppTextStyles.h4),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text('Total', style: AppTextStyles.bodyLarge),
                 Text(
- 'Total',
-                  style: AppTextStyles.bodyLarge,
-                ),
-                Text(
- '\$${widget.amount.toStringAsFixed(2)} CAD',
-                  style: AppTextStyles.h3.copyWith(
-                    color: AppColors.primary,
-                  ),
+                  '\$${widget.amount.toStringAsFixed(2)} CAD',
+                  style: AppTextStyles.h3.copyWith(color: AppColors.primary),
                 ),
               ],
             ),
             const SizedBox(height: 24),
             CustomButton(
- text: 'Payer maintenant',
+              text: 'Payer maintenant',
               onPressed: _isProcessing ? null : _processPayment,
               isLoading: _isProcessing,
             ),
             const SizedBox(height: 8),
             Text(
- 'Paiement sécurisé via Stripe',
+              'Paiement sécurisé via Stripe',
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondaryLight,
               ),
@@ -114,4 +106,3 @@ class _PaymentWidgetState extends ConsumerState<PaymentWidget> {
     );
   }
 }
-

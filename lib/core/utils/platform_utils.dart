@@ -13,7 +13,8 @@ class PlatformUtils {
   /// Vérifie si l'application s'exécute sur Windows
   static bool get isWindows {
     if (kIsWeb) return false;
-    return Platform.isWindows || defaultTargetPlatform == TargetPlatform.windows;
+    return Platform.isWindows ||
+        defaultTargetPlatform == TargetPlatform.windows;
   }
 
   /// Vérifie si l'application s'exécute sur macOS
@@ -31,7 +32,8 @@ class PlatformUtils {
   /// Vérifie si l'application s'exécute sur Android
   static bool get isAndroid {
     if (kIsWeb) return false;
-    return Platform.isAndroid || defaultTargetPlatform == TargetPlatform.android;
+    return Platform.isAndroid ||
+        defaultTargetPlatform == TargetPlatform.android;
   }
 
   /// Vérifie si l'application s'exécute sur iOS
@@ -94,4 +96,3 @@ class PlatformUtils {
     return false;
   }
 }
-

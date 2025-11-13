@@ -41,33 +41,33 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
       final endDate = widget.date.add(const Duration(days: 1));
 
       // Compter les conversions par étape du funnel
- final conversions = await SupabaseService.from('analytics_conversions')
- .select('funnel_step, conversion_type')
- .gte('created_at', startDate.toIso8601String())
- .lt('created_at', endDate.toIso8601String());
+      final conversions = await SupabaseService.from('analytics_conversions')
+          .select('funnel_step, conversion_type')
+          .gte('created_at', startDate.toIso8601String())
+          .lt('created_at', endDate.toIso8601String());
 
       final funnel = <String, int>{
- 'awareness': 0,
- 'interest': 0,
- 'consideration': 0,
- 'purchase': 0,
- 'retention': 0,
+        'awareness': 0,
+        'interest': 0,
+        'consideration': 0,
+        'purchase': 0,
+        'retention': 0,
       };
 
       for (final conversion in conversions as List) {
- final step = conversion['funnel_step'] as String?;
+        final step = conversion['funnel_step'] as String?;
         if (step != null && funnel.containsKey(step)) {
           funnel[step] = (funnel[step] ?? 0) + 1;
         }
       }
 
       // Calculer les sessions pour awareness
- final sessions = await SupabaseService.from('analytics_sessions')
- .select('id')
- .gte('started_at', startDate.toIso8601String())
- .lt('started_at', endDate.toIso8601String());
+      final sessions = await SupabaseService.from('analytics_sessions')
+          .select('id')
+          .gte('started_at', startDate.toIso8601String())
+          .lt('started_at', endDate.toIso8601String());
 
- funnel['awareness'] = (sessions as List).length;
+      funnel['awareness'] = (sessions as List).length;
 
       setState(() {
         _funnelData = funnel;
@@ -75,11 +75,11 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
     } catch (e) {
       setState(() {
         _funnelData = {
- 'awareness': 0,
- 'interest': 0,
- 'consideration': 0,
- 'purchase': 0,
- 'retention': 0,
+          'awareness': 0,
+          'interest': 0,
+          'consideration': 0,
+          'purchase': 0,
+          'retention': 0,
         };
       });
     }
@@ -87,11 +87,11 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
 
   DateTime _getStartDate() {
     switch (widget.period) {
- case 'daily':
+      case 'daily':
         return DateTime(widget.date.year, widget.date.month, widget.date.day);
- case 'weekly':
+      case 'weekly':
         return widget.date.subtract(Duration(days: widget.date.weekday - 1));
- case 'monthly':
+      case 'monthly':
         return DateTime(widget.date.year, widget.date.month, 1);
       default:
         return widget.date;
@@ -109,9 +109,7 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
       return const Card(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: Center(
- child: Text('Aucune donnée disponible'),
-          ),
+          child: Center(child: Text('Aucune donnée disponible')),
         ),
       );
     }
@@ -122,36 +120,36 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
         child: Column(
           children: [
             _buildFunnelStep(
- 'Conscience',
- _funnelData!['awareness'] ?? 0,
+              'Conscience',
+              _funnelData!['awareness'] ?? 0,
               maxValue,
               AppColors.primary,
             ),
             const SizedBox(height: 8),
             _buildFunnelStep(
- 'Intérêt',
- _funnelData!['interest'] ?? 0,
+              'Intérêt',
+              _funnelData!['interest'] ?? 0,
               maxValue,
               AppColors.secondary,
             ),
             const SizedBox(height: 8),
             _buildFunnelStep(
- 'Considération',
- _funnelData!['consideration'] ?? 0,
+              'Considération',
+              _funnelData!['consideration'] ?? 0,
               maxValue,
               Colors.orange,
             ),
             const SizedBox(height: 8),
             _buildFunnelStep(
- 'Achat',
- _funnelData!['purchase'] ?? 0,
+              'Achat',
+              _funnelData!['purchase'] ?? 0,
               maxValue,
               Colors.green,
             ),
             const SizedBox(height: 8),
             _buildFunnelStep(
- 'Rétention',
- _funnelData!['retention'] ?? 0,
+              'Rétention',
+              _funnelData!['retention'] ?? 0,
               maxValue,
               Colors.purple,
             ),
@@ -163,8 +161,8 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
 
   Widget _buildFunnelStep(String label, int value, int maxValue, Color color) {
     final percentage = maxValue > 0 ? (value / maxValue * 100) : 0.0;
- final conversionRate = _funnelData!['awareness']! > 0
- ? (value / _funnelData!['awareness']! * 100)
+    final conversionRate = _funnelData!['awareness']! > 0
+        ? (value / _funnelData!['awareness']! * 100)
         : 0.0;
 
     return Column(
@@ -180,7 +178,7 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
               ),
             ),
             Text(
- '$value (${conversionRate.toStringAsFixed(1)}%)',
+              '$value (${conversionRate.toStringAsFixed(1)}%)',
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondaryLight,
               ),
@@ -201,4 +199,3 @@ class _ConversionFunnelWidgetState extends State<ConversionFunnelWidget> {
     );
   }
 }
-

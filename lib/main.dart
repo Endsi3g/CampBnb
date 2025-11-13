@@ -11,7 +11,10 @@ import 'core/config/app_config.dart';
 import 'core/config/gemini_config.dart';
 import 'core/config/mapbox_config.dart';
 import 'core/services/gemini_service.dart';
-import 'core/monitoring/gemini_monitoring.dart' show GeminiMonitoring, MonitoringEventType;
+import 'core/services/reservation_timeout_service.dart';
+import 'core/cache/cache_service.dart';
+import 'core/monitoring/gemini_monitoring.dart'
+    show GeminiMonitoring, MonitoringEventType;
 import 'core/monitoring/error_monitoring_service.dart';
 import 'core/localization/app_localizations.dart';
 import 'core/localization/app_localizations_delegate.dart';
@@ -30,21 +33,23 @@ void main() async {
   // Initialiser les bindings Flutter
   WidgetsFlutterBinding.ensureInitialized();
 
- // Charger les variables d'environnement
+  // Charger les variables d'environnement
   try {
- await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: '.env');
   } catch (e) {
- print('WARNING: Fichier .env non trouve. Assurez-vous de le creer.');
+    print('WARNING: Fichier .env non trouve. Assurez-vous de le creer.');
   }
 
- // Démarrer l'application avec Sentry
- final sentryDsn = dotenv.env['SENTRY_DSN'] ?? '';
-  
+  // Démarrer l'application avec Sentry
+  final sentryDsn = dotenv.env['SENTRY_DSN'] ?? '';
+
   if (sentryDsn.isNotEmpty) {
     await SentryFlutter.init(
       (options) {
         options.dsn = sentryDsn;
- options.environment = AppConfig.isProduction ? 'production' : 'development';
+        options.environment = AppConfig.isProduction
+            ? 'production'
+            : 'development';
         options.tracesSampleRate = AppConfig.isProduction ? 0.1 : 1.0;
         options.profilesSampleRate = AppConfig.isProduction ? 0.1 : 1.0;
       },
@@ -53,7 +58,7 @@ void main() async {
       },
     );
   } else {
- // Si Sentry n'est pas configuré, démarrer l'app normalement
+    // Si Sentry n'est pas configuré, démarrer l'app normalement
     await _initializeApp();
   }
 }
@@ -63,31 +68,36 @@ Future<void> _initializeApp() async {
   // Initialiser Supabase en premier (avant ErrorMonitoringService)
   try {
     // Supporte SUPABASE_KEY ou SUPABASE_ANON_KEY
-    final supabaseKey = dotenv.env['SUPABASE_KEY'] ?? 
-                       dotenv.env['SUPABASE_ANON_KEY'] ?? 
-                       '';
-    
+    final supabaseKey =
+        dotenv.env['SUPABASE_KEY'] ?? dotenv.env['SUPABASE_ANON_KEY'] ?? '';
+
     if (supabaseKey.isEmpty) {
-      print('⚠️  ATTENTION: SUPABASE_KEY ou SUPABASE_ANON_KEY non trouvée dans .env.');
-      print('   Pour mobile/desktop, utilisez la clé publishable au lieu de anon key.');
-      print('   Vous pouvez la trouver dans Supabase Dashboard > Settings > API');
+      print(
+        '⚠️  ATTENTION: SUPABASE_KEY ou SUPABASE_ANON_KEY non trouvée dans .env.',
+      );
+      print(
+        '   Pour mobile/desktop, utilisez la clé publishable au lieu de anon key.',
+      );
+      print(
+        '   Vous pouvez la trouver dans Supabase Dashboard > Settings > API',
+      );
       print('   Ajoutez SUPABASE_KEY=votre_cle dans le fichier .env');
     }
-    
+
     await Supabase.initialize(
       url: 'https://kniaisdkzeflauawmyka.supabase.co',
-      anonKey: supabaseKey.isNotEmpty 
-          ? supabaseKey 
+      anonKey: supabaseKey.isNotEmpty
+          ? supabaseKey
           : '<prefer publishable key instead of anon key for mobile and desktop apps>',
       debug: AppConfig.isDevelopment,
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
       ),
     );
-    
+
     // Initialiser le service Supabase (récupère l'instance déjà créée)
     await SupabaseService.initialize();
-    
+
     print('✅ Supabase initialisé avec succès');
   } catch (e, stackTrace) {
     print('❌ ERREUR: Échec de l\'initialisation Supabase: $e');
@@ -95,26 +105,26 @@ Future<void> _initializeApp() async {
     // L'application peut continuer même si Supabase échoue
   }
 
- // Initialiser le monitoring d'erreurs (après Supabase)
- final sentryDsn = dotenv.env['SENTRY_DSN'] ?? '';
+  // Initialiser le monitoring d'erreurs (après Supabase)
+  final sentryDsn = dotenv.env['SENTRY_DSN'] ?? '';
   await ErrorMonitoringService.initialize(
     sentryDsn: sentryDsn,
     enableSentry: sentryDsn.isNotEmpty,
     enableTalker: AppConfig.isDevelopment,
   );
-  
+
   // Maintenant on peut capturer l'erreur Supabase si elle s'est produite
   // (mais on ne le fait pas car c'est déjà géré)
 
- // Configurer les handlers d'erreurs Flutter
+  // Configurer les handlers d'erreurs Flutter
   FlutterError.onError = (FlutterErrorDetails details) {
     // Envoyer à Sentry
     ErrorMonitoringService().captureException(
       details.exception,
       stackTrace: details.stack,
       context: {
- 'library': details.library,
- 'informationCollector': details.informationCollector?.call().toString(),
+        'library': details.library,
+        'informationCollector': details.informationCollector?.call().toString(),
       },
     );
 
@@ -122,7 +132,7 @@ Future<void> _initializeApp() async {
     FlutterError.presentError(details);
   };
 
- // Configurer les handlers d'erreurs Dart (non-Flutter)
+  // Configurer les handlers d'erreurs Dart (non-Flutter)
   PlatformDispatcher.instance.onError = (error, stack) {
     ErrorMonitoringService().captureException(
       error,
@@ -170,29 +180,27 @@ Future<void> _initializeApp() async {
       await GeminiService().initialize();
       GeminiMonitoring().logEvent(
         type: MonitoringEventType.success,
- message: 'Application démarrée avec succès',
+        message: 'Application démarrée avec succès',
       );
-      
+
       // Ajouter un breadcrumb pour Sentry
       ErrorMonitoringService().addBreadcrumb(
- message: 'Gemini initialisé avec succès',
- category: 'initialization',
+        message: 'Gemini initialisé avec succès',
+        category: 'initialization',
       );
     }
   } catch (e, stackTrace) {
     GeminiMonitoring().logEvent(
       type: MonitoringEventType.error,
- message: 'Erreur lors de l\'initialisation de Gemini',
+      message: 'Erreur lors de l\'initialisation de Gemini',
       error: e,
     );
-    
- // Capturer l'erreur dans Sentry
+
+    // Capturer l'erreur dans Sentry
     await ErrorMonitoringService().captureException(
       e,
       stackTrace: stackTrace,
-      context: {
- 'component': 'gemini_initialization',
-      },
+      context: {'component': 'gemini_initialization'},
     );
   }
 
@@ -209,18 +217,42 @@ Future<void> _initializeApp() async {
     await ErrorMonitoringService().captureException(
       e,
       stackTrace: stackTrace,
-      context: {
-        'component': 'mapbox_initialization',
-      },
+      context: {'component': 'mapbox_initialization'},
     );
   }
 
- // Démarrer l'application
-  runApp(
-    const ProviderScope(
-      child: CampbnbApp(),
-    ),
-  );
+  // Initialiser le cache persistant
+  try {
+    await CacheService().initialize();
+    ErrorMonitoringService().addBreadcrumb(
+      message: 'CacheService initialisé avec succès',
+      category: 'initialization',
+    );
+  } catch (e, stackTrace) {
+    await ErrorMonitoringService().captureException(
+      e,
+      stackTrace: stackTrace,
+      context: {'component': 'cache_initialization'},
+    );
+  }
+
+  // Démarrer le service de timeout des réservations
+  try {
+    ReservationTimeoutService().start();
+    ErrorMonitoringService().addBreadcrumb(
+      message: 'ReservationTimeoutService démarré',
+      category: 'initialization',
+    );
+  } catch (e, stackTrace) {
+    await ErrorMonitoringService().captureException(
+      e,
+      stackTrace: stackTrace,
+      context: {'component': 'reservation_timeout_initialization'},
+    );
+  }
+
+  // Démarrer l'application
+  runApp(const ProviderScope(child: CampbnbApp()));
 }
 
 class CampbnbApp extends ConsumerWidget {
@@ -235,7 +267,7 @@ class CampbnbApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Campbnb Québec',
       debugShowCheckedModeBanner: false,
-      
+
       // Localisation
       locale: locale,
       supportedLocales: AppLocale.locales,
@@ -245,12 +277,12 @@ class CampbnbApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      
+
       // Thème culturel (adapté pour desktop et mobile)
       theme: culturalTheme.toThemeData(isDark: false),
       darkTheme: culturalTheme.toThemeData(isDark: true),
       themeMode: ThemeMode.system,
-      
+
       // Router
       routerConfig: ref.watch(routerProvider),
     );
@@ -263,21 +295,19 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
- title: const Text('Campbnb Québec'),
-      ),
+      appBar: AppBar(title: const Text('Campbnb Québec')),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.camping, size: 64),
+            const Icon(Icons.forest, size: 64),
             SizedBox(height: 16),
             Text(
- 'Application Campbnb Québec',
+              'Application Campbnb Québec',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
- Text('Intégration Gemini 2.5 activée'),
+            Text('Intégration Gemini 2.5 activée'),
           ],
         ),
       ),

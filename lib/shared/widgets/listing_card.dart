@@ -7,22 +7,18 @@ class ListingCard extends StatelessWidget {
   final ListingModel listing;
   final VoidCallback? onTap;
 
-  const ListingCard({
-    super.key,
-    required this.listing,
-    this.onTap,
-  });
+  const ListingCard({super.key, required this.listing, this.onTap});
 
   String _getTypeLabel(ListingType type) {
     switch (type) {
       case ListingType.tent:
- return 'Tente';
+        return 'Tente';
       case ListingType.rv:
- return 'VR';
+        return 'VR';
       case ListingType.readyToCamp:
- return 'Prêt-à-camper';
+        return 'Prêt-à-camper';
       case ListingType.wild:
- return 'Sauvage';
+        return 'Sauvage';
     }
   }
 
@@ -73,7 +69,7 @@ class ListingCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
- 'Populaire',
+                      'Populaire',
                       style: AppTextStyles.labelSmall.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -93,13 +89,10 @@ class ListingCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          listing.title,
-                          style: AppTextStyles.h4,
-                        ),
+                        Text(listing.title, style: AppTextStyles.h4),
                         const SizedBox(height: 4),
                         Text(
- '${listing.city}, ${listing.province}',
+                          '${listing.city}, ${listing.province}',
                           style: AppTextStyles.bodyMedium.copyWith(
                             color: AppColors.textSecondaryLight,
                           ),
@@ -118,13 +111,13 @@ class ListingCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
- '\$${listing.pricePerNight.toStringAsFixed(0)}',
+                        '\$${listing.pricePerNight.toStringAsFixed(0)}',
                         style: AppTextStyles.h4.copyWith(
                           color: AppColors.primary,
                         ),
                       ),
                       Text(
- '/ nuit',
+                        '/ nuit',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondaryLight,
                         ),
@@ -140,4 +133,3 @@ class ListingCard extends StatelessWidget {
     );
   }
 }
-

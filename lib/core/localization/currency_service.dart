@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'app_locale.dart';
 
 class CurrencyService {
- /// Convertit un montant d'une devise à une autre
+  /// Convertit un montant d'une devise à une autre
   /// Note: En production, utiliser un service API réel (ex: exchangerate-api.com)
   static double convertCurrency({
     required double amount,
@@ -14,27 +14,27 @@ class CurrencyService {
 
     // Taux de change approximatifs (à remplacer par un service API en production)
     final exchangeRates = {
- 'USD': {
- 'CAD': 1.35,
- 'EUR': 0.92,
- 'GBP': 0.79,
- 'MXN': 17.50,
- 'BRL': 4.95,
- 'ARS': 350.00,
- 'CLP': 920.00,
- 'COP': 3900.00,
- 'PEN': 3.70,
- 'AUD': 1.52,
- 'NZD': 1.65,
- 'JPY': 150.00,
- 'CNY': 7.20,
- 'INR': 83.00,
- 'KRW': 1330.00,
- 'SGD': 1.34,
- 'CHF': 0.88,
- 'SEK': 10.50,
- 'NOK': 10.80,
- 'DKK': 6.90,
+      'USD': {
+        'CAD': 1.35,
+        'EUR': 0.92,
+        'GBP': 0.79,
+        'MXN': 17.50,
+        'BRL': 4.95,
+        'ARS': 350.00,
+        'CLP': 920.00,
+        'COP': 3900.00,
+        'PEN': 3.70,
+        'AUD': 1.52,
+        'NZD': 1.65,
+        'JPY': 150.00,
+        'CNY': 7.20,
+        'INR': 83.00,
+        'KRW': 1330.00,
+        'SGD': 1.34,
+        'CHF': 0.88,
+        'SEK': 10.50,
+        'NOK': 10.80,
+        'DKK': 6.90,
       },
     };
 
@@ -48,8 +48,8 @@ class CurrencyService {
     String fromCurrency,
     Map<String, Map<String, double>> rates,
   ) {
- if (fromCurrency == 'USD') return amount;
- final rate = rates['USD']?[fromCurrency];
+    if (fromCurrency == 'USD') return amount;
+    final rate = rates['USD']?[fromCurrency];
     if (rate == null) return amount; // Fallback: pas de conversion
     return amount / rate;
   }
@@ -59,8 +59,8 @@ class CurrencyService {
     String toCurrency,
     Map<String, Map<String, double>> rates,
   ) {
- if (toCurrency == 'USD') return usdAmount;
- final rate = rates['USD']?[toCurrency];
+    if (toCurrency == 'USD') return usdAmount;
+    final rate = rates['USD']?[toCurrency];
     if (rate == null) return usdAmount; // Fallback: pas de conversion
     return usdAmount * rate;
   }
@@ -82,27 +82,27 @@ class CurrencyService {
   /// Obtient le symbole de devise
   static String _getCurrencySymbol(String currencyCode) {
     const symbols = {
- 'USD': '\$',
- 'CAD': 'C\$',
- 'EUR': '€',
- 'GBP': '£',
- 'MXN': '\$',
- 'BRL': 'R\$',
- 'ARS': '\$',
- 'CLP': '\$',
- 'COP': '\$',
- 'PEN': 'S/',
- 'AUD': 'A\$',
- 'NZD': 'NZ\$',
- 'JPY': '¥',
- 'CNY': '¥',
- 'INR': '₹',
- 'KRW': '₩',
- 'SGD': 'S\$',
- 'CHF': 'CHF',
- 'SEK': 'kr',
- 'NOK': 'kr',
- 'DKK': 'kr',
+      'USD': '\$',
+      'CAD': 'C\$',
+      'EUR': '€',
+      'GBP': '£',
+      'MXN': '\$',
+      'BRL': 'R\$',
+      'ARS': '\$',
+      'CLP': '\$',
+      'COP': '\$',
+      'PEN': 'S/',
+      'AUD': 'A\$',
+      'NZD': 'NZ\$',
+      'JPY': '¥',
+      'CNY': '¥',
+      'INR': '₹',
+      'KRW': '₩',
+      'SGD': 'S\$',
+      'CHF': 'CHF',
+      'SEK': 'kr',
+      'NOK': 'kr',
+      'DKK': 'kr',
     };
     return symbols[currencyCode] ?? currencyCode;
   }
@@ -118,28 +118,26 @@ class CurrencyService {
 
   /// Liste des devises supportées
   static const List<String> supportedCurrencies = [
- 'USD',
- 'CAD',
- 'EUR',
- 'GBP',
- 'MXN',
- 'BRL',
- 'ARS',
- 'CLP',
- 'COP',
- 'PEN',
- 'AUD',
- 'NZD',
- 'JPY',
- 'CNY',
- 'INR',
- 'KRW',
- 'SGD',
- 'CHF',
- 'SEK',
- 'NOK',
- 'DKK',
+    'USD',
+    'CAD',
+    'EUR',
+    'GBP',
+    'MXN',
+    'BRL',
+    'ARS',
+    'CLP',
+    'COP',
+    'PEN',
+    'AUD',
+    'NZD',
+    'JPY',
+    'CNY',
+    'INR',
+    'KRW',
+    'SGD',
+    'CHF',
+    'SEK',
+    'NOK',
+    'DKK',
   ];
 }
-
-

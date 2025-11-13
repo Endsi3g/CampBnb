@@ -46,17 +46,11 @@ class AuthNotifier extends _$AuthNotifier {
     }
   }
 
-  Future<void> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signIn({required String email, required String password}) async {
     state = const AsyncValue.loading();
     try {
       final repository = ref.read(authRepositoryProvider);
-      final user = await repository.signIn(
-        email: email,
-        password: password,
-      );
+      final user = await repository.signIn(email: email, password: password);
       state = AsyncValue.data(user);
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
@@ -75,4 +69,3 @@ class AuthNotifier extends _$AuthNotifier {
     }
   }
 }
-

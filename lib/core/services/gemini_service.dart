@@ -56,11 +56,12 @@ class GeminiService {
   /// Vérifie si une nouvelle requête peut être effectuée (rate limiting)
   Future<bool> _canMakeRequest() async {
     final now = DateTime.now();
-    
+
     // Vérifier limite par minute
-    _requestTimestamps.removeWhere((timestamp) => 
-        now.difference(timestamp).inMinutes >= 1);
-    
+    _requestTimestamps.removeWhere(
+      (timestamp) => now.difference(timestamp).inMinutes >= 1,
+    );
+
     if (_requestTimestamps.length >= GeminiConfig.rateLimitPerMinute) {
       _logger.w('Limite de requetes par minute atteinte');
       return false;
@@ -75,7 +76,7 @@ class GeminiService {
     return true;
   }
 
- /// Enregistre une requête dans l'historique
+  /// Enregistre une requête dans l'historique
   void _recordRequest({required bool success, required Duration duration}) {
     final now = DateTime.now();
     _requestTimestamps.add(now);
@@ -85,7 +86,9 @@ class GeminiService {
       requestsToday: _stats.requestsToday + 1,
       requestsThisMinute: _requestTimestamps.length,
       totalRequests: _stats.totalRequests + 1,
-      failedRequests: success ? _stats.failedRequests : _stats.failedRequests + 1,
+      failedRequests: success
+          ? _stats.failedRequests
+          : _stats.failedRequests + 1,
       lastRequestTime: now,
       averageResponseTime: _calculateAverageResponseTime(duration),
     );
@@ -98,18 +101,22 @@ class GeminiService {
     final currentAvg = _stats.averageResponseTime;
     final totalRequests = _stats.totalRequests;
     if (totalRequests == 0) return newDuration.inMilliseconds.toDouble();
-    
-    return ((currentAvg * (totalRequests - 1)) + newDuration.inMilliseconds) / totalRequests;
+
+    return ((currentAvg * (totalRequests - 1)) + newDuration.inMilliseconds) /
+        totalRequests;
   }
 
   /// Sauvegarde les statistiques
   Future<void> _saveStats() async {
     try {
       final prefs = await SharedPreferences.getInstance();
- await prefs.setString('gemini_stats', jsonEncode(_stats.toJson()));
- await prefs.setString('gemini_last_reset', DateTime.now().toIso8601String());
+      await prefs.setString('gemini_stats', jsonEncode(_stats.toJson()));
+      await prefs.setString(
+        'gemini_last_reset',
+        DateTime.now().toIso8601String(),
+      );
     } catch (e) {
- _logger.e('Erreur lors de la sauvegarde des stats: $e');
+      _logger.e('Erreur lors de la sauvegarde des stats: $e');
     }
   }
 
@@ -117,13 +124,15 @@ class GeminiService {
   Future<void> _loadStats() async {
     try {
       final prefs = await SharedPreferences.getInstance();
- final statsJson = prefs.getString('gemini_stats');
- final lastResetStr = prefs.getString('gemini_last_reset');
-      
+      final statsJson = prefs.getString('gemini_stats');
+      final lastResetStr = prefs.getString('gemini_last_reset');
+
       if (statsJson != null) {
-        final lastReset = lastResetStr != null ? DateTime.parse(lastResetStr) : null;
+        final lastReset = lastResetStr != null
+            ? DateTime.parse(lastResetStr)
+            : null;
         final now = DateTime.now();
-        
+
         // Réinitialiser le compteur quotidien si nécessaire
         if (lastReset == null || now.difference(lastReset).inDays >= 1) {
           _stats = const GeminiApiStats();
@@ -133,7 +142,7 @@ class GeminiService {
         }
       }
     } catch (e) {
- _logger.e('Erreur lors du chargement des stats: $e');
+      _logger.e('Erreur lors du chargement des stats: $e');
     }
   }
 
@@ -144,20 +153,21 @@ class GeminiService {
     List<Content>? history,
   }) async {
     if (_model == null) {
- throw Exception('GeminiService non initialisé');
+      throw Exception('GeminiService non initialisé');
     }
 
     if (!await _canMakeRequest()) {
- throw Exception('Limite de requêtes atteinte. Réessayez plus tard.');
+      throw Exception('Limite de requêtes atteinte. Réessayez plus tard.');
     }
 
     final stopwatch = Stopwatch()..start();
     try {
- _logger.d(' Envoi requête Gemini: ${prompt.substring(0, prompt.length > 100 ? 100 : prompt.length)}...');
+      _logger.d(
+        ' Envoi requête Gemini: ${prompt.substring(0, prompt.length > 100 ? 100 : prompt.length)}...',
+      );
 
       final content = [
-        if (systemInstruction != null)
-          Content.system(systemInstruction),
+        if (systemInstruction != null) Content.system(systemInstruction),
         ...?history,
         Content.text(prompt),
       ];
@@ -170,17 +180,17 @@ class GeminiService {
       final duration = stopwatch.elapsed;
 
       if (response.text == null || response.text!.isEmpty) {
- throw Exception('Réponse vide de Gemini');
+        throw Exception('Réponse vide de Gemini');
       }
 
       _recordRequest(success: true, duration: duration);
- _logger.d(' Réponse reçue en ${duration.inMilliseconds}ms');
+      _logger.d(' Réponse reçue en ${duration.inMilliseconds}ms');
 
       return response.text!;
     } catch (e) {
       stopwatch.stop();
       _recordRequest(success: false, duration: stopwatch.elapsed);
- _logger.e(' Erreur requête Gemini: $e');
+      _logger.e(' Erreur requête Gemini: $e');
       rethrow;
     }
   }
@@ -202,13 +212,13 @@ class GeminiService {
 
       final response = await _makeRequest(prompt: prompt);
       final json = jsonDecode(response) as Map<String, dynamic>;
- final suggestions = (json['suggestions'] as List)
+      final suggestions = (json['suggestions'] as List)
           .map((s) => DestinationSuggestion.fromJson(s as Map<String, dynamic>))
           .toList();
 
       return suggestions;
     } catch (e) {
- _logger.e('Erreur lors de la suggestion de destinations: $e');
+      _logger.e('Erreur lors de la suggestion de destinations: $e');
       rethrow;
     }
   }
@@ -220,7 +230,7 @@ class GeminiService {
       final response = await _makeRequest(prompt: prompt);
       return jsonDecode(response) as Map<String, dynamic>;
     } catch (e) {
- _logger.e('Erreur lors de l\'analyse de recherche: $e');
+      _logger.e('Erreur lors de l\'analyse de recherche: $e');
       rethrow;
     }
   }
@@ -244,7 +254,7 @@ class GeminiService {
       final json = jsonDecode(response) as Map<String, dynamic>;
       return GeneratedItinerary.fromJson(json);
     } catch (e) {
- _logger.e('Erreur lors de la génération d\'itinéraire: $e');
+      _logger.e('Erreur lors de la génération d\'itinéraire: $e');
       rethrow;
     }
   }
@@ -255,7 +265,7 @@ class GeminiService {
       final prompt = GeminiPrompts.faqResponse(question, context: context);
       return await _makeRequest(prompt: prompt);
     } catch (e) {
- _logger.e('Erreur lors de la réponse FAQ: $e');
+      _logger.e('Erreur lors de la réponse FAQ: $e');
       rethrow;
     }
   }
@@ -268,18 +278,24 @@ class GeminiService {
       final json = jsonDecode(response) as Map<String, dynamic>;
       return ReviewSummary.fromJson(json);
     } catch (e) {
- _logger.e('Erreur lors du résumé d\'avis: $e');
+      _logger.e('Erreur lors du résumé d\'avis: $e');
       rethrow;
     }
   }
 
   /// Traduit du texte
-  Future<String> translate(String text, {required String targetLanguage}) async {
+  Future<String> translate(
+    String text, {
+    required String targetLanguage,
+  }) async {
     try {
-      final prompt = GeminiPrompts.translation(text, targetLanguage: targetLanguage);
+      final prompt = GeminiPrompts.translation(
+        text,
+        targetLanguage: targetLanguage,
+      );
       return await _makeRequest(prompt: prompt);
     } catch (e) {
- _logger.e('Erreur lors de la traduction: $e');
+      _logger.e('Erreur lors de la traduction: $e');
       rethrow;
     }
   }
@@ -291,7 +307,7 @@ class GeminiService {
       final response = await _makeRequest(prompt: prompt);
       return jsonDecode(response) as Map<String, dynamic>;
     } catch (e) {
- _logger.e('Erreur lors de l\'analyse d\'image: $e');
+      _logger.e('Erreur lors de l\'analyse d\'image: $e');
       rethrow;
     }
   }
@@ -309,13 +325,13 @@ class GeminiService {
 
       final response = await _makeRequest(prompt: prompt);
       final json = jsonDecode(response) as Map<String, dynamic>;
- final experiences = (json['experiences'] as List)
+      final experiences = (json['experiences'] as List)
           .map((e) => LocalExperience.fromJson(e as Map<String, dynamic>))
           .toList();
 
       return experiences;
     } catch (e) {
- _logger.e('Erreur lors de la suggestion d\'expériences locales: $e');
+      _logger.e('Erreur lors de la suggestion d\'expériences locales: $e');
       rethrow;
     }
   }
@@ -328,9 +344,12 @@ class GeminiService {
   }) async {
     try {
       final systemPrompt = GeminiPrompts.chatSystemPrompt;
-      final chatPrompt = GeminiPrompts.chatPrompt(message, userContext: userContext);
+      final chatPrompt = GeminiPrompts.chatPrompt(
+        message,
+        userContext: userContext,
+      );
 
- // Convertir l'historique en Content
+      // Convertir l'historique en Content
       final contentHistory = history
           .where((msg) => !msg.isProcessing && msg.error == null)
           .map((msg) => Content.text(msg.content))
@@ -342,15 +361,15 @@ class GeminiService {
         history: contentHistory,
       );
     } catch (e) {
- _logger.e('Erreur lors du chat: $e');
+      _logger.e('Erreur lors du chat: $e');
       rethrow;
     }
   }
 
- /// Obtient les statistiques d'utilisation
+  /// Obtient les statistiques d'utilisation
   GeminiApiStats getStats() => _stats;
 
- /// Obtient l'historique des requêtes
+  /// Obtient l'historique des requêtes
   List<GeminiRequest> getRequestHistory() => List.unmodifiable(_requestHistory);
 
   /// Réinitialise les statistiques (pour les tests)
@@ -360,5 +379,3 @@ class GeminiService {
     await _saveStats();
   }
 }
-
-

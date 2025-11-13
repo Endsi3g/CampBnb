@@ -51,17 +51,17 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
 
   Future<void> _initializeMap() async {
     if (!MapboxConfig.isValid) {
- _logger.e('Configuration Mapbox invalide');
+      _logger.e('Configuration Mapbox invalide');
       return;
     }
 
     try {
       // Initialise Mapbox avec le token
- // Note: L'initialisation peut varier selon la version de mapbox_maps_flutter
+      // Note: L'initialisation peut varier selon la version de mapbox_maps_flutter
       // Vérifiez la documentation pour la méthode exacte
       // await MapboxOptions.setAccessToken(MapboxConfig.accessToken!);
     } catch (e) {
- _logger.e('Erreur lors de l\'initialisation de Mapbox: $e');
+      _logger.e('Erreur lors de l\'initialisation de Mapbox: $e');
     }
   }
 
@@ -71,7 +71,7 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
 
     // Configure la carte
     _configureMap();
-    
+
     // Charge les marqueurs
     _loadMarkers();
   }
@@ -96,13 +96,13 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
       );
       await _mapboxMap!.camera.easeTo(cameraOptions);
 
- // Active la localisation de l'utilisateur si demandé
- // Note: L'API peut varier selon la version de mapbox_maps_flutter
+      // Active la localisation de l'utilisateur si demandé
+      // Note: L'API peut varier selon la version de mapbox_maps_flutter
       // if (widget.showUserLocation) {
       //   await _mapboxMap!.location.updateSettings(...);
       // }
     } catch (e) {
- _logger.e('Erreur lors de la configuration de la carte: $e');
+      _logger.e('Erreur lors de la configuration de la carte: $e');
     }
   }
 
@@ -127,7 +127,7 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
         }
       }
     } catch (e) {
- _logger.e('Erreur lors du chargement des marqueurs: $e');
+      _logger.e('Erreur lors du chargement des marqueurs: $e');
     }
   }
 
@@ -141,7 +141,7 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
       );
       await marker.addToMap(_mapboxMap!);
     } catch (e) {
- _logger.e('Erreur lors de l\'ajout du marqueur: $e');
+      _logger.e('Erreur lors de l\'ajout du marqueur: $e');
     }
   }
 
@@ -151,16 +151,13 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
     try {
       final cameraOptions = CameraOptions(
         center: Point(
-          coordinates: Position(
-            cluster.longitude,
-            cluster.latitude,
-          ),
+          coordinates: Position(cluster.longitude, cluster.latitude),
         ),
         zoom: await _getCurrentZoom() + 2,
       );
       await _mapboxMap!.camera.easeTo(cameraOptions);
     } catch (e) {
- _logger.e('Erreur lors du zoom sur le cluster: $e');
+      _logger.e('Erreur lors du zoom sur le cluster: $e');
     }
   }
 
@@ -189,13 +186,11 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
   @override
   Widget build(BuildContext context) {
     if (!MapboxConfig.isValid) {
-      return const Center(
- child: Text('Configuration Mapbox invalide'),
-      );
+      return const Center(child: Text('Configuration Mapbox invalide'));
     }
 
     return MapWidget(
- key: const ValueKey('mapbox_map'),
+      key: const ValueKey('mapbox_map'),
       cameraOptions: CameraOptions(
         center: Point(
           coordinates: Position(
@@ -227,4 +222,3 @@ class _MapboxMapWidgetState extends State<MapboxMapWidget> {
     super.dispose();
   }
 }
-

@@ -11,7 +11,8 @@ import '../../shared/services/mapbox_service.dart';
 
 /// Service d'observabilité
 class ObservabilityService {
-  static final ObservabilityService _instance = ObservabilityService._internal();
+  static final ObservabilityService _instance =
+      ObservabilityService._internal();
   factory ObservabilityService() => _instance;
   ObservabilityService._internal();
 
@@ -19,7 +20,7 @@ class ObservabilityService {
   StreamSubscription<ConnectivityResult>? _connectivitySubscription;
   Timer? _healthCheckTimer;
 
- /// Initialise le service d'observabilité
+  /// Initialise le service d'observabilité
   Future<void> initialize() async {
     // Surveiller la connectivité
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(
@@ -40,18 +41,15 @@ class ObservabilityService {
   Future<void> _onConnectivityChanged(ConnectivityResult result) async {
     if (result == ConnectivityResult.none) {
       await ErrorMonitoringService().captureMessage(
- 'Connexion internet perdue',
+        'Connexion internet perdue',
         level: SentryLevel.warning,
-        context: {
- 'type': 'connectivity',
- 'status': 'disconnected',
-        },
+        context: {'type': 'connectivity', 'status': 'disconnected'},
       );
     } else {
       await ErrorMonitoringService().addBreadcrumb(
- message: 'Connexion internet rétablie',
- category: 'connectivity',
- data: {'type': result.toString()},
+        message: 'Connexion internet rétablie',
+        category: 'connectivity',
+        data: {'type': result.toString()},
       );
     }
   }
@@ -69,11 +67,11 @@ class ObservabilityService {
 
     if (failedChecks.isNotEmpty) {
       await ErrorMonitoringService().captureMessage(
- '${failedChecks.length} service(s) en panne',
+        '${failedChecks.length} service(s) en panne',
         level: SentryLevel.warning,
         context: {
- 'type': 'health_check',
- 'failed_services': failedChecks.map((r) => r.serviceName).toList(),
+          'type': 'health_check',
+          'failed_services': failedChecks.map((r) => r.serviceName).toList(),
         },
       );
     }
@@ -83,23 +81,23 @@ class ObservabilityService {
   Future<HealthCheckResult> _checkSupabaseHealth() async {
     try {
       final stopwatch = Stopwatch()..start();
-      
- // Test simple : vérifier l'authentification
+
+      // Test simple : vérifier l'authentification
       final client = SupabaseService.client;
       final response = await client.auth.getSession();
-      
+
       stopwatch.stop();
 
       if (stopwatch.elapsedMilliseconds > 5000) {
         await ErrorMonitoringService().capturePerformanceIssue(
- operation: 'supabase_health_check',
+          operation: 'supabase_health_check',
           duration: stopwatch.elapsed,
- context: 'Supabase response time is high',
+          context: 'Supabase response time is high',
         );
       }
 
       return HealthCheckResult(
- serviceName: 'Supabase',
+        serviceName: 'Supabase',
         isHealthy: true,
         responseTime: stopwatch.elapsed,
       );
@@ -107,14 +105,11 @@ class ObservabilityService {
       await ErrorMonitoringService().captureException(
         e,
         stackTrace: stackTrace,
-        context: {
- 'type': 'health_check',
- 'service': 'supabase',
-        },
+        context: {'type': 'health_check', 'service': 'supabase'},
       );
 
       return HealthCheckResult(
- serviceName: 'Supabase',
+        serviceName: 'Supabase',
         isHealthy: false,
         error: e.toString(),
       );
@@ -125,23 +120,23 @@ class ObservabilityService {
   Future<HealthCheckResult> _checkMapboxHealth() async {
     try {
       final stopwatch = Stopwatch()..start();
-      
+
       // Test simple : vérifier que le token est valide
       final token = AppConfig.mapboxAccessToken;
       if (token.isEmpty) {
         return HealthCheckResult(
- serviceName: 'Mapbox',
+          serviceName: 'Mapbox',
           isHealthy: false,
- error: 'Token not configured',
+          error: 'Token not configured',
         );
       }
 
- // Vérifier la connectivité à l'API Mapbox
+      // Vérifier la connectivité à l'API Mapbox
       // (test simplifié - en production, faire une vraie requête)
       stopwatch.stop();
 
       return HealthCheckResult(
- serviceName: 'Mapbox',
+        serviceName: 'Mapbox',
         isHealthy: true,
         responseTime: stopwatch.elapsed,
       );
@@ -149,14 +144,11 @@ class ObservabilityService {
       await ErrorMonitoringService().captureException(
         e,
         stackTrace: stackTrace,
-        context: {
- 'type': 'health_check',
- 'service': 'mapbox',
-        },
+        context: {'type': 'health_check', 'service': 'mapbox'},
       );
 
       return HealthCheckResult(
- serviceName: 'Mapbox',
+        serviceName: 'Mapbox',
         isHealthy: false,
         error: e.toString(),
       );
@@ -170,13 +162,13 @@ class ObservabilityService {
       final isConnected = result != ConnectivityResult.none;
 
       return HealthCheckResult(
- serviceName: 'Connectivity',
+        serviceName: 'Connectivity',
         isHealthy: isConnected,
- metadata: {'type': result.toString()},
+        metadata: {'type': result.toString()},
       );
     } catch (e) {
       return HealthCheckResult(
- serviceName: 'Connectivity',
+        serviceName: 'Connectivity',
         isHealthy: false,
         error: e.toString(),
       );
@@ -189,8 +181,8 @@ class ObservabilityService {
     Future<T> Function() operation,
   ) async {
     final transaction = ErrorMonitoringService().startTransaction(
- 'supabase_$operationName',
- 'database',
+      'supabase_$operationName',
+      'database',
     );
 
     try {
@@ -200,7 +192,7 @@ class ObservabilityService {
 
       if (stopwatch.elapsedMilliseconds > 2000) {
         await ErrorMonitoringService().capturePerformanceIssue(
- operation: 'supabase_$operationName',
+          operation: 'supabase_$operationName',
           duration: stopwatch.elapsed,
         );
       }
@@ -212,10 +204,7 @@ class ObservabilityService {
       await ErrorMonitoringService().captureException(
         e,
         stackTrace: stackTrace,
-        context: {
- 'type': 'supabase_operation',
- 'operation': operationName,
-        },
+        context: {'type': 'supabase_operation', 'operation': operationName},
       );
       rethrow;
     }
@@ -227,8 +216,8 @@ class ObservabilityService {
     Future<T> Function() operation,
   ) async {
     final transaction = ErrorMonitoringService().startTransaction(
- 'mapbox_$operationName',
- 'map_service',
+      'mapbox_$operationName',
+      'map_service',
     );
 
     try {
@@ -238,7 +227,7 @@ class ObservabilityService {
 
       if (stopwatch.elapsedMilliseconds > 3000) {
         await ErrorMonitoringService().capturePerformanceIssue(
- operation: 'mapbox_$operationName',
+          operation: 'mapbox_$operationName',
           duration: stopwatch.elapsed,
         );
       }
@@ -250,10 +239,7 @@ class ObservabilityService {
       await ErrorMonitoringService().captureException(
         e,
         stackTrace: stackTrace,
-        context: {
- 'type': 'mapbox_operation',
- 'operation': operationName,
-        },
+        context: {'type': 'mapbox_operation', 'operation': operationName},
       );
       rethrow;
     }
@@ -282,4 +268,3 @@ class HealthCheckResult {
     this.metadata,
   });
 }
-

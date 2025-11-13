@@ -43,32 +43,32 @@ class _AnalyticsTrackerState extends ConsumerState<AnalyticsTracker> {
       final analytics = AnalyticsService.instance;
 
       await analytics.logEvent(
- eventName: 'screen_view',
- eventCategory: 'navigation',
- eventType: 'screen_view',
+        eventName: 'screen_view',
+        eventCategory: 'navigation',
+        eventType: 'screen_view',
         screenName: widget.screenName,
         screenClass: widget.screenClass ?? widget.screenName,
         previousScreen: _previousScreen,
         properties: widget.properties,
       );
 
- // Mettre à jour la session avec l'écran d'entrée si c'est le premier
+      // Mettre à jour la session avec l'écran d'entrée si c'est le premier
       // (géré par le service)
     });
   }
 
   @override
   void dispose() {
- // Logger le temps passé sur l'écran
+    // Logger le temps passé sur l'écran
     if (_screenStartTime != null) {
       final duration = DateTime.now().difference(_screenStartTime!);
       AnalyticsService.instance.logEvent(
- eventName: 'screen_exit',
- eventCategory: 'navigation',
- eventType: 'screen_exit',
+        eventName: 'screen_exit',
+        eventCategory: 'navigation',
+        eventType: 'screen_exit',
         screenName: widget.screenName,
         properties: {
- 'duration_seconds': duration.inSeconds,
+          'duration_seconds': duration.inSeconds,
           ...?widget.properties,
         },
       );
@@ -91,14 +91,11 @@ mixin AnalyticsMixin {
     Map<String, dynamic>? properties,
   }) async {
     await AnalyticsService.instance.logEvent(
- eventName: 'button_click',
- eventCategory: 'interaction',
- eventType: 'button_click',
+      eventName: 'button_click',
+      eventCategory: 'interaction',
+      eventType: 'button_click',
       screenName: screenName,
-      properties: {
- 'button_name': buttonName,
-        ...?properties,
-      },
+      properties: {'button_name': buttonName, ...?properties},
     );
   }
 
@@ -109,14 +106,10 @@ mixin AnalyticsMixin {
     int? resultsCount,
   }) async {
     await AnalyticsService.instance.logEvent(
- eventName: 'search',
- eventCategory: 'interaction',
- eventType: 'search',
-      properties: {
- 'query': query,
- 'results_count': resultsCount,
-        ...?filters,
-      },
+      eventName: 'search',
+      eventCategory: 'interaction',
+      eventType: 'search',
+      properties: {'query': query, 'results_count': resultsCount, ...?filters},
     );
   }
 
@@ -128,14 +121,14 @@ mixin AnalyticsMixin {
     double? price,
   }) async {
     await AnalyticsService.instance.logEvent(
- eventName: 'listing_view',
- eventCategory: 'interaction',
- eventType: 'listing_view',
+      eventName: 'listing_view',
+      eventCategory: 'interaction',
+      eventType: 'listing_view',
       properties: {
- 'listing_id': listingId,
- 'listing_title': listingTitle,
- 'property_type': propertyType,
- 'price': price,
+        'listing_id': listingId,
+        'listing_title': listingTitle,
+        'property_type': propertyType,
+        'price': price,
       },
     );
   }
@@ -157,6 +150,3 @@ mixin AnalyticsMixin {
     );
   }
 }
-
-
-

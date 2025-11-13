@@ -2,15 +2,15 @@ class AppConstants {
   AppConstants._();
 
   // API
- static const String supabaseUrlKey = 'SUPABASE_URL';
- static const String supabaseAnonKeyKey = 'SUPABASE_ANON_KEY';
- static const String googleMapsApiKeyKey = 'GOOGLE_MAPS_API_KEY';
- static const String geminiApiKeyKey = 'GEMINI_API_KEY';
+  static const String supabaseUrlKey = 'SUPABASE_URL';
+  static const String supabaseAnonKeyKey = 'SUPABASE_ANON_KEY';
+  static const String googleMapsApiKeyKey = 'GOOGLE_MAPS_API_KEY';
+  static const String geminiApiKeyKey = 'GEMINI_API_KEY';
 
   // Storage Keys
- static const String themeModeKey = 'theme_mode';
- static const String onboardingCompletedKey = 'onboarding_completed';
- static const String userTokenKey = 'user_token';
+  static const String themeModeKey = 'theme_mode';
+  static const String onboardingCompletedKey = 'onboarding_completed';
+  static const String userTokenKey = 'user_token';
 
   // Pagination
   static const int defaultPageSize = 20;
@@ -18,7 +18,12 @@ class AppConstants {
 
   // Images
   static const int maxImageSize = 5 * 1024 * 1024; // 5MB
- static const List<String> allowedImageFormats = ['jpg', 'jpeg', 'png', 'webp'];
+  static const List<String> allowedImageFormats = [
+    'jpg',
+    'jpeg',
+    'png',
+    'webp',
+  ];
 
   // Dates
   static const int minBookingDays = 1;
@@ -40,4 +45,3 @@ class AppConstants {
   static const Duration shortAnimationDuration = Duration(milliseconds: 150);
   static const Duration longAnimationDuration = Duration(milliseconds: 500);
 }
-

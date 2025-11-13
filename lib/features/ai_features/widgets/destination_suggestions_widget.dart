@@ -49,10 +49,10 @@ class DestinationSuggestionsWidget extends ConsumerWidget {
                   const Icon(Icons.auto_awesome, size: 20),
                   const SizedBox(width: 8),
                   Text(
- 'Suggestions IA',
+                    'Suggestions IA',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -82,7 +82,7 @@ class DestinationSuggestionsWidget extends ConsumerWidget {
       error: (error, stack) => Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
- 'Erreur: $error',
+          'Erreur: $error',
           style: TextStyle(color: Theme.of(context).colorScheme.error),
         ),
       ),
@@ -94,10 +94,7 @@ class _SuggestionCard extends StatelessWidget {
   final DestinationSuggestion suggestion;
   final VoidCallback? onTap;
 
-  const _SuggestionCard({
-    required this.suggestion,
-    this.onTap,
-  });
+  const _SuggestionCard({required this.suggestion, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +105,7 @@ class _SuggestionCard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 12),
       child: Card(
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(16),
@@ -167,7 +162,11 @@ class _SuggestionCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            const Icon(Icons.star, size: 16, color: Colors.amber),
+                            const Icon(
+                              Icons.star,
+                              size: 16,
+                              color: Colors.amber,
+                            ),
                             const SizedBox(width: 4),
                             Text(
                               suggestion.rating.toStringAsFixed(1),
@@ -181,7 +180,9 @@ class _SuggestionCard extends StatelessWidget {
                     Text(
                       suggestion.region,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.textTheme.bodySmall?.color?.withOpacity(0.7),
+                        color: theme.textTheme.bodySmall?.color?.withOpacity(
+                          0.7,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -201,5 +202,3 @@ class _SuggestionCard extends StatelessWidget {
     );
   }
 }
-
-

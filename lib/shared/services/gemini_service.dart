@@ -14,7 +14,7 @@ class GeminiService {
   static void initialize() {
     // Déléguer au service core
     core_gemini.GeminiService().initialize();
-    
+
     // Garder l'ancienne implémentation pour compatibilité
     _model = GenerativeModel(
       model: 'gemini-2.0-flash-exp',
@@ -25,14 +25,17 @@ class GeminiService {
   /// @deprecated Utilisez core_gemini.GeminiService() à la place
   static GenerativeModel get model {
     if (_model == null) {
-      throw Exception('Gemini not initialized. Call GeminiService.initialize() first.');
+      throw Exception(
+        'Gemini not initialized. Call GeminiService.initialize() first.',
+      );
     }
     return _model!;
   }
 
   /// Recherche intelligente de campings
   static Future<String> intelligentSearch(String query) async {
- final prompt = '''
+    final prompt =
+        '''
 Tu es un assistant spécialisé dans la recherche de campings au Québec.
 L'utilisateur recherche: "$query"
 
@@ -48,9 +51,9 @@ Réponds de manière concise et structurée en JSON.
 
     try {
       final response = await model.generateContent([Content.text(prompt)]);
- return response.text ?? '';
+      return response.text ?? '';
     } catch (e) {
- throw Exception('Erreur lors de la recherche intelligente: $e');
+      throw Exception('Erreur lors de la recherche intelligente: $e');
     }
   }
 
@@ -62,9 +65,9 @@ Réponds de manière concise et structurée en JSON.
     try {
       final chat = model.startChat(history: history);
       final response = await chat.sendMessage(Content.text(message));
- return response.text ?? '';
+      return response.text ?? '';
     } catch (e) {
- throw Exception('Erreur lors du chat: $e');
+      throw Exception('Erreur lors du chat: $e');
     }
   }
 
@@ -73,7 +76,8 @@ Réponds de manière concise et structurée en JSON.
     required Map<String, dynamic> userProfile,
     required List<Map<String, dynamic>> previousBookings,
   }) async {
- final prompt = '''
+    final prompt =
+        '''
 Analyse le profil utilisateur et l'historique de réservations pour suggérer des campings pertinents.
 
 Profil: $userProfile
@@ -85,9 +89,9 @@ Réponds en JSON avec: nom, région, type, raison de la suggestion.
 
     try {
       final response = await model.generateContent([Content.text(prompt)]);
- return response.text ?? '';
+      return response.text ?? '';
     } catch (e) {
- throw Exception('Erreur lors de la génération de suggestions: $e');
+      throw Exception('Erreur lors de la génération de suggestions: $e');
     }
   }
 
@@ -98,7 +102,8 @@ Réponds en JSON avec: nom, région, type, raison de la suggestion.
     required String type,
     required List<String> features,
   }) async {
- final prompt = '''
+    final prompt =
+        '''
 Génère une description attrayante et authentique pour un camping au Québec.
 
 Nom: $name
@@ -115,10 +120,9 @@ La description doit être:
 
     try {
       final response = await model.generateContent([Content.text(prompt)]);
- return response.text ?? '';
+      return response.text ?? '';
     } catch (e) {
- throw Exception('Erreur lors de la génération de description: $e');
+      throw Exception('Erreur lors de la génération de description: $e');
     }
   }
 }
-

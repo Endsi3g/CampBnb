@@ -23,9 +23,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Détails de la réservation'),
-      ),
+      appBar: AppBar(title: const Text('Détails de la réservation')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -34,29 +32,29 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
             // Statut de la réservation
             _buildStatusCard(context),
             const SizedBox(height: 24),
-            
+
             // Informations du camping
             _buildListingInfo(context),
             const SizedBox(height: 24),
-            
+
             // Dates
             _buildDatesSection(context),
             const SizedBox(height: 24),
-            
+
             // Invités
             _buildGuestsSection(context),
             const SizedBox(height: 24),
-            
+
             // Prix
             _buildPriceSection(context),
             const SizedBox(height: 24),
-            
+
             // Message du client
             if (reservation.message != null) ...[
               _buildMessageSection(context),
               const SizedBox(height: 24),
             ],
-            
+
             // Actions
             if (isHost && reservation.status == ReservationStatus.pending)
               _buildHostActions(context, ref),
@@ -71,7 +69,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
   Widget _buildStatusCard(BuildContext context) {
     Color statusColor;
     String statusText;
-    
+
     switch (reservation.status) {
       case ReservationStatus.pending:
         statusColor = Colors.orange;
@@ -90,7 +88,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
         statusText = 'Terminée';
         break;
     }
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -105,9 +103,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
           Expanded(
             child: Text(
               statusText,
-              style: AppTextStyles.headingMedium.copyWith(
-                color: statusColor,
-              ),
+              style: AppTextStyles.headingMedium.copyWith(color: statusColor),
             ),
           ),
         ],
@@ -119,10 +115,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Camping',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Camping', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
@@ -139,14 +132,8 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
                   height: 80,
                   color: AppColors.primary.withOpacity(0.1),
                   child: listing.images.isNotEmpty
-                      ? Image.network(
-                          listing.images.first,
-                          fit: BoxFit.cover,
-                        )
-                      : Icon(
-                          Icons.image,
-                          color: AppColors.primary,
-                        ),
+                      ? Image.network(listing.images.first, fit: BoxFit.cover)
+                      : Icon(Icons.image, color: AppColors.primary),
                 ),
               ),
               const SizedBox(width: 16),
@@ -179,10 +166,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Dates',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Dates', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
@@ -211,7 +195,8 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
                 'Durée',
                 null,
                 Icons.hotel,
-                subtitle: '${reservation.numberOfNights} nuit${reservation.numberOfNights > 1 ? 's' : ''}',
+                subtitle:
+                    '${reservation.numberOfNights} nuit${reservation.numberOfNights > 1 ? 's' : ''}',
               ),
             ],
           ),
@@ -235,14 +220,12 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(label, style: AppTextStyles.bodySmall),
               Text(
-                label,
-                style: AppTextStyles.bodySmall,
-              ),
-              Text(
-                subtitle ?? (date != null
-                    ? '${date.day}/${date.month}/${date.year}'
-                    : ''),
+                subtitle ??
+                    (date != null
+                        ? '${date.day}/${date.month}/${date.year}'
+                        : ''),
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -258,10 +241,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Invités',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Invités', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
@@ -288,10 +268,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Prix',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Prix', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
@@ -304,10 +281,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Prix total',
-                    style: AppTextStyles.bodyLarge,
-                  ),
+                  Text('Prix total', style: AppTextStyles.bodyLarge),
                   Text(
                     '${reservation.totalPrice.toStringAsFixed(2)} \$',
                     style: AppTextStyles.headingMedium.copyWith(
@@ -327,10 +301,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Message',
-          style: AppTextStyles.labelLarge,
-        ),
+        Text('Message', style: AppTextStyles.labelLarge),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
@@ -338,10 +309,7 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(
-            reservation.message!,
-            style: AppTextStyles.bodyMedium,
-          ),
+          child: Text(reservation.message!, style: AppTextStyles.bodyMedium),
         ),
       ],
     );
@@ -406,7 +374,8 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
                             child: const Text('Annuler'),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.pop(context, controller.text),
+                            onPressed: () =>
+                                Navigator.pop(context, controller.text),
                             child: const Text('Refuser'),
                           ),
                         ],
@@ -416,7 +385,10 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
 
                   if (reason != null || reason == '') {
                     try {
-                      await notifier.rejectReservation(reservation.id, reason: reason);
+                      await notifier.rejectReservation(
+                        reservation.id,
+                        reason: reason,
+                      );
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -508,4 +480,3 @@ class ReservationRequestDetailsScreen extends ConsumerWidget {
     );
   }
 }
-

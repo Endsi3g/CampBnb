@@ -22,7 +22,7 @@ class ReviewSummaryWidget extends ConsumerWidget {
       error: (error, stack) => Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
- 'Erreur lors de l\'analyse des avis: $error',
+          'Erreur lors de l\'analyse des avis: $error',
           style: TextStyle(color: Theme.of(context).colorScheme.error),
         ),
       ),
@@ -51,7 +51,7 @@ class _ReviewSummaryContent extends StatelessWidget {
                 const Icon(Icons.auto_awesome, size: 20),
                 const SizedBox(width: 8),
                 Text(
- 'Résumé IA des avis',
+                  'Résumé IA des avis',
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -59,7 +59,7 @@ class _ReviewSummaryContent extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            
+
             // Note moyenne
             Row(
               children: [
@@ -81,7 +81,7 @@ class _ReviewSummaryContent extends StatelessWidget {
                 }),
                 const Spacer(),
                 Text(
- '${summary.totalReviews} avis',
+                  '${summary.totalReviews} avis',
                   style: theme.textTheme.bodySmall,
                 ),
               ],
@@ -95,46 +95,48 @@ class _ReviewSummaryContent extends StatelessWidget {
             // Aspects positifs
             if (summary.positiveAspects.isNotEmpty) ...[
               Text(
- 'Points forts',
+                'Points forts',
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8),
-              ...summary.positiveAspects.map((aspect) => Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Row(
-                      children: [
-                        Icon(Icons.check_circle,
-                            size: 16, color: Colors.green),
-                        const SizedBox(width: 8),
-                        Expanded(child: Text(aspect)),
-                      ],
-                    ),
-                  )),
+              ...summary.positiveAspects.map(
+                (aspect) => Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Row(
+                    children: [
+                      Icon(Icons.check_circle, size: 16, color: Colors.green),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text(aspect)),
+                    ],
+                  ),
+                ),
+              ),
               const SizedBox(height: 16),
             ],
 
             // Aspects négatifs
             if (summary.negativeAspects.isNotEmpty) ...[
               Text(
- 'Points à améliorer',
+                'Points à améliorer',
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8),
-              ...summary.negativeAspects.map((aspect) => Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Row(
-                      children: [
-                        Icon(Icons.info_outline,
-                            size: 16, color: Colors.orange),
-                        const SizedBox(width: 8),
-                        Expanded(child: Text(aspect)),
-                      ],
-                    ),
-                  )),
+              ...summary.negativeAspects.map(
+                (aspect) => Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Row(
+                    children: [
+                      Icon(Icons.info_outline, size: 16, color: Colors.orange),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text(aspect)),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ],
         ),
@@ -143,8 +145,9 @@ class _ReviewSummaryContent extends StatelessWidget {
   }
 
   Widget _buildRatingDistribution(ThemeData theme) {
-    final maxCount = summary.ratingDistribution.values
-        .reduce((a, b) => a > b ? a : b);
+    final maxCount = summary.ratingDistribution.values.reduce(
+      (a, b) => a > b ? a : b,
+    );
 
     return Column(
       children: [5, 4, 3, 2, 1].map((rating) {
@@ -155,7 +158,7 @@ class _ReviewSummaryContent extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 8),
           child: Row(
             children: [
- Text('$rating', style: theme.textTheme.bodySmall),
+              Text('$rating', style: theme.textTheme.bodySmall),
               const SizedBox(width: 8),
               Expanded(
                 child: LinearProgressIndicator(
@@ -164,7 +167,7 @@ class _ReviewSummaryContent extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
- Text('$count', style: theme.textTheme.bodySmall),
+              Text('$count', style: theme.textTheme.bodySmall),
             ],
           ),
         );
@@ -172,5 +175,3 @@ class _ReviewSummaryContent extends StatelessWidget {
     );
   }
 }
-
-

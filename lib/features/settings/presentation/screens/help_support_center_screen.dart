@@ -28,9 +28,7 @@ class _HelpSupportCenterScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Aide et support'),
-      ),
+      appBar: AppBar(title: const Text('Aide et support')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -53,12 +51,9 @@ class _HelpSupportCenterScreenState
               },
             ),
             const SizedBox(height: 24),
-            
+
             // FAQ avec IA
-            Text(
-              'Questions fréquentes',
-              style: AppTextStyles.headingSmall,
-            ),
+            Text('Questions fréquentes', style: AppTextStyles.headingSmall),
             const SizedBox(height: 16),
             FAQAIWidget(
               question: _searchController.text.isEmpty
@@ -66,12 +61,9 @@ class _HelpSupportCenterScreenState
                   : _searchController.text,
             ),
             const SizedBox(height: 24),
-            
+
             // Catégories d'aide
-            Text(
-              'Catégories',
-              style: AppTextStyles.headingSmall,
-            ),
+            Text('Catégories', style: AppTextStyles.headingSmall),
             const SizedBox(height: 16),
             _buildCategoryCard(
               context,
@@ -113,7 +105,7 @@ class _HelpSupportCenterScreenState
               },
             ),
             const SizedBox(height: 24),
-            
+
             // Chat avec assistant IA
             Container(
               padding: const EdgeInsets.all(16),
@@ -129,10 +121,7 @@ class _HelpSupportCenterScreenState
                     color: AppColors.primary,
                   ),
                   const SizedBox(height: 12),
-                  Text(
-                    'Besoin d\'aide ?',
-                    style: AppTextStyles.headingSmall,
-                  ),
+                  Text('Besoin d\'aide ?', style: AppTextStyles.headingSmall),
                   const SizedBox(height: 8),
                   Text(
                     'Discutez avec notre assistant IA',
@@ -150,12 +139,9 @@ class _HelpSupportCenterScreenState
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // Contact
-            Text(
-              'Contact',
-              style: AppTextStyles.headingSmall,
-            ),
+            Text('Contact', style: AppTextStyles.headingSmall),
             const SizedBox(height: 16),
             _buildContactOption(
               context,
@@ -218,4 +204,3 @@ class _HelpSupportCenterScreenState
     );
   }
 }
-

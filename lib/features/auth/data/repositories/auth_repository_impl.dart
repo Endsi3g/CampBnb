@@ -14,22 +14,19 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await SupabaseService.signUp(
       email: email,
       password: password,
-      data: {
- 'first_name': firstName,
- 'last_name': lastName,
-      },
+      data: {'first_name': firstName, 'last_name': lastName},
     );
 
     if (response.user == null) {
- throw Exception('Échec de l\'inscription');
+      throw Exception('Échec de l\'inscription');
     }
 
     // Créer le profil utilisateur dans la table users
- await SupabaseService.from('users').insert({
- 'id': response.user!.id,
- 'email': email,
- 'first_name': firstName,
- 'last_name': lastName,
+    await SupabaseService.from('users').insert({
+      'id': response.user!.id,
+      'email': email,
+      'first_name': firstName,
+      'last_name': lastName,
     });
 
     return UserModel(
@@ -52,14 +49,13 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     if (response.user == null) {
- throw Exception('Email ou mot de passe incorrect');
+      throw Exception('Email ou mot de passe incorrect');
     }
 
     // Récupérer le profil utilisateur
- final userData = await SupabaseService.from('users')
-        .select()
- .eq('id', response.user!.id)
-        .single();
+    final userData = await SupabaseService.from(
+      'users',
+    ).select().eq('id', response.user!.id).single();
 
     return UserModel.fromJson(userData);
   }
@@ -75,10 +71,9 @@ class AuthRepositoryImpl implements AuthRepository {
     if (user == null) return null;
 
     try {
- final userData = await SupabaseService.from('users')
-          .select()
- .eq('id', user.id)
-          .single();
+      final userData = await SupabaseService.from(
+        'users',
+      ).select().eq('id', user.id).single();
 
       return UserModel.fromJson(userData);
     } catch (e) {
@@ -88,14 +83,15 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Stream<UserModel?> watchCurrentUser() {
-    return SupabaseService.authStateChanges.map((authState) {
-      final user = authState.session?.user;
-      if (user == null) return null;
+    return SupabaseService.authStateChanges
+        .map((authState) {
+          final user = authState.session?.user;
+          if (user == null) return null;
 
-      // En production, il faudrait écouter les changements de la table users
- // Pour l'instant, on retourne un stream basique
-      return getCurrentUser();
-    }).asyncMap((future) => future);
+          // En production, il faudrait écouter les changements de la table users
+          // Pour l'instant, on retourne un stream basique
+          return getCurrentUser();
+        })
+        .asyncMap((future) => future);
   }
 }
-

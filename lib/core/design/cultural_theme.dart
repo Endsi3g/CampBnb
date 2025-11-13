@@ -19,25 +19,25 @@ class CulturalTheme {
   /// Obtient le thème culturel pour une locale
   static CulturalTheme getThemeForLocale(AppLocale locale) {
     switch (locale.countryCode) {
- case 'CA':
+      case 'CA':
         return _canadianTheme(locale);
- case 'US':
+      case 'US':
         return _americanTheme(locale);
- case 'FR':
+      case 'FR':
         return _frenchTheme(locale);
- case 'ES':
+      case 'ES':
         return _spanishTheme(locale);
- case 'MX':
+      case 'MX':
         return _mexicanTheme(locale);
- case 'BR':
+      case 'BR':
         return _brazilianTheme(locale);
- case 'JP':
+      case 'JP':
         return _japaneseTheme(locale);
- case 'CN':
+      case 'CN':
         return _chineseTheme(locale);
- case 'KR':
+      case 'KR':
         return _koreanTheme(locale);
- case 'IN':
+      case 'IN':
         return _indianTheme(locale);
       default:
         return _defaultTheme(locale);
@@ -52,7 +52,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.plusJakartaSansTextTheme(),
- fontFamily: 'PlusJakartaSans',
+      fontFamily: 'PlusJakartaSans',
     );
   }
 
@@ -64,7 +64,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.interTextTheme(),
- fontFamily: 'Inter',
+      fontFamily: 'Inter',
     );
   }
 
@@ -76,7 +76,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.robotoTextTheme(),
- fontFamily: 'Roboto',
+      fontFamily: 'Roboto',
     );
   }
 
@@ -88,7 +88,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.robotoTextTheme(),
- fontFamily: 'Roboto',
+      fontFamily: 'Roboto',
     );
   }
 
@@ -100,7 +100,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.robotoTextTheme(),
- fontFamily: 'Roboto',
+      fontFamily: 'Roboto',
     );
   }
 
@@ -112,7 +112,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.robotoTextTheme(),
- fontFamily: 'Roboto',
+      fontFamily: 'Roboto',
     );
   }
 
@@ -124,7 +124,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.notoSansJpTextTheme(),
- fontFamily: 'NotoSansJP',
+      fontFamily: 'NotoSansJP',
     );
   }
 
@@ -136,7 +136,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.notoSansScTextTheme(),
- fontFamily: 'NotoSansSC',
+      fontFamily: 'NotoSansSC',
     );
   }
 
@@ -148,7 +148,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.notoSansKrTextTheme(),
- fontFamily: 'NotoSansKR',
+      fontFamily: 'NotoSansKR',
     );
   }
 
@@ -160,7 +160,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.notoSansTextTheme(),
- fontFamily: 'NotoSans',
+      fontFamily: 'NotoSans',
     );
   }
 
@@ -172,7 +172,7 @@ class CulturalTheme {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.robotoTextTheme(),
- fontFamily: 'Roboto',
+      fontFamily: 'Roboto',
     );
   }
 
@@ -186,5 +186,3 @@ class CulturalTheme {
     );
   }
 }
-
-

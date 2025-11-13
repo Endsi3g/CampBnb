@@ -15,7 +15,8 @@ class SupabaseService {
       _client = Supabase.instance.client;
     } catch (e) {
       // Si Supabase n'est pas encore initialisé, utiliser les valeurs de AppConfig
-      if (AppConfig.supabaseUrl.isNotEmpty && AppConfig.supabaseAnonKey.isNotEmpty) {
+      if (AppConfig.supabaseUrl.isNotEmpty &&
+          AppConfig.supabaseAnonKey.isNotEmpty) {
         await Supabase.initialize(
           url: AppConfig.supabaseUrl,
           anonKey: AppConfig.supabaseAnonKey,
@@ -23,7 +24,9 @@ class SupabaseService {
         );
         _client = Supabase.instance.client;
       } else {
-        throw Exception('Supabase not initialized. Ensure SUPABASE_URL and SUPABASE_ANON_KEY are set.');
+        throw Exception(
+          'Supabase not initialized. Ensure SUPABASE_URL and SUPABASE_ANON_KEY are set.',
+        );
       }
     }
   }
@@ -34,7 +37,9 @@ class SupabaseService {
       try {
         _client = Supabase.instance.client;
       } catch (e) {
-        throw Exception('Supabase not initialized. Call SupabaseService.initialize() first.');
+        throw Exception(
+          'Supabase not initialized. Call SupabaseService.initialize() first.',
+        );
       }
     }
     return _client!;
@@ -68,7 +73,8 @@ class SupabaseService {
   }
 
   static User? get currentUser => client.auth.currentUser;
-  static Stream<AuthState> get authStateChanges => client.auth.onAuthStateChange;
+  static Stream<AuthState> get authStateChanges =>
+      client.auth.onAuthStateChange;
 
   // Database
   static PostgrestQueryBuilder from(String table) {
@@ -89,10 +95,7 @@ class SupabaseService {
       await ErrorMonitoringService().captureException(
         e,
         stackTrace: stackTrace,
-        context: {
-          'component': 'supabase_service',
-          'operation': operationName,
-        },
+        context: {'component': 'supabase_service', 'operation': operationName},
       );
       rethrow;
     }
@@ -107,14 +110,16 @@ class SupabaseService {
     required List<int> fileBytes,
     String? contentType,
   }) async {
-    await storage.from(bucket).uploadBinary(
-      path,
-      fileBytes,
-      fileOptions: FileOptions(
- contentType: contentType ?? 'image/jpeg',
-        upsert: true,
-      ),
-    );
+    await storage
+        .from(bucket)
+        .uploadBinary(
+          path,
+          fileBytes,
+          fileOptions: FileOptions(
+            contentType: contentType ?? 'image/jpeg',
+            upsert: true,
+          ),
+        );
     return storage.from(bucket).getPublicUrl(path);
   }
 
@@ -125,4 +130,3 @@ class SupabaseService {
     await storage.from(bucket).remove([path]);
   }
 }
-

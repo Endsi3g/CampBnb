@@ -39,10 +39,7 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
   void initState() {
     super.initState();
     _selectedTypes = List.from(widget.selectedTypes);
-    _priceRange = RangeValues(
-      widget.minPrice ?? 0,
-      widget.maxPrice ?? 500,
-    );
+    _priceRange = RangeValues(widget.minPrice ?? 0, widget.maxPrice ?? 500);
     _selectedRegion = widget.selectedRegion;
   }
 
@@ -74,11 +71,8 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
- 'Filtres',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  'Filtres',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
@@ -97,11 +91,8 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
- 'Type de camping',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  'Type de camping',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 12),
                 Wrap(
@@ -138,11 +129,8 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
- 'Prix / nuit',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  'Prix / nuit',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 12),
                 RangeSlider(
@@ -151,15 +139,12 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
                   max: 500,
                   divisions: 50,
                   labels: RangeLabels(
- '\$${_priceRange.start.toInt()}',
- '\$${_priceRange.end.toInt()}',
+                    '\$${_priceRange.start.toInt()}',
+                    '\$${_priceRange.end.toInt()}',
                   ),
                   onChanged: (values) {
                     setState(() => _priceRange = values);
-                    widget.onPriceChanged(
-                      _priceRange.start,
-                      _priceRange.end,
-                    );
+                    widget.onPriceChanged(_priceRange.start, _priceRange.end);
                   },
                 ),
               ],
@@ -173,23 +158,20 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
- 'Région',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  'Région',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
                   value: _selectedRegion,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
- hintText: 'Toutes les régions',
+                    hintText: 'Toutes les régions',
                   ),
                   items: [
                     const DropdownMenuItem<String>(
                       value: null,
- child: Text('Toutes les régions'),
+                      child: Text('Toutes les régions'),
                     ),
                     ...MapboxConfig.quebecRegions.map((region) {
                       return DropdownMenuItem<String>(
@@ -207,7 +189,7 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
             ),
           ),
 
- // Boutons d'action
+          // Boutons d'action
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -224,7 +206,7 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
                       widget.onPriceChanged(null, null);
                       widget.onRegionChanged(null);
                     },
- child: const Text('Réinitialiser'),
+                    child: const Text('Réinitialiser'),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -235,7 +217,7 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                     ),
- child: const Text('Appliquer'),
+                    child: const Text('Appliquer'),
                   ),
                 ),
               ],
@@ -249,23 +231,21 @@ class _MapFiltersSheetState extends State<MapFiltersSheet> {
   String _getTypeLabel(CampsiteType type) {
     switch (type) {
       case CampsiteType.tent:
- return 'Tente';
+        return 'Tente';
       case CampsiteType.rv:
- return 'VR';
+        return 'VR';
       case CampsiteType.cabin:
- return 'Prêt-à-camper';
+        return 'Prêt-à-camper';
       case CampsiteType.wild:
- return 'Sauvage';
+        return 'Sauvage';
       case CampsiteType.lake:
- return 'Lac';
+        return 'Lac';
       case CampsiteType.forest:
- return 'Forêt';
+        return 'Forêt';
       case CampsiteType.beach:
- return 'Plage';
+        return 'Plage';
       case CampsiteType.mountain:
- return 'Montagne';
+        return 'Montagne';
     }
   }
 }
-
-

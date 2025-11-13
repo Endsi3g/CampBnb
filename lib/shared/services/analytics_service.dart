@@ -26,7 +26,7 @@ class AnalyticsService {
     if (_isInitialized) return;
 
     try {
- // Générer ou récupérer l'ID anonyme
+      // Générer ou récupérer l'ID anonyme
       _anonymousId = await _getOrCreateAnonymousId();
 
       // Récupérer les consentements privacy
@@ -38,9 +38,9 @@ class AnalyticsService {
       }
 
       _isInitialized = true;
- AppConfig.logger.i(' Analytics Service initialisé');
+      AppConfig.logger.i(' Analytics Service initialisé');
     } catch (e) {
- AppConfig.logger.e(' Erreur initialisation Analytics: $e');
+      AppConfig.logger.e(' Erreur initialisation Analytics: $e');
     }
   }
 
@@ -48,16 +48,16 @@ class AnalyticsService {
   Future<String> _getOrCreateAnonymousId() async {
     try {
       final prefs = await SharedPreferences.getInstance();
- String? storedId = prefs.getString('analytics_anonymous_id');
+      String? storedId = prefs.getString('analytics_anonymous_id');
 
       if (storedId == null || storedId.isEmpty) {
         storedId = const Uuid().v4();
- await prefs.setString('analytics_anonymous_id', storedId);
+        await prefs.setString('analytics_anonymous_id', storedId);
       }
 
       return storedId;
     } catch (e) {
- AppConfig.logger.e('Erreur récupération anonymous_id: $e');
+      AppConfig.logger.e('Erreur récupération anonymous_id: $e');
       return const Uuid().v4();
     }
   }
@@ -68,9 +68,9 @@ class AnalyticsService {
       final userId = SupabaseService.currentUser?.id;
       final anonymousId = _anonymousId ?? await _getOrCreateAnonymousId();
 
- final response = await SupabaseService.from('analytics_privacy_consents')
+      final response = await SupabaseService.from('analytics_privacy_consents')
           .select()
- .or('user_id.eq.$userId,anonymous_id.eq.$anonymousId')
+          .or('user_id.eq.$userId,anonymous_id.eq.$anonymousId')
           .maybeSingle();
 
       if (response != null) {
@@ -80,17 +80,17 @@ class AnalyticsService {
         _privacyConsent = AnalyticsPrivacyConsentModel(
           anonymousId: anonymousId,
           userId: userId,
- consentVersion: '1.0',
+          consentVersion: '1.0',
           consentGivenAt: DateTime.now(),
         );
         await _savePrivacyConsent(_privacyConsent!);
       }
     } catch (e) {
- AppConfig.logger.e('Erreur chargement consentement: $e');
+      AppConfig.logger.e('Erreur chargement consentement: $e');
       // Consentement par défaut si erreur
       _privacyConsent = AnalyticsPrivacyConsentModel(
         anonymousId: _anonymousId ?? const Uuid().v4(),
- consentVersion: '1.0',
+        consentVersion: '1.0',
         consentGivenAt: DateTime.now(),
       );
     }
@@ -99,14 +99,15 @@ class AnalyticsService {
   /// Sauvegarder les consentements privacy
   Future<void> _savePrivacyConsent(AnalyticsPrivacyConsentModel consent) async {
     try {
- await SupabaseService.from('analytics_privacy_consents')
-          .upsert(consent.toJson());
+      await SupabaseService.from(
+        'analytics_privacy_consents',
+      ).upsert(consent.toJson());
     } catch (e) {
- AppConfig.logger.e('Erreur sauvegarde consentement: $e');
+      AppConfig.logger.e('Erreur sauvegarde consentement: $e');
     }
   }
 
- /// Vérifier si l'analytics est activé
+  /// Vérifier si l'analytics est activé
   bool get isAnalyticsEnabled {
     return _privacyConsent?.analyticsEnabled ?? true;
   }
@@ -120,7 +121,7 @@ class AnalyticsService {
       final userId = SupabaseService.currentUser?.id;
       final anonymousId = _anonymousId ?? await _getOrCreateAnonymousId();
 
- // Récupérer les infos de l'app
+      // Récupérer les infos de l'app
       final packageInfo = await PackageInfo.fromPlatform();
       final deviceInfo = await _getDeviceInfo();
 
@@ -131,18 +132,22 @@ class AnalyticsService {
         startedAt: DateTime.now(),
         isActive: true,
         appVersion: packageInfo.version,
- platform: Platform.isIOS ? 'ios' : Platform.isAndroid ? 'android' : 'web',
- osVersion: deviceInfo['osVersion'],
- deviceModel: deviceInfo['deviceModel'],
- deviceId: await _hashDeviceId(deviceInfo['deviceId'] ?? ''),
+        platform: Platform.isIOS
+            ? 'ios'
+            : Platform.isAndroid
+            ? 'android'
+            : 'web',
+        osVersion: deviceInfo['osVersion'],
+        deviceModel: deviceInfo['deviceModel'],
+        deviceId: await _hashDeviceId(deviceInfo['deviceId'] ?? ''),
         entryScreen: null, // Sera mis à jour au premier screen_view
       );
 
- await SupabaseService.from('analytics_sessions').insert(session.toJson());
+      await SupabaseService.from('analytics_sessions').insert(session.toJson());
 
- AppConfig.logger.d(' Session démarrée: $_currentSessionId');
+      AppConfig.logger.d(' Session démarrée: $_currentSessionId');
     } catch (e) {
- AppConfig.logger.e('Erreur démarrage session: $e');
+      AppConfig.logger.e('Erreur démarrage session: $e');
     }
   }
 
@@ -151,17 +156,17 @@ class AnalyticsService {
     if (!isAnalyticsEnabled || _currentSessionId == null) return;
 
     try {
- await SupabaseService.from('analytics_sessions')
+      await SupabaseService.from('analytics_sessions')
           .update({
- 'ended_at': DateTime.now().toIso8601String(),
- 'is_active': false,
+            'ended_at': DateTime.now().toIso8601String(),
+            'is_active': false,
           })
- .eq('id', _currentSessionId!);
+          .eq('id', _currentSessionId!);
 
       _currentSessionId = null;
- AppConfig.logger.d(' Session terminée');
+      AppConfig.logger.d(' Session terminée');
     } catch (e) {
- AppConfig.logger.e('Erreur fin session: $e');
+      AppConfig.logger.e('Erreur fin session: $e');
     }
   }
 
@@ -202,21 +207,25 @@ class AnalyticsService {
         previousScreen: previousScreen,
         eventProperties: properties,
         appVersion: packageInfo.version,
- platform: Platform.isIOS ? 'ios' : Platform.isAndroid ? 'android' : 'web',
- osVersion: deviceInfo['osVersion'],
- deviceModel: deviceInfo['deviceModel'],
- deviceId: await _hashDeviceId(deviceInfo['deviceId'] ?? ''),
+        platform: Platform.isIOS
+            ? 'ios'
+            : Platform.isAndroid
+            ? 'android'
+            : 'web',
+        osVersion: deviceInfo['osVersion'],
+        deviceModel: deviceInfo['deviceModel'],
+        deviceId: await _hashDeviceId(deviceInfo['deviceId'] ?? ''),
         loadTimeMs: loadTimeMs,
         responseTimeMs: responseTimeMs,
         createdAt: DateTime.now(),
       );
 
       // Supabase
- await SupabaseService.from('analytics_events').insert(event.toJson());
+      await SupabaseService.from('analytics_events').insert(event.toJson());
 
- AppConfig.logger.d(' Événement: $eventName');
+      AppConfig.logger.d(' Événement: $eventName');
     } catch (e) {
- AppConfig.logger.e('Erreur log événement: $e');
+      AppConfig.logger.e('Erreur log événement: $e');
     }
   }
 
@@ -255,21 +264,23 @@ class AnalyticsService {
         createdAt: DateTime.now(),
       );
 
- await SupabaseService.from('analytics_conversions').insert(conversion.toJson());
+      await SupabaseService.from(
+        'analytics_conversions',
+      ).insert(conversion.toJson());
 
       // Mettre à jour la session avec la conversion
       if (sessionId != null) {
- await SupabaseService.from('analytics_sessions')
+        await SupabaseService.from('analytics_sessions')
             .update({
- 'conversion_type': conversionType,
- 'conversion_value': conversionValue,
+              'conversion_type': conversionType,
+              'conversion_value': conversionValue,
             })
- .eq('id', sessionId);
+            .eq('id', sessionId);
       }
 
- AppConfig.logger.i(' Conversion: $conversionType');
+      AppConfig.logger.i(' Conversion: $conversionType');
     } catch (e) {
- AppConfig.logger.e('Erreur log conversion: $e');
+      AppConfig.logger.e('Erreur log conversion: $e');
     }
   }
 
@@ -297,8 +308,8 @@ class AnalyticsService {
       double? sentimentScore;
       if (comment != null && comment.isNotEmpty) {
         final sentimentAnalysis = await _analyzeSentiment(comment);
- sentiment = sentimentAnalysis['sentiment'];
- sentimentScore = sentimentAnalysis['score'];
+        sentiment = sentimentAnalysis['sentiment'];
+        sentimentScore = sentimentAnalysis['score'];
       }
 
       final packageInfo = await PackageInfo.fromPlatform();
@@ -319,22 +330,29 @@ class AnalyticsService {
         reservationId: reservationId,
         categories: categories,
         appVersion: packageInfo.version,
- platform: Platform.isIOS ? 'ios' : Platform.isAndroid ? 'android' : 'web',
+        platform: Platform.isIOS
+            ? 'ios'
+            : Platform.isAndroid
+            ? 'android'
+            : 'web',
         createdAt: DateTime.now(),
       );
 
- await SupabaseService.from('analytics_satisfaction').insert(satisfaction.toJson());
+      await SupabaseService.from(
+        'analytics_satisfaction',
+      ).insert(satisfaction.toJson());
 
- AppConfig.logger.i(' Satisfaction: $feedbackType');
+      AppConfig.logger.i(' Satisfaction: $feedbackType');
     } catch (e) {
- AppConfig.logger.e('Erreur log satisfaction: $e');
+      AppConfig.logger.e('Erreur log satisfaction: $e');
     }
   }
 
- /// Analyser le sentiment d'un commentaire avec Gemini
+  /// Analyser le sentiment d'un commentaire avec Gemini
   Future<Map<String, dynamic>> _analyzeSentiment(String comment) async {
     try {
- final prompt = '''
+      final prompt =
+          '''
 Analyse le sentiment de ce commentaire utilisateur et retourne uniquement un JSON avec:
 - "sentiment": "positive", "neutral" ou "negative"
 - "score": un nombre entre -1.0 (très négatif) et 1.0 (très positif)
@@ -342,22 +360,24 @@ Analyse le sentiment de ce commentaire utilisateur et retourne uniquement un JSO
 Commentaire: "$comment"
 ''';
 
-      final response = await GeminiService.model.generateContent([Content.text(prompt)]);
- final responseText = response.text ?? '';
- final jsonMatch = RegExp(r'\{[^}]+\}').firstMatch(responseText);
-      
+      final response = await GeminiService.model.generateContent([
+        Content.text(prompt),
+      ]);
+      final responseText = response.text ?? '';
+      final jsonMatch = RegExp(r'\{[^}]+\}').firstMatch(responseText);
+
       if (jsonMatch != null) {
         final json = jsonDecode(jsonMatch.group(0)!);
         return {
- 'sentiment': json['sentiment'] ?? 'neutral',
- 'score': (json['score'] ?? 0.0).toDouble(),
+          'sentiment': json['sentiment'] ?? 'neutral',
+          'score': (json['score'] ?? 0.0).toDouble(),
         };
       }
     } catch (e) {
- AppConfig.logger.e('Erreur analyse sentiment: $e');
+      AppConfig.logger.e('Erreur analyse sentiment: $e');
     }
 
- return {'sentiment': 'neutral', 'score': 0.0};
+    return {'sentiment': 'neutral', 'score': 0.0};
   }
 
   /// Obtenir les infos du device
@@ -365,24 +385,20 @@ Commentaire: "$comment"
     try {
       // Utiliser device_info_plus si disponible, sinon valeurs par défaut
       return {
- 'deviceModel': Platform.isIOS ? 'iOS Device' : 'Android Device',
- 'osVersion': Platform.operatingSystemVersion,
- 'deviceId': _anonymousId,
+        'deviceModel': Platform.isIOS ? 'iOS Device' : 'Android Device',
+        'osVersion': Platform.operatingSystemVersion,
+        'deviceId': _anonymousId,
       };
     } catch (e) {
-      return {
- 'deviceModel': null,
- 'osVersion': null,
- 'deviceId': _anonymousId,
-      };
+      return {'deviceModel': null, 'osVersion': null, 'deviceId': _anonymousId};
     }
   }
 
   /// Hasher un device ID pour privacy
   Future<String> _hashDeviceId(String deviceId) async {
- if (deviceId.isEmpty) return '';
+    if (deviceId.isEmpty) return '';
     // Utiliser un hash simple (en production, utiliser crypto)
- return deviceId.substring(0, 16); // Simplifié pour l'exemple
+    return deviceId.substring(0, 16); // Simplifié pour l'exemple
   }
 
   /// Mettre à jour les consentements privacy
@@ -396,18 +412,21 @@ Commentaire: "$comment"
     try {
       final updatedConsent = _privacyConsent!.copyWith(
         analyticsEnabled: analyticsEnabled ?? _privacyConsent!.analyticsEnabled,
-        personalizationEnabled: personalizationEnabled ?? _privacyConsent!.personalizationEnabled,
-        dataSharingEnabled: dataSharingEnabled ?? _privacyConsent!.dataSharingEnabled,
-        dataRetentionDays: dataRetentionDays ?? _privacyConsent!.dataRetentionDays,
-        anonymizationLevel: anonymizationLevel ?? _privacyConsent!.anonymizationLevel,
+        personalizationEnabled:
+            personalizationEnabled ?? _privacyConsent!.personalizationEnabled,
+        dataSharingEnabled:
+            dataSharingEnabled ?? _privacyConsent!.dataSharingEnabled,
+        dataRetentionDays:
+            dataRetentionDays ?? _privacyConsent!.dataRetentionDays,
+        anonymizationLevel:
+            anonymizationLevel ?? _privacyConsent!.anonymizationLevel,
         consentUpdatedAt: DateTime.now(),
       );
 
       _privacyConsent = updatedConsent;
       await _savePrivacyConsent(updatedConsent);
     } catch (e) {
- AppConfig.logger.e('Erreur mise à jour consentement: $e');
+      AppConfig.logger.e('Erreur mise à jour consentement: $e');
     }
   }
 }
-

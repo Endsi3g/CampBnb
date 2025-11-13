@@ -16,20 +16,16 @@ class LanguageSelector extends ConsumerWidget {
 
     return ExpansionTile(
       leading: const Icon(Icons.language),
- title: Text(appLocalizations?.translate('language') ?? 'Language'),
-      subtitle: Text(
- currentAppLocale?.nativeName ?? 'Français (Canada)',
-      ),
+      title: Text(appLocalizations?.translate('language') ?? 'Language'),
+      subtitle: Text(currentAppLocale?.nativeName ?? 'Français (Canada)'),
       children: [
         ...AppLocale.supportedLocales.map((appLocale) {
-          final isSelected = currentLocale.languageCode == appLocale.languageCode &&
+          final isSelected =
+              currentLocale.languageCode == appLocale.languageCode &&
               currentLocale.countryCode == appLocale.countryCode;
 
           return ListTile(
-            leading: Text(
-              appLocale.flag,
-              style: const TextStyle(fontSize: 24),
-            ),
+            leading: Text(appLocale.flag, style: const TextStyle(fontSize: 24)),
             title: Text(appLocale.nativeName),
             subtitle: Text(appLocale.name),
             trailing: isSelected
@@ -45,4 +41,3 @@ class LanguageSelector extends ConsumerWidget {
     );
   }
 }
-

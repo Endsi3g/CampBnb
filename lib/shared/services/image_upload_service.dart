@@ -52,28 +52,31 @@ class ImageUploadService {
     String? folder,
   }) async {
     try {
- final fileName = '${DateTime.now().millisecondsSinceEpoch}_${imageFile.path.split('/').last}';
- final filePath = folder != null ? '$folder/$fileName' : fileName;
+      final fileName =
+          '${DateTime.now().millisecondsSinceEpoch}_${imageFile.path.split('/').last}';
+      final filePath = folder != null ? '$folder/$fileName' : fileName;
 
       // Lire le fichier
       final bytes = await imageFile.readAsBytes();
 
       // Upload vers Supabase Storage
       final supabase = Supabase.instance.client;
-      await supabase.storage.from(bucket).uploadBinary(
-        filePath,
-        bytes,
-        fileOptions: const FileOptions(
- contentType: 'image/jpeg',
-          upsert: true,
-        ),
-      );
+      await supabase.storage
+          .from(bucket)
+          .uploadBinary(
+            filePath,
+            bytes,
+            fileOptions: const FileOptions(
+              contentType: 'image/jpeg',
+              upsert: true,
+            ),
+          );
 
- // Obtenir l'URL publique
+      // Obtenir l'URL publique
       final publicUrl = supabase.storage.from(bucket).getPublicUrl(filePath);
       return publicUrl;
     } catch (e) {
- throw Exception('Erreur lors de l\'upload de l\'image: $e');
+      throw Exception('Erreur lors de l\'upload de l\'image: $e');
     }
   }
 
@@ -84,7 +87,7 @@ class ImageUploadService {
     String? folder,
   }) async {
     final List<String> urls = [];
-    
+
     for (final imageFile in imageFiles) {
       try {
         final url = await uploadImage(
@@ -111,15 +114,14 @@ class ImageUploadService {
       final supabase = Supabase.instance.client;
       await supabase.storage.from(bucket).remove([filePath]);
     } catch (e) {
- throw Exception('Erreur lors de la suppression de l\'image: $e');
+      throw Exception('Erreur lors de la suppression de l\'image: $e');
     }
   }
 
- /// Compresser une image avant l'upload
+  /// Compresser une image avant l'upload
   static Future<File?> compressImage(File imageFile) async {
     // TODO: Implémenter la compression avec flutter_image_compress si nécessaire
- // Pour l'instant, on retourne le fichier tel quel
+    // Pour l'instant, on retourne le fichier tel quel
     return imageFile;
   }
 }
-

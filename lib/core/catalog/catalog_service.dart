@@ -12,46 +12,49 @@ class CatalogService {
   }) async {
     try {
       // En production, récupérer depuis la base de données
- // Pour l'instant, retourner les catégories par défaut
+      // Pour l'instant, retourner les catégories par défaut
       return _getDefaultCategories(regionCode, languageCode);
     } catch (e) {
- _logger.e('Erreur lors de la récupération des catégories: $e');
+      _logger.e('Erreur lors de la récupération des catégories: $e');
       return [];
     }
   }
 
-  List<CatalogCategory> _getDefaultCategories(String regionCode, String? languageCode) {
- final lang = languageCode ?? 'en';
-    
+  List<CatalogCategory> _getDefaultCategories(
+    String regionCode,
+    String? languageCode,
+  ) {
+    final lang = languageCode ?? 'en';
+
     return [
       CatalogCategory(
- code: 'tent',
- name: _getCategoryName('tent', lang),
- icon: 'tent',
+        code: 'tent',
+        name: _getCategoryName('tent', lang),
+        icon: 'tent',
         isAvailable: true,
       ),
       CatalogCategory(
- code: 'rv',
- name: _getCategoryName('rv', lang),
- icon: 'rv',
+        code: 'rv',
+        name: _getCategoryName('rv', lang),
+        icon: 'rv',
         isAvailable: true,
       ),
       CatalogCategory(
- code: 'cabin',
- name: _getCategoryName('cabin', lang),
- icon: 'cabin',
+        code: 'cabin',
+        name: _getCategoryName('cabin', lang),
+        icon: 'cabin',
         isAvailable: true,
       ),
       CatalogCategory(
- code: 'yurt',
- name: _getCategoryName('yurt', lang),
- icon: 'yurt',
+        code: 'yurt',
+        name: _getCategoryName('yurt', lang),
+        icon: 'yurt',
         isAvailable: true,
       ),
       CatalogCategory(
- code: 'treehouse',
- name: _getCategoryName('treehouse', lang),
- icon: 'treehouse',
+        code: 'treehouse',
+        name: _getCategoryName('treehouse', lang),
+        icon: 'treehouse',
         isAvailable: true,
       ),
     ];
@@ -59,38 +62,38 @@ class CatalogService {
 
   String _getCategoryName(String code, String lang) {
     const names = {
- 'tent': {
- 'en': 'Tent',
- 'fr': 'Tente',
- 'es': 'Tienda',
- 'pt': 'Barraca',
- 'de': 'Zelt',
- 'it': 'Tenda',
- 'ja': 'テント',
- 'zh': '帐篷',
- 'ko': '텐트',
+      'tent': {
+        'en': 'Tent',
+        'fr': 'Tente',
+        'es': 'Tienda',
+        'pt': 'Barraca',
+        'de': 'Zelt',
+        'it': 'Tenda',
+        'ja': 'テント',
+        'zh': '帐篷',
+        'ko': '텐트',
       },
- 'rv': {
- 'en': 'RV',
- 'fr': 'VR',
- 'es': 'Autocaravana',
- 'pt': 'Motorhome',
- 'de': 'Wohnmobil',
- 'it': 'Camper',
- 'ja': 'RV',
- 'zh': '房车',
- 'ko': 'RV',
+      'rv': {
+        'en': 'RV',
+        'fr': 'VR',
+        'es': 'Autocaravana',
+        'pt': 'Motorhome',
+        'de': 'Wohnmobil',
+        'it': 'Camper',
+        'ja': 'RV',
+        'zh': '房车',
+        'ko': 'RV',
       },
- 'cabin': {
- 'en': 'Cabin',
- 'fr': 'Chalet',
- 'es': 'Cabaña',
- 'pt': 'Cabana',
- 'de': 'Hütte',
- 'it': 'Capanna',
- 'ja': 'キャビン',
- 'zh': '小屋',
- 'ko': '오두막',
+      'cabin': {
+        'en': 'Cabin',
+        'fr': 'Chalet',
+        'es': 'Cabaña',
+        'pt': 'Cabana',
+        'de': 'Hütte',
+        'it': 'Capanna',
+        'ja': 'キャビン',
+        'zh': '小屋',
+        'ko': '오두막',
       },
     };
 
@@ -106,7 +109,7 @@ class CatalogService {
       // En production, récupérer depuis la base de données
       return [];
     } catch (e) {
- _logger.e('Erreur lors de la récupération des expériences locales: $e');
+      _logger.e('Erreur lors de la récupération des expériences locales: $e');
       return [];
     }
   }
@@ -118,10 +121,12 @@ class CatalogService {
   }) async {
     try {
       // En production, insérer dans la base de données
- _logger.d('Ajout de la catégorie ${category.code} pour la région $regionCode');
+      _logger.d(
+        'Ajout de la catégorie ${category.code} pour la région $regionCode',
+      );
       return true;
     } catch (e) {
- _logger.e('Erreur lors de l\'ajout de la catégorie: $e');
+      _logger.e('Erreur lors de l\'ajout de la catégorie: $e');
       return false;
     }
   }
@@ -160,5 +165,3 @@ class LocalExperience {
     this.longitude,
   });
 }
-
-

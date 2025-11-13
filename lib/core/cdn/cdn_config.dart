@@ -10,15 +10,16 @@ class CDNConfig {
   // URLs CDN par région - Configuration Cloudflare
   // Remplacez 'campbnb' par votre domaine Cloudflare
   // Pour configurer: Cloudflare Dashboard > Workers & Pages > Create Application
-  
+
   static const Map<String, String> _productionCDNUrls = {
     // Cloudflare Workers/Pages avec routing par région
-    'us-east': 'https://cdn-us-east.campbnb.pages.dev', // ou votre domaine custom
+    'us-east':
+        'https://cdn-us-east.campbnb.pages.dev', // ou votre domaine custom
     'us-west': 'https://cdn-us-west.campbnb.pages.dev',
     'eu-west': 'https://cdn-eu-west.campbnb.pages.dev',
     'asia-pacific': 'https://cdn-asia.campbnb.pages.dev',
     'south-america': 'https://cdn-sa.campbnb.pages.dev',
-    
+
     // Alternative: Utiliser un seul CDN avec routing intelligent
     // 'us-east': 'https://cdn.campbnb.com/us-east',
     // 'us-west': 'https://cdn.campbnb.com/us-west',
@@ -48,34 +49,36 @@ class CDNConfig {
   static String getCdnUrlForRegion(String regionCode) {
     // Mapper les codes de région aux CDN
     String cdnRegion;
-    
+
     if (regionCode.startsWith('US-') || regionCode.startsWith('CA-')) {
       // Utiliser le CDN le plus proche selon la région
-      if (regionCode.contains('CA') || regionCode.contains('NY') || 
-          regionCode.contains('ON') || regionCode.contains('QC')) {
+      if (regionCode.contains('CA') ||
+          regionCode.contains('NY') ||
+          regionCode.contains('ON') ||
+          regionCode.contains('QC')) {
         cdnRegion = 'us-east';
       } else {
         cdnRegion = 'us-west';
       }
-    } else if (regionCode.startsWith('FR-') || 
-               regionCode.startsWith('ES-') || 
-               regionCode.startsWith('DE-') ||
-               regionCode.startsWith('IT-') ||
-               regionCode.startsWith('GB-')) {
+    } else if (regionCode.startsWith('FR-') ||
+        regionCode.startsWith('ES-') ||
+        regionCode.startsWith('DE-') ||
+        regionCode.startsWith('IT-') ||
+        regionCode.startsWith('GB-')) {
       cdnRegion = 'eu-west';
-    } else if (regionCode.startsWith('JP-') || 
-               regionCode.startsWith('CN-') || 
-               regionCode.startsWith('KR-') ||
-               regionCode.startsWith('IN-') ||
-               regionCode.startsWith('AU-') ||
-               regionCode.startsWith('NZ-')) {
+    } else if (regionCode.startsWith('JP-') ||
+        regionCode.startsWith('CN-') ||
+        regionCode.startsWith('KR-') ||
+        regionCode.startsWith('IN-') ||
+        regionCode.startsWith('AU-') ||
+        regionCode.startsWith('NZ-')) {
       cdnRegion = 'asia-pacific';
-    } else if (regionCode.startsWith('MX-') || 
-               regionCode.startsWith('BR-') || 
-               regionCode.startsWith('AR-') ||
-               regionCode.startsWith('CL-') ||
-               regionCode.startsWith('CO-') ||
-               regionCode.startsWith('PE-')) {
+    } else if (regionCode.startsWith('MX-') ||
+        regionCode.startsWith('BR-') ||
+        regionCode.startsWith('AR-') ||
+        regionCode.startsWith('CL-') ||
+        regionCode.startsWith('CO-') ||
+        regionCode.startsWith('PE-')) {
       cdnRegion = 'south-america';
     } else {
       cdnRegion = 'us-east'; // Par défaut
@@ -119,4 +122,3 @@ class CDNConfig {
     }
   }
 }
-

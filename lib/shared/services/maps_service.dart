@@ -76,7 +76,7 @@ class MapsService {
       final placemarks = await placemarkFromCoordinates(latitude, longitude);
       if (placemarks.isNotEmpty) {
         final place = placemarks.first;
- return '${place.street}, ${place.locality}, ${place.administrativeArea}';
+        return '${place.street}, ${place.locality}, ${place.administrativeArea}';
       }
       return null;
     } catch (e) {
@@ -94,4 +94,3 @@ class MapsService {
     return Geolocator.distanceBetween(lat1, lon1, lat2, lon2) / 1000;
   }
 }
-

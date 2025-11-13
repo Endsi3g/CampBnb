@@ -17,20 +17,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingPage> _pages = [
     OnboardingPage(
- title: 'Découvrez',
- description: 'Explorez les plus beaux campings du Québec',
+      title: 'Découvrez',
+      description: 'Explorez les plus beaux campings du Québec',
       icon: Icons.explore,
       color: AppColors.primary,
     ),
     OnboardingPage(
- title: 'Réservez facilement',
- description: 'Trouvez et réservez votre camping en quelques clics',
+      title: 'Réservez facilement',
+      description: 'Trouvez et réservez votre camping en quelques clics',
       icon: Icons.calendar_today,
       color: AppColors.secondary,
     ),
     OnboardingPage(
- title: 'Devenez hôte',
- description: 'Partagez votre espace et gagnez de l\'argent',
+      title: 'Devenez hôte',
+      description: 'Partagez votre espace et gagnez de l\'argent',
       icon: Icons.home,
       color: AppColors.accent,
     ),
@@ -49,7 +49,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
- context.go('/welcome');
+      context.go('/welcome');
     }
   }
 
@@ -87,7 +87,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: CustomButton(
- text: _currentPage == _pages.length - 1 ? 'Commencer' : 'Suivant',
+                text: _currentPage == _pages.length - 1
+                    ? 'Commencer'
+                    : 'Suivant',
                 onPressed: _nextPage,
               ),
             ),
@@ -104,17 +106,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            page.icon,
-            size: 120,
-            color: page.color,
-          ),
+          Icon(page.icon, size: 120, color: page.color),
           const SizedBox(height: 48),
           Text(
             page.title,
-            style: AppTextStyles.h1.copyWith(
-              color: page.color,
-            ),
+            style: AppTextStyles.h1.copyWith(color: page.color),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -156,4 +152,3 @@ class OnboardingPage {
     required this.color,
   });
 }
-

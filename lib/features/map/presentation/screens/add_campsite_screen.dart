@@ -31,7 +31,7 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
-  
+
   double? _selectedLatitude;
   double? _selectedLongitude;
   String? _selectedAddress;
@@ -59,14 +59,14 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
 
   Future<void> _getAddressFromCoordinates(double lat, double lon) async {
     setState(() => _isSearchingAddress = true);
-    
+
     try {
       final mapboxService = ref.read(mapboxServiceProvider);
       final result = await mapboxService.reverseGeocode(lat, lon);
-      
+
       if (result != null && mounted) {
         setState(() {
- _selectedAddress = result['place_name'] as String?;
+          _selectedAddress = result['place_name'] as String?;
           _isSearchingAddress = false;
         });
       } else {
@@ -93,17 +93,17 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
     try {
       final mapboxService = ref.read(mapboxServiceProvider);
       final result = await mapboxService.geocode(query);
-      
+
       if (result != null && mounted) {
- final coordinates = result['geometry']?['coordinates'] as List?;
+        final coordinates = result['geometry']?['coordinates'] as List?;
         if (coordinates != null && coordinates.length >= 2) {
           final lon = (coordinates[0] as num).toDouble();
           final lat = (coordinates[1] as num).toDouble();
-          
+
           setState(() {
             _selectedLatitude = lat;
             _selectedLongitude = lon;
- _selectedAddress = result['place_name'] as String?;
+            _selectedAddress = result['place_name'] as String?;
             _isSearchingAddress = false;
           });
         } else {
@@ -125,7 +125,7 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
     if (_selectedLatitude == null || _selectedLongitude == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
- content: Text('Veuillez sélectionner un emplacement sur la carte'),
+          content: Text('Veuillez sélectionner un emplacement sur la carte'),
         ),
       );
       return;
@@ -135,9 +135,9 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
 
     try {
       final repository = ref.read(mapRepositoryProvider);
-      
- // Récupère l'ID de l'utilisateur actuel (à adapter selon votre système d'auth)
- final userId = 'current_user_id'; // TODO: Récupérer depuis l'auth
+
+      // Récupère l'ID de l'utilisateur actuel (à adapter selon votre système d'auth)
+      final userId = 'current_user_id'; // TODO: Récupérer depuis l'auth
 
       final campsite = CampsiteLocation(
         id: const Uuid().v4(),
@@ -162,7 +162,7 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
- content: Text('Emplacement créé avec succès !'),
+            content: Text('Emplacement créé avec succès !'),
             backgroundColor: AppColors.success,
           ),
         );
@@ -172,7 +172,7 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
- content: Text('Erreur lors de la création: $e'),
+            content: Text('Erreur lors de la création: $e'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -188,7 +188,7 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
- title: const Text('Ajouter un emplacement'),
+        title: const Text('Ajouter un emplacement'),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
@@ -196,7 +196,7 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
         key: _formKey,
         child: Column(
           children: [
- // Carte pour sélectionner l'emplacement
+            // Carte pour sélectionner l'emplacement
             Expanded(
               flex: 2,
               child: widget.allowLocationSelection
@@ -228,13 +228,13 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
                     TextFormField(
                       controller: _nameController,
                       decoration: const InputDecoration(
- labelText: 'Nom de l\'emplacement *',
- hintText: 'Ex: Camping du Lac Vert',
+                        labelText: 'Nom de l\'emplacement *',
+                        hintText: 'Ex: Camping du Lac Vert',
                         border: OutlineInputBorder(),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
- return 'Le nom est requis';
+                          return 'Le nom est requis';
                         }
                         return null;
                       },
@@ -245,7 +245,7 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
                     DropdownButtonFormField<CampsiteType>(
                       value: _selectedType,
                       decoration: const InputDecoration(
- labelText: 'Type d\'emplacement *',
+                        labelText: 'Type d\'emplacement *',
                         border: OutlineInputBorder(),
                       ),
                       items: CampsiteType.values.map((type) {
@@ -266,8 +266,8 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
                     TextFormField(
                       controller: _descriptionController,
                       decoration: const InputDecoration(
- labelText: 'Description',
- hintText: 'Décrivez votre emplacement...',
+                        labelText: 'Description',
+                        hintText: 'Décrivez votre emplacement...',
                         border: OutlineInputBorder(),
                       ),
                       maxLines: 3,
@@ -278,17 +278,17 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
                     TextFormField(
                       controller: _priceController,
                       decoration: const InputDecoration(
- labelText: 'Prix par nuit (CAD)',
- hintText: 'Ex: 45.00',
+                        labelText: 'Prix par nuit (CAD)',
+                        hintText: 'Ex: 45.00',
                         border: OutlineInputBorder(),
- prefixText: '\$ ',
+                        prefixText: '\$ ',
                       ),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value != null && value.trim().isNotEmpty) {
                           final price = double.tryParse(value.trim());
                           if (price == null || price < 0) {
- return 'Prix invalide';
+                            return 'Prix invalide';
                           }
                         }
                         return null;
@@ -306,7 +306,10 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
                         ),
                         child: Row(
                           children: [
-                            const Icon(Icons.location_on, color: AppColors.primary),
+                            const Icon(
+                              Icons.location_on,
+                              color: AppColors.primary,
+                            ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
@@ -334,12 +337,17 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
                               width: 20,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
                               ),
                             )
                           : const Text(
- 'Créer l\'emplacement',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              'Créer l\'emplacement',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                     ),
                   ],
@@ -355,22 +363,21 @@ class _AddCampsiteScreenState extends ConsumerState<AddCampsiteScreen> {
   String _getTypeLabel(CampsiteType type) {
     switch (type) {
       case CampsiteType.tent:
- return 'Tente';
+        return 'Tente';
       case CampsiteType.rv:
- return 'VR (Véhicule récréatif)';
+        return 'VR (Véhicule récréatif)';
       case CampsiteType.cabin:
- return 'Chalet / Prêt-à-camper';
+        return 'Chalet / Prêt-à-camper';
       case CampsiteType.wild:
- return 'Camping sauvage';
+        return 'Camping sauvage';
       case CampsiteType.lake:
- return 'Emplacement au bord d\'un lac';
+        return 'Emplacement au bord d\'un lac';
       case CampsiteType.forest:
- return 'Emplacement en forêt';
+        return 'Emplacement en forêt';
       case CampsiteType.beach:
- return 'Emplacement sur la plage';
+        return 'Emplacement sur la plage';
       case CampsiteType.mountain:
- return 'Emplacement en montagne';
+        return 'Emplacement en montagne';
     }
   }
 }
-

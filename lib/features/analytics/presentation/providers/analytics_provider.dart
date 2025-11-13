@@ -13,7 +13,9 @@ AnalyticsService analyticsService(AnalyticsServiceRef ref) {
 
 /// Provider pour le service d'analyse comportementale
 @riverpod
-BehaviorAnalysisService behaviorAnalysisService(BehaviorAnalysisServiceRef ref) {
+BehaviorAnalysisService behaviorAnalysisService(
+  BehaviorAnalysisServiceRef ref,
+) {
   return BehaviorAnalysisService.instance;
 }
 
@@ -21,13 +23,15 @@ BehaviorAnalysisService behaviorAnalysisService(BehaviorAnalysisServiceRef ref) 
 @riverpod
 Future<String?> currentSessionId(CurrentSessionIdRef ref) async {
   final analytics = ref.watch(analyticsServiceProvider);
- // Retourner l'ID de session actuel (simplifié)
+  // Retourner l'ID de session actuel (simplifié)
   return null; // Sera géré par le service
 }
 
 /// Provider pour les consentements privacy
 @riverpod
-Future<AnalyticsPrivacyConsentModel?> privacyConsent(PrivacyConsentRef ref) async {
+Future<AnalyticsPrivacyConsentModel?> privacyConsent(
+  PrivacyConsentRef ref,
+) async {
   final analytics = ref.watch(analyticsServiceProvider);
   // Le consentement est géré en interne par le service
   return null;
@@ -42,22 +46,19 @@ Future<AnalyticsUserBehaviorModel?> userBehaviorAnalysis(
   required String analysisPeriod,
 }) async {
   final behaviorService = ref.watch(behaviorAnalysisServiceProvider);
-  
+
   try {
     final analysis = await behaviorService.analyzeUserBehavior(
       userIdOrAnonymousId: userIdOrAnonymousId,
       analysisDate: analysisDate,
       analysisPeriod: analysisPeriod,
     );
-    
- // Sauvegarder l'analyse
+
+    // Sauvegarder l'analyse
     await behaviorService.saveBehaviorAnalysis(analysis);
-    
+
     return analysis;
   } catch (e) {
     return null;
   }
 }
-
-
-

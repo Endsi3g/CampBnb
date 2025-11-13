@@ -12,7 +12,7 @@ final geminiServiceProvider = Provider<GeminiService>((ref) {
 final geminiStatsProvider = StreamProvider<GeminiApiStats>((ref) async* {
   final service = ref.watch(geminiServiceProvider);
   yield service.getStats();
-  
+
   // Émettre des mises à jour périodiques
   await for (final _ in Stream.periodic(const Duration(seconds: 5))) {
     yield service.getStats();
@@ -20,18 +20,19 @@ final geminiStatsProvider = StreamProvider<GeminiApiStats>((ref) async* {
 });
 
 /// Provider pour les suggestions de destinations
-final destinationSuggestionsProvider = FutureProvider.family<
-    List<DestinationSuggestion>, DestinationSuggestionParams>(
-  (ref, params) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.suggestDestinations(
-      region: params.region,
-      month: params.month,
-      preferences: params.preferences,
-      groupType: params.groupType,
-    );
-  },
-);
+final destinationSuggestionsProvider =
+    FutureProvider.family<
+      List<DestinationSuggestion>,
+      DestinationSuggestionParams
+    >((ref, params) async {
+      final service = ref.watch(geminiServiceProvider);
+      return await service.suggestDestinations(
+        region: params.region,
+        month: params.month,
+        preferences: params.preferences,
+        groupType: params.groupType,
+      );
+    });
 
 /// Paramètres pour les suggestions de destinations
 class DestinationSuggestionParams {
@@ -67,26 +68,25 @@ class DestinationSuggestionParams {
 
 /// Provider pour l'analyse de recherche
 final searchAnalysisProvider =
-    FutureProvider.family<Map<String, dynamic>, String>(
-  (ref, query) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.analyzeSearch(query);
-  },
-);
+    FutureProvider.family<Map<String, dynamic>, String>((ref, query) async {
+      final service = ref.watch(geminiServiceProvider);
+      return await service.analyzeSearch(query);
+    });
 
 /// Provider pour la génération d'itinéraire
 final itineraryProvider =
-    FutureProvider.family<GeneratedItinerary, ItineraryParams>(
-  (ref, params) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.generateItinerary(
-      destination: params.destination,
-      days: params.days,
-      preferences: params.preferences,
-      budget: params.budget,
-    );
-  },
-);
+    FutureProvider.family<GeneratedItinerary, ItineraryParams>((
+      ref,
+      params,
+    ) async {
+      final service = ref.watch(geminiServiceProvider);
+      return await service.generateItinerary(
+        destination: params.destination,
+        days: params.days,
+        preferences: params.preferences,
+        budget: params.budget,
+      );
+    });
 
 /// Paramètres pour la génération d'itinéraire
 class ItineraryParams {
@@ -121,15 +121,13 @@ class ItineraryParams {
 }
 
 /// Provider pour les réponses FAQ
-final faqResponseProvider = FutureProvider.family<String, FAQParams>(
-  (ref, params) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.answerFAQ(
-      params.question,
-      context: params.context,
-    );
-  },
-);
+final faqResponseProvider = FutureProvider.family<String, FAQParams>((
+  ref,
+  params,
+) async {
+  final service = ref.watch(geminiServiceProvider);
+  return await service.answerFAQ(params.question, context: params.context);
+});
 
 /// Paramètres pour FAQ
 class FAQParams {
@@ -152,33 +150,29 @@ class FAQParams {
 
 /// Provider pour le résumé d'avis
 final reviewSummaryProvider =
-    FutureProvider.family<ReviewSummary, List<String>>(
-  (ref, reviews) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.summarizeReviews(reviews);
-  },
-);
+    FutureProvider.family<ReviewSummary, List<String>>((ref, reviews) async {
+      final service = ref.watch(geminiServiceProvider);
+      return await service.summarizeReviews(reviews);
+    });
 
 /// Provider pour la traduction
-final translationProvider = FutureProvider.family<String, TranslationParams>(
-  (ref, params) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.translate(
-      params.text,
-      targetLanguage: params.targetLanguage,
-    );
-  },
-);
+final translationProvider = FutureProvider.family<String, TranslationParams>((
+  ref,
+  params,
+) async {
+  final service = ref.watch(geminiServiceProvider);
+  return await service.translate(
+    params.text,
+    targetLanguage: params.targetLanguage,
+  );
+});
 
 /// Paramètres pour la traduction
 class TranslationParams {
   final String text;
   final String targetLanguage;
 
-  TranslationParams({
-    required this.text,
-    required this.targetLanguage,
-  });
+  TranslationParams({required this.text, required this.targetLanguage});
 
   @override
   bool operator ==(Object other) =>
@@ -194,34 +188,33 @@ class TranslationParams {
 
 /// Provider pour l'analyse d'image
 final imageAnalysisProvider =
-    FutureProvider.family<Map<String, dynamic>, String>(
-  (ref, imageDescription) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.analyzeImage(imageDescription);
-  },
-);
+    FutureProvider.family<Map<String, dynamic>, String>((
+      ref,
+      imageDescription,
+    ) async {
+      final service = ref.watch(geminiServiceProvider);
+      return await service.analyzeImage(imageDescription);
+    });
 
 /// Provider pour les expériences locales
 final localExperiencesProvider =
-    FutureProvider.family<List<LocalExperience>, LocalExperienceParams>(
-  (ref, params) async {
-    final service = ref.watch(geminiServiceProvider);
-    return await service.suggestLocalExperiences(
-      location: params.location,
-      preferences: params.preferences,
-    );
-  },
-);
+    FutureProvider.family<List<LocalExperience>, LocalExperienceParams>((
+      ref,
+      params,
+    ) async {
+      final service = ref.watch(geminiServiceProvider);
+      return await service.suggestLocalExperiences(
+        location: params.location,
+        preferences: params.preferences,
+      );
+    });
 
 /// Paramètres pour les expériences locales
 class LocalExperienceParams {
   final String location;
   final String? preferences;
 
-  LocalExperienceParams({
-    required this.location,
-    this.preferences,
-  });
+  LocalExperienceParams({required this.location, this.preferences});
 
   @override
   bool operator ==(Object other) =>
@@ -246,11 +239,7 @@ class ChatState {
   final bool isLoading;
   final String? error;
 
-  ChatState({
-    this.messages = const [],
-    this.isLoading = false,
-    this.error,
-  });
+  ChatState({this.messages = const [], this.isLoading = false, this.error});
 
   ChatState copyWith({
     List<ChatMessage>? messages,
@@ -307,10 +296,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
         isLoading: false,
       );
     } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        error: e.toString(),
-      );
+      state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
@@ -319,10 +305,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
     _userContext = context;
   }
 
- /// Efface l'historique du chat
+  /// Efface l'historique du chat
   void clearHistory() {
     state = ChatState();
   }
 }
-
-

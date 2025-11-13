@@ -30,8 +30,7 @@ class AddLocationButton extends StatelessWidget {
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       icon: const Icon(Icons.add_location_alt),
- label: const Text('Ajouter un emplacement'),
+      label: const Text('Ajouter un emplacement'),
     );
   }
 }
-

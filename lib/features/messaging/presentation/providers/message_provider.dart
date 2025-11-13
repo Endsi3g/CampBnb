@@ -44,7 +44,7 @@ Future<Map<String, dynamic>> conversationById(
 ) async {
   final repository = ref.watch(messageRepositoryProvider);
   final currentUserId = SupabaseService.client.auth.currentUser?.id ?? '';
-  
+
   if (currentUserId.isEmpty) {
     return {
       'id': conversationId,
@@ -52,29 +52,32 @@ Future<Map<String, dynamic>> conversationById(
       'recipientName': 'Utilisateur',
     };
   }
-  
+
   final conversations = await repository.getConversations(currentUserId);
-  
+
   final conversation = conversations.firstWhere(
     (c) => c.id == conversationId,
-    orElse: () => conversations.isNotEmpty ? conversations.first : ConversationModel(
-      id: conversationId,
-      participant1Id: currentUserId,
-      participant2Id: '',
-    ),
+    orElse: () => conversations.isNotEmpty
+        ? conversations.first
+        : ConversationModel(
+            id: conversationId,
+            participant1Id: currentUserId,
+            participant2Id: '',
+          ),
   );
-  
+
   // Récupérer le nom du destinataire depuis le profil
   final recipientId = conversation.participant1Id == currentUserId
       ? conversation.participant2Id
       : conversation.participant1Id;
-  
+
   // TODO: Récupérer le nom depuis le profil utilisateur via Supabase
   // Pour l'instant, retourner un nom par défaut
   return {
     'id': conversation.id,
     'recipientId': recipientId,
-    'recipientName': 'Utilisateur', // À remplacer par le vrai nom depuis le profil
+    'recipientName':
+        'Utilisateur', // À remplacer par le vrai nom depuis le profil
   };
 }
 
@@ -98,11 +101,11 @@ class MessageNotifier extends _$MessageNotifier {
       receiverId: receiverId,
       content: content,
     );
-    
+
     // Invalider les providers pour rafraîchir
     ref.invalidate(messagesProvider(conversationId));
     ref.invalidate(conversationsProvider);
-    
+
     return message;
   }
 
@@ -110,10 +113,9 @@ class MessageNotifier extends _$MessageNotifier {
   Future<void> markAsRead(String conversationId) async {
     final repository = ref.read(messageRepositoryProvider);
     await repository.markAsRead(conversationId);
-    
+
     // Invalider les providers
     ref.invalidate(conversationsProvider);
     ref.invalidate(messagesProvider(conversationId));
   }
 }
-

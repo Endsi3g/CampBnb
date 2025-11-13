@@ -11,16 +11,11 @@ class AIChatScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
- title: const Text('Assistant IA'),
-        elevation: 0,
-      ),
+      appBar: AppBar(title: const Text('Assistant IA'), elevation: 0),
       body: GeminiChatWidget(
- title: 'Assistant Campbnb',
+        title: 'Assistant Campbnb',
         userContext: userContext,
       ),
     );
   }
 }
-
-

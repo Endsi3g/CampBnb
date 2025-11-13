@@ -19,12 +19,12 @@ class MapClusterManager {
     Function(CampsiteLocation)? onCampsiteTap,
   }) async {
     try {
- // Crée les managers d'annotations
- // Note: L'API peut varier selon la version de mapbox_maps_flutter
+      // Crée les managers d'annotations
+      // Note: L'API peut varier selon la version de mapbox_maps_flutter
       // _pointManager = await mapboxMap.annotations.createPointAnnotationManager();
       // _clusterManager = await mapboxMap.annotations.createCircleAnnotationManager();
-      
- _logger.w('Cluster manager - API Mapbox à adapter selon la version');
+
+      _logger.w('Cluster manager - API Mapbox à adapter selon la version');
 
       // Nettoie les anciens marqueurs
       await _clearMarkers();
@@ -34,7 +34,7 @@ class MapClusterManager {
 
       // Affiche les clusters ou les marqueurs individuels selon le zoom
       final currentZoom = await _getCurrentZoom(mapboxMap);
-      
+
       if (currentZoom >= MapboxConfig.clusterMinZoom) {
         // Affiche les marqueurs individuels
         for (final campsite in campsites) {
@@ -55,7 +55,7 @@ class MapClusterManager {
         }
       }
     } catch (e) {
- _logger.e('Erreur lors du chargement des clusters: $e');
+      _logger.e('Erreur lors du chargement des clusters: $e');
     }
   }
 
@@ -85,31 +85,37 @@ class MapClusterManager {
       if (nearby.isNotEmpty) {
         // Crée un cluster
         final allIds = [campsite.id, ...nearby.map((c) => c.id)];
-        final avgLat = (campsite.latitude +
+        final avgLat =
+            (campsite.latitude +
                 nearby.map((c) => c.latitude).reduce((a, b) => a + b)) /
             (nearby.length + 1);
-        final avgLon = (campsite.longitude +
+        final avgLon =
+            (campsite.longitude +
                 nearby.map((c) => c.longitude).reduce((a, b) => a + b)) /
             (nearby.length + 1);
 
-        clusters.add(CampsiteCluster(
- id: 'cluster_${campsite.id}',
-          latitude: avgLat,
-          longitude: avgLon,
-          pointCount: allIds.length,
-          campsiteIds: allIds,
-        ));
+        clusters.add(
+          CampsiteCluster(
+            id: 'cluster_${campsite.id}',
+            latitude: avgLat,
+            longitude: avgLon,
+            pointCount: allIds.length,
+            campsiteIds: allIds,
+          ),
+        );
 
         processed.addAll(allIds);
       } else {
         // Marqueur individuel
-        clusters.add(CampsiteCluster(
- id: 'single_${campsite.id}',
-          latitude: campsite.latitude,
-          longitude: campsite.longitude,
-          pointCount: 1,
-          campsiteIds: [campsite.id],
-        ));
+        clusters.add(
+          CampsiteCluster(
+            id: 'single_${campsite.id}',
+            latitude: campsite.latitude,
+            longitude: campsite.longitude,
+            pointCount: 1,
+            campsiteIds: [campsite.id],
+          ),
+        );
         processed.add(campsite.id);
       }
     }
@@ -132,7 +138,7 @@ class MapClusterManager {
       await marker.addToMap(_pointManager!);
       _markers[campsite.id] = marker;
     } catch (e) {
- _logger.e('Erreur lors de l\'ajout du marqueur: $e');
+      _logger.e('Erreur lors de l\'ajout du marqueur: $e');
     }
   }
 
@@ -146,10 +152,7 @@ class MapClusterManager {
     try {
       final circleOptions = CircleAnnotationOptions(
         geometry: Point(
-          coordinates: Position(
-            cluster.longitude,
-            cluster.latitude,
-          ),
+          coordinates: Position(cluster.longitude, cluster.latitude),
         ),
         circleRadius: 20.0 + (cluster.pointCount * 2.0),
         circleColor: 0xFF2D572C, // AppColors.primary
@@ -166,7 +169,7 @@ class MapClusterManager {
         }
       });
     } catch (e) {
- _logger.e('Erreur lors de l\'ajout du cluster: $e');
+      _logger.e('Erreur lors de l\'ajout du cluster: $e');
     }
   }
 
@@ -181,17 +184,23 @@ class MapClusterManager {
       }
       _markers.clear();
     } catch (e) {
- _logger.e('Erreur lors du nettoyage des marqueurs: $e');
+      _logger.e('Erreur lors du nettoyage des marqueurs: $e');
     }
   }
 
   /// Calcule la distance entre deux points en mètres
-  double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  double _calculateDistance(
+    double lat1,
+    double lon1,
+    double lat2,
+    double lon2,
+  ) {
     const double earthRadius = 6371000; // Rayon de la Terre en mètres
     final dLat = _toRadians(lat2 - lat1);
     final dLon = _toRadians(lon2 - lon1);
 
-    final a = (dLat / 2).sin() * (dLat / 2).sin() +
+    final a =
+        (dLat / 2).sin() * (dLat / 2).sin() +
         _toRadians(lat1).cos() *
             _toRadians(lat2).cos() *
             (dLon / 2).sin() *
@@ -218,4 +227,3 @@ class MapClusterManager {
     _clusterManager = null;
   }
 }
-

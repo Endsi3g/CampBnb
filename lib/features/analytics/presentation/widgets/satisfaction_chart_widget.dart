@@ -15,7 +15,8 @@ class SatisfactionChartWidget extends StatefulWidget {
   });
 
   @override
-  State<SatisfactionChartWidget> createState() => _SatisfactionChartWidgetState();
+  State<SatisfactionChartWidget> createState() =>
+      _SatisfactionChartWidgetState();
 }
 
 class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
@@ -40,21 +41,21 @@ class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
       final startDate = _getStartDate();
       final endDate = widget.date.add(const Duration(days: 1));
 
- final response = await SupabaseService.from('analytics_satisfaction')
- .select('nps_score, csat_score, rating, sentiment')
- .gte('created_at', startDate.toIso8601String())
- .lt('created_at', endDate.toIso8601String());
+      final response = await SupabaseService.from('analytics_satisfaction')
+          .select('nps_score, csat_score, rating, sentiment')
+          .gte('created_at', startDate.toIso8601String())
+          .lt('created_at', endDate.toIso8601String());
 
       final data = response as List;
 
       if (data.isEmpty) {
         setState(() {
           _satisfactionData = {
- 'nps': 0.0,
- 'csat': 0.0,
- 'average_rating': 0.0,
- 'positive_sentiment': 0.0,
- 'total_feedback': 0,
+            'nps': 0.0,
+            'csat': 0.0,
+            'average_rating': 0.0,
+            'positive_sentiment': 0.0,
+            'total_feedback': 0,
           };
         });
         return;
@@ -69,40 +70,42 @@ class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
       int ratingCount = 0;
 
       for (final item in data) {
- if (item['nps_score'] != null) {
- npsSum += (item['nps_score'] as num).toDouble();
+        if (item['nps_score'] != null) {
+          npsSum += (item['nps_score'] as num).toDouble();
           npsCount++;
         }
- if (item['csat_score'] != null) {
- csatSum += (item['csat_score'] as num).toDouble();
+        if (item['csat_score'] != null) {
+          csatSum += (item['csat_score'] as num).toDouble();
           csatCount++;
         }
- if (item['rating'] != null) {
- ratingSum += (item['rating'] as num).toDouble();
+        if (item['rating'] != null) {
+          ratingSum += (item['rating'] as num).toDouble();
           ratingCount++;
         }
- if (item['sentiment'] == 'positive') {
+        if (item['sentiment'] == 'positive') {
           positiveCount++;
         }
       }
 
       setState(() {
         _satisfactionData = {
- 'nps': npsCount > 0 ? npsSum / npsCount : 0.0,
- 'csat': csatCount > 0 ? csatSum / csatCount : 0.0,
- 'average_rating': ratingCount > 0 ? ratingSum / ratingCount : 0.0,
- 'positive_sentiment': data.length > 0 ? (positiveCount / data.length * 100) : 0.0,
- 'total_feedback': data.length,
+          'nps': npsCount > 0 ? npsSum / npsCount : 0.0,
+          'csat': csatCount > 0 ? csatSum / csatCount : 0.0,
+          'average_rating': ratingCount > 0 ? ratingSum / ratingCount : 0.0,
+          'positive_sentiment': data.length > 0
+              ? (positiveCount / data.length * 100)
+              : 0.0,
+          'total_feedback': data.length,
         };
       });
     } catch (e) {
       setState(() {
         _satisfactionData = {
- 'nps': 0.0,
- 'csat': 0.0,
- 'average_rating': 0.0,
- 'positive_sentiment': 0.0,
- 'total_feedback': 0,
+          'nps': 0.0,
+          'csat': 0.0,
+          'average_rating': 0.0,
+          'positive_sentiment': 0.0,
+          'total_feedback': 0,
         };
       });
     }
@@ -110,11 +113,11 @@ class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
 
   DateTime _getStartDate() {
     switch (widget.period) {
- case 'daily':
+      case 'daily':
         return DateTime(widget.date.year, widget.date.month, widget.date.day);
- case 'weekly':
+      case 'weekly':
         return widget.date.subtract(Duration(days: widget.date.weekday - 1));
- case 'monthly':
+      case 'monthly':
         return DateTime(widget.date.year, widget.date.month, 1);
       default:
         return widget.date;
@@ -134,36 +137,31 @@ class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
- '${_satisfactionData!['total_feedback']} retours collectés',
+              '${_satisfactionData!['total_feedback']} retours collectés',
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondaryLight,
               ),
             ),
             const SizedBox(height: 24),
-            _buildMetricRow(
- 'NPS',
- _satisfactionData!['nps'],
-              10,
-              Colors.blue,
-            ),
+            _buildMetricRow('NPS', _satisfactionData!['nps'], 10, Colors.blue),
             const SizedBox(height: 16),
             _buildMetricRow(
- 'CSAT',
- _satisfactionData!['csat'],
+              'CSAT',
+              _satisfactionData!['csat'],
               5,
               Colors.green,
             ),
             const SizedBox(height: 16),
             _buildMetricRow(
- 'Note moyenne',
- _satisfactionData!['average_rating'],
+              'Note moyenne',
+              _satisfactionData!['average_rating'],
               5,
               Colors.orange,
             ),
             const SizedBox(height: 16),
             _buildMetricRow(
- 'Sentiment positif',
- _satisfactionData!['positive_sentiment'],
+              'Sentiment positif',
+              _satisfactionData!['positive_sentiment'],
               100,
               Colors.purple,
               isPercentage: true,
@@ -174,7 +172,13 @@ class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
     );
   }
 
-  Widget _buildMetricRow(String label, double value, double maxValue, Color color, {bool isPercentage = false}) {
+  Widget _buildMetricRow(
+    String label,
+    double value,
+    double maxValue,
+    Color color, {
+    bool isPercentage = false,
+  }) {
     final percentage = maxValue > 0 ? (value / maxValue * 100) : 0.0;
 
     return Column(
@@ -191,7 +195,7 @@ class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
             ),
             Text(
               isPercentage
- ? '${value.toStringAsFixed(1)}%'
+                  ? '${value.toStringAsFixed(1)}%'
                   : value.toStringAsFixed(1),
               style: AppTextStyles.bodyLarge.copyWith(
                 color: color,
@@ -214,4 +218,3 @@ class _SatisfactionChartWidgetState extends State<SatisfactionChartWidget> {
     );
   }
 }
-

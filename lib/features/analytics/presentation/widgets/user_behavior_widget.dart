@@ -42,10 +42,10 @@ class _UserBehaviorWidgetState extends State<UserBehaviorWidget> {
       final endDate = widget.date.add(const Duration(days: 1));
 
       // Récupérer les comportements analysés
- final response = await SupabaseService.from('analytics_user_behaviors')
+      final response = await SupabaseService.from('analytics_user_behaviors')
           .select()
- .eq('analysis_date', startDate.toIso8601String().split('T')[0])
- .eq('analysis_period', widget.period)
+          .eq('analysis_date', startDate.toIso8601String().split('T')[0])
+          .eq('analysis_period', widget.period)
           .maybeSingle();
 
       if (response != null) {
@@ -55,20 +55,20 @@ class _UserBehaviorWidgetState extends State<UserBehaviorWidget> {
       } else {
         setState(() {
           _behaviorData = {
- 'engagement_score': 0.0,
- 'personalization_score': 0.0,
- 'retention_probability': 0.0,
- 'ai_insights': 'Analyse en cours...',
+            'engagement_score': 0.0,
+            'personalization_score': 0.0,
+            'retention_probability': 0.0,
+            'ai_insights': 'Analyse en cours...',
           };
         });
       }
     } catch (e) {
       setState(() {
         _behaviorData = {
- 'engagement_score': 0.0,
- 'personalization_score': 0.0,
- 'retention_probability': 0.0,
- 'ai_insights': 'Erreur lors du chargement',
+          'engagement_score': 0.0,
+          'personalization_score': 0.0,
+          'retention_probability': 0.0,
+          'ai_insights': 'Erreur lors du chargement',
         };
       });
     }
@@ -76,11 +76,11 @@ class _UserBehaviorWidgetState extends State<UserBehaviorWidget> {
 
   DateTime _getStartDate() {
     switch (widget.period) {
- case 'daily':
+      case 'daily':
         return DateTime(widget.date.year, widget.date.month, widget.date.day);
- case 'weekly':
+      case 'weekly':
         return widget.date.subtract(Duration(days: widget.date.weekday - 1));
- case 'monthly':
+      case 'monthly':
         return DateTime(widget.date.year, widget.date.month, 1);
       default:
         return widget.date;
@@ -99,36 +99,30 @@ class _UserBehaviorWidgetState extends State<UserBehaviorWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
- 'Scores comportementaux',
-              style: AppTextStyles.h3,
-            ),
+            Text('Scores comportementaux', style: AppTextStyles.h3),
             const SizedBox(height: 16),
             _buildScoreCard(
- 'Engagement',
- _behaviorData!['engagement_score'] ?? 0.0,
+              'Engagement',
+              _behaviorData!['engagement_score'] ?? 0.0,
               Colors.blue,
             ),
             const SizedBox(height: 12),
             _buildScoreCard(
- 'Personnalisation',
- _behaviorData!['personalization_score'] ?? 0.0,
+              'Personnalisation',
+              _behaviorData!['personalization_score'] ?? 0.0,
               Colors.green,
             ),
             const SizedBox(height: 12),
             _buildScoreCard(
- 'Probabilité de rétention',
- _behaviorData!['retention_probability'] ?? 0.0,
+              'Probabilité de rétention',
+              _behaviorData!['retention_probability'] ?? 0.0,
               Colors.orange,
             ),
- if (_behaviorData!['ai_insights'] != null) ...[
+            if (_behaviorData!['ai_insights'] != null) ...[
               const SizedBox(height: 24),
               const Divider(),
               const SizedBox(height: 16),
-              Text(
- 'Insights IA',
-                style: AppTextStyles.h3,
-              ),
+              Text('Insights IA', style: AppTextStyles.h3),
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(12),
@@ -137,7 +131,7 @@ class _UserBehaviorWidgetState extends State<UserBehaviorWidget> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
- _behaviorData!['ai_insights'] ?? 'Aucun insight disponible',
+                  _behaviorData!['ai_insights'] ?? 'Aucun insight disponible',
                   style: AppTextStyles.bodyMedium,
                 ),
               ),
@@ -155,12 +149,9 @@ class _UserBehaviorWidgetState extends State<UserBehaviorWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Text(label, style: AppTextStyles.bodyLarge),
             Text(
-              label,
-              style: AppTextStyles.bodyLarge,
-            ),
-            Text(
- '${(score * 100).toStringAsFixed(1)}%',
+              '${(score * 100).toStringAsFixed(1)}%',
               style: AppTextStyles.bodyLarge.copyWith(
                 color: color,
                 fontWeight: FontWeight.bold,
@@ -182,4 +173,3 @@ class _UserBehaviorWidgetState extends State<UserBehaviorWidget> {
     );
   }
 }
-

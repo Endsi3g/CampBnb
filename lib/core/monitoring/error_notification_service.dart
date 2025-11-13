@@ -7,17 +7,19 @@ import '../config/app_config.dart';
 
 /// Service de notifications d'erreurs
 class ErrorNotificationService {
-  static final ErrorNotificationService _instance = ErrorNotificationService._internal();
+  static final ErrorNotificationService _instance =
+      ErrorNotificationService._internal();
   factory ErrorNotificationService() => _instance;
   ErrorNotificationService._internal();
 
   final List<ErrorAlert> _activeAlerts = [];
-  final StreamController<ErrorAlert> _alertController = StreamController<ErrorAlert>.broadcast();
+  final StreamController<ErrorAlert> _alertController =
+      StreamController<ErrorAlert>.broadcast();
 
- /// Stream des alertes d'erreurs
+  /// Stream des alertes d'erreurs
   Stream<ErrorAlert> get alerts => _alertController.stream;
 
- /// Détermine la priorité d'une erreur
+  /// Détermine la priorité d'une erreur
   ErrorPriority determinePriority({
     required ErrorSeverity severity,
     required String errorType,
@@ -40,18 +42,18 @@ class ErrorNotificationService {
       return ErrorPriority.high;
     }
 
- // Erreurs affectant beaucoup d'utilisateurs = priorité élevée
+    // Erreurs affectant beaucoup d'utilisateurs = priorité élevée
     if (affectedUsers != null && affectedUsers > 100) {
       return ErrorPriority.high;
     }
 
     // Erreurs réseau = priorité moyenne
- if (errorType == 'network_error') {
+    if (errorType == 'network_error') {
       return ErrorPriority.medium;
     }
 
     // Erreurs de performance = priorité moyenne
- if (errorType == 'performance') {
+    if (errorType == 'performance') {
       return ErrorPriority.medium;
     }
 
@@ -68,7 +70,7 @@ class ErrorNotificationService {
     }
   }
 
- /// Crée une alerte d'erreur
+  /// Crée une alerte d'erreur
   Future<void> createAlert({
     required String errorId,
     required String title,
@@ -97,10 +99,8 @@ class ErrorNotificationService {
     _activeAlerts.add(alert);
     _alertController.add(alert);
 
- // Logger l'alerte
-    AppConfig.logger.w(
- ' Alerte créée: $title (Priorité: ${priority.name})',
-    );
+    // Logger l'alerte
+    AppConfig.logger.w(' Alerte créée: $title (Priorité: ${priority.name})');
 
     // Envoyer une notification si priorité critique ou élevée
     if (priority == ErrorPriority.critical || priority == ErrorPriority.high) {
@@ -117,11 +117,9 @@ class ErrorNotificationService {
     // - Discord
     // - PagerDuty pour les alertes critiques
 
-    AppConfig.logger.i(
- ' Notification envoyée pour: ${alert.title}',
-    );
+    AppConfig.logger.i(' Notification envoyée pour: ${alert.title}');
 
- // Exemple d'intégration avec un webhook Slack (à configurer)
+    // Exemple d'intégration avec un webhook Slack (à configurer)
     // await _sendSlackNotification(alert);
   }
 
@@ -138,7 +136,8 @@ class ErrorNotificationService {
       if (severity != null && alert.severity != severity) return false;
       if (errorType != null && alert.errorType != errorType) return false;
       if (since != null && alert.createdAt.isBefore(since)) return false;
-      if (versions != null && !versions.any((v) => alert.affectedVersions.contains(v))) {
+      if (versions != null &&
+          !versions.any((v) => alert.affectedVersions.contains(v))) {
         return false;
       }
       return true;
@@ -149,50 +148,46 @@ class ErrorNotificationService {
   void resolveAlert(String alertId, {String? resolution}) {
     final alert = _activeAlerts.firstWhere(
       (a) => a.id == alertId,
- orElse: () => throw Exception('Alert not found'),
+      orElse: () => throw Exception('Alert not found'),
     );
 
     alert.status = AlertStatus.resolved;
     alert.resolvedAt = DateTime.now();
     alert.resolution = resolution;
 
- AppConfig.logger.i(' Alerte résolue: ${alert.title}');
+    AppConfig.logger.i(' Alerte résolue: ${alert.title}');
   }
 
- /// Obtient les statistiques d'alertes
+  /// Obtient les statistiques d'alertes
   AlertStats getStats() {
     final now = DateTime.now();
     final last24h = now.subtract(const Duration(hours: 24));
 
-    final recentAlerts = _activeAlerts.where(
-      (a) => a.createdAt.isAfter(last24h),
-    ).toList();
+    final recentAlerts = _activeAlerts
+        .where((a) => a.createdAt.isAfter(last24h))
+        .toList();
 
     return AlertStats(
       totalAlerts: _activeAlerts.length,
-      activeAlerts: _activeAlerts.where((a) => a.status == AlertStatus.active).length,
-      resolvedAlerts: _activeAlerts.where((a) => a.status == AlertStatus.resolved).length,
-      criticalAlerts: _activeAlerts.where((a) => a.priority == ErrorPriority.critical).length,
+      activeAlerts: _activeAlerts
+          .where((a) => a.status == AlertStatus.active)
+          .length,
+      resolvedAlerts: _activeAlerts
+          .where((a) => a.status == AlertStatus.resolved)
+          .length,
+      criticalAlerts: _activeAlerts
+          .where((a) => a.priority == ErrorPriority.critical)
+          .length,
       alertsLast24h: recentAlerts.length,
     );
   }
 }
 
 /// Priorité d'une erreur
-enum ErrorPriority {
-  low,
-  medium,
-  high,
-  critical,
-}
+enum ErrorPriority { low, medium, high, critical }
 
 /// Statut d'une alerte
-enum AlertStatus {
-  active,
-  investigating,
-  resolved,
-  ignored,
-}
+enum AlertStatus { active, investigating, resolved, ignored }
 
 /// Alerte d'erreur
 class ErrorAlert {
@@ -243,4 +238,3 @@ class AlertStats {
     required this.alertsLast24h,
   });
 }
-

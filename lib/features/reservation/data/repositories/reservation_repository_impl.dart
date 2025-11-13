@@ -37,11 +37,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
           'number_of_children': 0,
           'guest_message': message,
         },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return _mapToReservationModel(response.data['data']);
@@ -55,11 +51,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
     try {
       final response = await _dio.get(
         '/reservations/$id',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return _mapToReservationModel(response.data['data']);
@@ -75,10 +67,8 @@ class ReservationRepositoryImpl implements ReservationRepository {
     bool isHost = false,
   }) async {
     try {
-      final queryParams = <String, dynamic>{
-        'role': isHost ? 'host' : 'guest',
-      };
-      
+      final queryParams = <String, dynamic>{'role': isHost ? 'host' : 'guest'};
+
       if (status != null) {
         queryParams['status'] = status.name;
       }
@@ -86,11 +76,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
       final response = await _dio.get(
         '/reservations',
         queryParameters: queryParams,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       final List<dynamic> data = response.data['data'] ?? [];
@@ -105,14 +91,8 @@ class ReservationRepositoryImpl implements ReservationRepository {
     try {
       final response = await _dio.put(
         '/reservations/$reservationId',
-        data: {
-          'status': 'confirmed',
-        },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        data: {'status': 'confirmed'},
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return _mapToReservationModel(response.data['data']);
@@ -122,19 +102,15 @@ class ReservationRepositoryImpl implements ReservationRepository {
   }
 
   @override
-  Future<ReservationModel> rejectReservation(String reservationId, {String? reason}) async {
+  Future<ReservationModel> rejectReservation(
+    String reservationId, {
+    String? reason,
+  }) async {
     try {
       final response = await _dio.put(
         '/reservations/$reservationId',
-        data: {
-          'status': 'rejected',
-          'host_message': reason,
-        },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        data: {'status': 'rejected', 'host_message': reason},
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return _mapToReservationModel(response.data['data']);
@@ -144,19 +120,15 @@ class ReservationRepositoryImpl implements ReservationRepository {
   }
 
   @override
-  Future<ReservationModel> cancelReservation(String reservationId, {String? reason}) async {
+  Future<ReservationModel> cancelReservation(
+    String reservationId, {
+    String? reason,
+  }) async {
     try {
       final response = await _dio.put(
         '/reservations/$reservationId',
-        data: {
-          'status': 'cancelled',
-          'cancellation_reason': reason,
-        },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        data: {'status': 'cancelled', 'cancellation_reason': reason},
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
 
       return _mapToReservationModel(response.data['data']);
@@ -180,11 +152,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
           'new_check_out_date': newCheckOut.toIso8601String().split('T')[0],
           'message': message,
         },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_authToken',
-          },
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $_authToken'}),
       );
     } catch (e) {
       throw Exception('Erreur lors de la suggestion de dates: $e');
@@ -233,4 +201,3 @@ class ReservationRepositoryImpl implements ReservationRepository {
     }
   }
 }
-

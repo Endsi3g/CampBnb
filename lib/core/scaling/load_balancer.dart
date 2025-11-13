@@ -4,7 +4,7 @@ import 'dart:math';
 
 class LoadBalancer {
   static final Logger _logger = Logger();
-  
+
   final List<String> _endpoints;
   final LoadBalancingStrategy _strategy;
   int _currentIndex = 0;
@@ -13,8 +13,8 @@ class LoadBalancer {
   LoadBalancer({
     required List<String> endpoints,
     LoadBalancingStrategy strategy = LoadBalancingStrategy.roundRobin,
-  })  : _endpoints = endpoints,
-        _strategy = strategy {
+  }) : _endpoints = endpoints,
+       _strategy = strategy {
     for (final endpoint in endpoints) {
       _requestCounts[endpoint] = 0;
     }
@@ -84,10 +84,4 @@ class LoadBalancer {
   }
 }
 
-enum LoadBalancingStrategy {
-  roundRobin,
-  random,
-  leastConnections,
-}
-
-
+enum LoadBalancingStrategy { roundRobin, random, leastConnections }

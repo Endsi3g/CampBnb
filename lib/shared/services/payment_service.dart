@@ -50,7 +50,7 @@ class PaymentService {
   static PaymentService? _instance;
   final Dio _dio = Dio();
   final String _baseUrl;
-  
+
   factory PaymentService() => _instance ??= PaymentService._internal();
   PaymentService._internal() : _baseUrl = AppConfig.supabaseUrl {
     _dio.options.baseUrl = '$_baseUrl/functions/v1';
@@ -75,23 +75,27 @@ class PaymentService {
     required String regionCode,
   }) async {
     // En production, récupérer depuis la base de données
- // Pour l'instant, retourner les méthodes par défaut selon la région
+    // Pour l'instant, retourner les méthodes par défaut selon la région
     switch (regionCode) {
- case 'CA-QC':
- case 'CA-ON':
- case 'CA-BC':
-        return [PaymentMethod.stripe, PaymentMethod.paypal, PaymentMethod.applePay];
- case 'US-CA':
- case 'US-NY':
+      case 'CA-QC':
+      case 'CA-ON':
+      case 'CA-BC':
+        return [
+          PaymentMethod.stripe,
+          PaymentMethod.paypal,
+          PaymentMethod.applePay,
+        ];
+      case 'US-CA':
+      case 'US-NY':
         return [
           PaymentMethod.stripe,
           PaymentMethod.paypal,
           PaymentMethod.applePay,
           PaymentMethod.googlePay,
         ];
- case 'MX-CDMX':
+      case 'MX-CDMX':
         return [PaymentMethod.stripe, PaymentMethod.paypal];
- case 'BR-SP':
+      case 'BR-SP':
         return [PaymentMethod.stripe, PaymentMethod.paypal];
       default:
         return [PaymentMethod.stripe, PaymentMethod.paypal];
@@ -99,7 +103,9 @@ class PaymentService {
   }
 
   /// Crée une intention de paiement
-  Future<Map<String, dynamic>> createPaymentIntent(PaymentRequest request) async {
+  Future<Map<String, dynamic>> createPaymentIntent(
+    PaymentRequest request,
+  ) async {
     try {
       // Convertir le montant si nécessaire
       final convertedAmount = await _convertAmountIfNeeded(
@@ -135,7 +141,9 @@ class PaymentService {
         };
       } else {
         // Pour les autres méthodes (PayPal, etc.), utiliser l'implémentation future
-        _logger.w('Méthode de paiement ${request.method} non encore implémentée');
+        _logger.w(
+          'Méthode de paiement ${request.method} non encore implémentée',
+        );
         throw Exception('Méthode de paiement non supportée: ${request.method}');
       }
     } catch (e) {
@@ -173,11 +181,11 @@ class PaymentService {
   /// Annule un paiement
   Future<bool> cancelPayment(String paymentIntentId) async {
     try {
- _logger.d('Annulation du paiement: $paymentIntentId');
- // En production, appeler l'API du fournisseur
+      _logger.d('Annulation du paiement: $paymentIntentId');
+      // En production, appeler l'API du fournisseur
       return true;
     } catch (e) {
- _logger.e('Erreur lors de l\'annulation du paiement: $e');
+      _logger.e('Erreur lors de l\'annulation du paiement: $e');
       return false;
     }
   }
@@ -188,11 +196,11 @@ class PaymentService {
     double? amount,
   }) async {
     try {
- _logger.d('Remboursement du paiement: $paymentIntentId');
- // En production, appeler l'API du fournisseur
+      _logger.d('Remboursement du paiement: $paymentIntentId');
+      // En production, appeler l'API du fournisseur
       return true;
     } catch (e) {
- _logger.e('Erreur lors du remboursement: $e');
+      _logger.e('Erreur lors du remboursement: $e');
       return false;
     }
   }
@@ -217,7 +225,7 @@ class PaymentService {
   Future<PaymentStatus> getPaymentStatus(String paymentIntentId) async {
     try {
       _logger.d('Vérification du statut du paiement: $paymentIntentId');
-      
+
       final response = await _dio.get(
         '/payments/status/$paymentIntentId',
         options: Options(
@@ -229,7 +237,7 @@ class PaymentService {
 
       final data = response.data['data'] as Map<String, dynamic>;
       final statusString = data['status'] as String;
-      
+
       // Mapper le statut depuis l'Edge Function
       switch (statusString) {
         case 'completed':

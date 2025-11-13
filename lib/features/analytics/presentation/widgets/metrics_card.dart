@@ -35,9 +35,14 @@ class MetricsCard extends StatelessWidget {
                 Icon(icon, color: color, size: 32),
                 if (trend != null)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
-                      color: trend! >= 0 ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                      color: trend! >= 0
+                          ? Colors.green.withOpacity(0.1)
+                          : Colors.red.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -50,7 +55,7 @@ class MetricsCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
- '${trend!.abs().toStringAsFixed(1)}%',
+                          '${trend!.abs().toStringAsFixed(1)}%',
                           style: TextStyle(
                             fontSize: 12,
                             color: trend! >= 0 ? Colors.green : Colors.red,
@@ -65,10 +70,7 @@ class MetricsCard extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               value,
-              style: AppTextStyles.h2.copyWith(
-                color: color,
-                fontSize: 28,
-              ),
+              style: AppTextStyles.h2.copyWith(color: color, fontSize: 28),
             ),
             const SizedBox(height: 4),
             Text(
@@ -83,4 +85,3 @@ class MetricsCard extends StatelessWidget {
     );
   }
 }
-

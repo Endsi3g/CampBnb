@@ -16,27 +16,27 @@ class AppConfig {
   );
 
   // Supabase
- static String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? 'https://kniaisdkzeflauawmyka.supabase.co';
- 
- // Supporte SUPABASE_KEY ou SUPABASE_ANON_KEY pour flexibilité
- static String get supabaseAnonKey => 
-     dotenv.env['SUPABASE_KEY'] ?? 
-     dotenv.env['SUPABASE_ANON_KEY'] ?? 
-     '';
+  static String get supabaseUrl =>
+      dotenv.env['SUPABASE_URL'] ?? 'https://kniaisdkzeflauawmyka.supabase.co';
+
+  // Supporte SUPABASE_KEY ou SUPABASE_ANON_KEY pour flexibilité
+  static String get supabaseAnonKey =>
+      dotenv.env['SUPABASE_KEY'] ?? dotenv.env['SUPABASE_ANON_KEY'] ?? '';
 
   // Mapbox
-  static String get mapboxAccessToken => 
-      dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? 
+  static String get mapboxAccessToken =>
+      dotenv.env['MAPBOX_ACCESS_TOKEN'] ??
       'pk.eyJ1IjoiY2FtcGJuYiIsImEiOiJjbWh3N21wZjAwNDhuMm9weXFwMmt1c2VqIn0.r6bKsNWgKmIb0FzWOcZh8g';
 
   // Gemini
- static String get geminiApiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
+  static String get geminiApiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
 
   // Stripe
- static String get stripePublishableKey => dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
+  static String get stripePublishableKey =>
+      dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 
   // Environment
- static bool get isProduction => const bool.fromEnvironment('dart.vm.product');
+  static bool get isProduction => const bool.fromEnvironment('dart.vm.product');
   static bool get isDevelopment => !isProduction;
 
   // Validation
@@ -44,20 +44,20 @@ class AppConfig {
     final errors = <String>[];
 
     if (supabaseUrl.isEmpty) {
- errors.add('SUPABASE_URL is missing');
+      errors.add('SUPABASE_URL is missing');
     }
     if (supabaseAnonKey.isEmpty) {
- errors.add('SUPABASE_ANON_KEY is missing');
+      errors.add('SUPABASE_ANON_KEY is missing');
     }
     if (mapboxAccessToken.isEmpty) {
- errors.add('MAPBOX_ACCESS_TOKEN is missing');
+      errors.add('MAPBOX_ACCESS_TOKEN is missing');
     }
     if (geminiApiKey.isEmpty) {
- errors.add('GEMINI_API_KEY is missing');
+      errors.add('GEMINI_API_KEY is missing');
     }
 
     if (errors.isNotEmpty) {
- logger.e('Configuration errors: ${errors.join(', ')}');
+      logger.e('Configuration errors: ${errors.join(', ')}');
       return false;
     }
 
