@@ -29,7 +29,8 @@ flutter pub get
 # Voir CREATE_ENV_FILE.md
 ```
 
-## 📚 Documentation
+## 📚 Documentation du Github
+
 
 - **[Documentation Complète](docs/README.md)** - Index de toute la documentation
 - **[Guide de Configuration](docs/GUIDE_CONFIGURATION_COMPLETE.md)** - Configuration GitHub complète
