@@ -76,6 +76,15 @@ docs/
 
 ## Navigation Rapide
 
+### ⚡ Configuration GitHub (Nouveau !)
+
+- **Quick Start** → [QUICK_START_GITHUB.md](../QUICK_START_GITHUB.md) - Configuration en 3 étapes
+- **Guide Complet** → [GUIDE_CONFIGURATION_COMPLETE.md](GUIDE_CONFIGURATION_COMPLETE.md) - Checklist complète
+- **Secrets GitHub** → [CONFIGURER_SECRETS_GITHUB.md](CONFIGURER_SECRETS_GITHUB.md) - Configuration des secrets
+- **Branch Protection** → [CONFIGURER_BRANCH_PROTECTION.md](CONFIGURER_BRANCH_PROTECTION.md) - Protection des branches
+- **Labels GitHub** → [CONFIGURER_LABELS_GITHUB.md](CONFIGURER_LABELS_GITHUB.md) - Configuration des labels
+- **Index Configuration** → [INDEX_CONFIGURATION.md](INDEX_CONFIGURATION.md) - Index des guides
+
 ### Pour les Utilisateurs
 
 - **Nouveau sur Campbnb ?** → [Onboarding Utilisateur](onboarding/new-user-onboarding-fr.md)
@@ -85,7 +94,8 @@ docs/
 
 ### ️ Pour les Développeurs
 
-- **Commencer le développement** → [Architecture](ARCHITECTURE.md) → [Setup](../SETUP.md)
+- **Commencer le développement** → [Architecture](ARCHITECTURE.md) → [Setup](SETUP.md)
+- **Configurer GitHub** → [GUIDE_CONFIGURATION_COMPLETE.md](GUIDE_CONFIGURATION_COMPLETE.md)
 - **Comprendre un module** → [Documentation Technique](technical/README.md)
 - **Contribuer** → [Git Workflow](GIT_WORKFLOW.md)
 - **Déployer** → [Guide de Déploiement](DEPLOYMENT.md)
