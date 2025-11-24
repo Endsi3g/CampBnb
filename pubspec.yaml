@@ -68,7 +68,7 @@ dependencies:
 
   # Forms & Validation
   reactive_forms: ^16.1.1
-  email_validator: ^2.1.17
+  email_validator: ^3.0.0
 
   # Date & Time
   table_calendar: ^3.0.9
