@@ -67,7 +67,7 @@ dependencies:
   package_info_plus: ^5.0.1
 
   # Forms & Validation
-  reactive_forms: ^16.1.1
+  reactive_forms: ^18.2.0
   email_validator: ^2.1.17
 
   # Date & Time
