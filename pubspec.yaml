@@ -81,7 +81,7 @@ dependencies:
   flutter_local_notifications: ^16.3.0
 
   # Image & Media
-  photo_view: ^0.14.0
+  photo_view: ^0.15.0
   carousel_slider: ^5.0.0
   flutter_image_compress: ^2.1.0
 
